@@ -8,6 +8,10 @@
     top: 100px;
     height: max-content;
     margin-bottom: 10px;
+
+    input {
+        background-color: #f5f5f5f5;
+    }
 }
 
 .lsTitle {
@@ -33,7 +37,7 @@
 .lsItem>input {
     height: 30px;
     padding: 5px;
-    background-color: #efefef;
+    background-color: #f5f5f5f5;
     border: none;
     border-radius: 50px;
     text-align: center;
@@ -42,7 +46,7 @@
 .lsItem>span {
     height: 30px;
     padding: 5px;
-    background-color: #efefef;
+    background-color: #f5f5f5f5;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -152,17 +156,18 @@
     height: 30px;
     cursor: pointer;
 }
- .optionsContainer {
-     overflow-y: auto;
-     max-height: 420px;
-     scroll-behavior: smooth;
-     padding: 0px 5px;
- }
 
-  .cards {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-top: 15px;
-  }
+.optionsContainer {
+    overflow-y: auto;
+    max-height: 420px;
+    scroll-behavior: smooth;
+    padding: 0px 5px;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}

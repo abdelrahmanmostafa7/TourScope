@@ -20,6 +20,7 @@ import headSet from "../../image/headSet.jpg"
 import { useState } from "react";
 import useFetch from "../../hook/useFetch.js"
 import { useLocation } from "react-router-dom"
+import Loading from './../../components/Loading/Loading';
 import Wifi from "../../image/wif1i.png"
 import Bar from "../../image/martini.png"
 import Laundry from "../../image/washe1r.png"
@@ -34,11 +35,8 @@ import LaTerrazza from "../../image/dish.png"
 import DailyHouseKeeping from "../../image/mop.png"
 import FamilyRooms from "../../image/family.png"
 import CoffeeMaker from "../../image/coffee-machine.png"
-import Luggage from "../../image/luggage.png"
-import parking from "../../image/parking-area.png"
-import FitnessCenter from "../../image/gym.png"
-import AirportShuttle from "../../image/bus.png"
-import Pool from "../../image/poolIcon.png"
+
+import Point from "../../image/right-arrow (3).png"
 
 function Room() {
   // To fetch data 
@@ -54,6 +52,7 @@ function Room() {
   const payment = () => {
     navigate("/payment")
   }
+  console.log(data.facilities)
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
@@ -77,11 +76,26 @@ function Room() {
     setSlideNumber(newSlideNumber)
   };
 
+  // const standardFacilities = data.facilities.filter((facility) =>{
+  //   return facility=== "Desk" || facility==="Free toiletries"
+  // });
 
+  // console.log(standardFacilities);
+  //   const filteredFacilities = data.facilities.filter(facility => {
+  //     return [
+  //       "Safe",
+  //       "Shower",
+  //       "TV",
+  //       "Socket near the bed"
+  //     ].includes(facility);
+  //   });
+
+  // console.log(filteredFacilities);
+  // const 
   return (
     <div>
       <Navbar />
-      {loading ? ("loading...") :
+      {loading ? <Loading /> :
         (<div className="roomContainer">
           <div className="roomWrapper">
             {open && (
@@ -114,72 +128,69 @@ function Room() {
             <div className="roomTop">
               <div className="roomRight">
                 <div className="roomImages">
-                  {data.images?.slice(0, 5).map((photo, i) => (
-                    <div className="roomImgWrapper" key={i}>
-                      <img
-                        onClick={() => handleOpen(i)}
-                        src={photo}
-                        alt=""
-                        className="hotelImg"
-                      />
-                    </div>
-                  ))}
-                  {data.images?.length > 6 && <>
-
-                    <div className="lastImgbtn">
-                      <img
-                        onClick={() => handleOpen(5)}
-                        src={data.images[5]}
-                        alt=""
-                        className="hotelImg lastImg"
-                      />
-                      <button onClick={() => setOpen(true)} className="seeMoreBtn">
-                        see more
-                      </button>
-                    </div>
-                  </>
-                  }
-
+                  <div className="RoomMainImage">
+                    <img src={data.images ? data.images[0] : ""} alt="" className="roomMainImg" onClick={() => handleOpen(0)} />
+                  </div>
+                  <div className="roomSubImg">
+                    {data.images?.slice(1, 4).map((photo, i) => (
+                      <div className="roomImgWrapper" key={i}>
+                        <img
+                          onClick={() => handleOpen(i)}
+                          src={photo}
+                          alt=""
+                          className="hotelImg"
+                        />
+                      </div>
+                    ))}
+                    {data.images?.length > 5 && <>
+                      <div className="lastImgBtn">
+                        <img
+                          onClick={() => handleOpen(5)}
+                          src={data.images[5]}
+                          alt=""
+                          className="hotelImg lastImg"
+                        />
+                        <button onClick={() => setOpen(true)} className="seeMoreBtn">
+                          see more
+                        </button>
+                      </div>
+                    </>
+                    }
+                  </div>
                 </div>
                 <h2 className="aboutHotel">Hotel Features</h2>
                 <span className="HotelFeatures">
-                  {data.amenities?.slice(0, 8).map((facilities, i) => (
+                  <div className="hotelFeaturesLeft">
+                    <span><img src={Point} alt="" className="featureIcon" /></span>
+                    <div className="feature">{data.facilities[0] || ""}</div>
+                  </div>
+                  <div className="hotelFeaturesRight">
+                    <span><img src={Point} alt="" className="featureIcon" /></span>
+                    <div className="feature"></div>
+                  </div>
+                  {/* {data.facilities?.slice(0, 8).map((facilities, i) => (
                     <div className="FeaturesWrapper" key={i}>
-                      {facilities === "Free WiFi" ? (
+                      {facilities === "Free toiletries" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
                           <img src={Wifi} alt="" className="featureImages" />
                         </div>
-                      ) : facilities === "Bar" ? (
+                      ) : facilities === "Safe" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
-                          <img src={Bar} alt="" className="featureImages" />
+                          <img src={Safe} alt="" className="featureImages" />
                         </div>
-                      ) : facilities === "Non-smoking rooms" ? (
+                        ) : facilities === "Toilet" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
-                          <img src={NoSmoking} alt="" className="featureImages" />
+                          <img src={Wifi} alt="" className="featureImages" />
                         </div>
-                      ) : facilities === "Room service" ? (
+                          ) : facilities === "Bathtub or shower" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
-                          <img src={RoomService} alt="" className="featureImages" />
+                          <img src={Wifi} alt="" className="featureImages" />
                         </div>
-                      ) : facilities === "Elevator" ? (
-                        <div className="inHotel">
-                          <h3 className="featureTitle">{facilities}</h3>
-                          <img src={Elevator} alt="" className="featureImages" />
-                        </div>
-                      ) : facilities === "Terrace" ? (
-                        <div>
-                          <h3 className="featureTitle">{facilities}</h3>
-                          <img src={Terrace} alt="" className="featureImages" />
-                        </div>
-                      ) : facilities === "Air conditioning" ? (
-                        <div className="inHotel">
-                          <h3 className="featureTitle">{facilities}</h3>
-                          <img src={AirConditioning} alt="" className="featureImages" />
-                        </div>
+
                       ) : facilities === "Laundry" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
@@ -263,16 +274,17 @@ function Room() {
                       ) : facilities === "Outdoor swimming pool" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
-                          <img src={Pool} alt="" className="featureImages" />
+                          <img src={Safe} alt="" className="featureImages" />
                         </div>
                       ) : (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
-                          <img src={Pool} alt="" className="featureImages" />
+                          <img src={Check} alt="" className="featureImages" />
                         </div>
                       )}
                     </div>
-                  ))}
+                  ))} */}
+
                 </span>
               </div>
               <div className="roomLeft">

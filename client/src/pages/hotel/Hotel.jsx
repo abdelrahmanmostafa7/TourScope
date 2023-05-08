@@ -29,13 +29,15 @@ import Hours from "../../image/24-hours.png"
 import LaTerrazza from "../../image/dish.png"
 import DailyHouseKeeping from "../../image/mop.png"
 import FamilyRooms from "../../image/family.png"
-import CoffeeMaker from "../../image/coffee-machine.png"
+import CoffeeMaker from "../../image/coffee-machine (1).png"
 import Luggage from "../../image/luggage.png"
 import parking from "../../image/parking-area.png"
 import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import styled from "@emotion/styled";
+import Check from "../../image/check (1).png"
+
 
 const Hotel = () => {
   // To fetch data 
@@ -124,33 +126,36 @@ const Hotel = () => {
             <div className="hotelTop">
               <div className="hotelRight">
                 <div className="hotelImages">
-                  {hotel.images?.slice(0, 5).map((photo, i) => (
+                  <div className="hotelMainImg">
+                    <img src={hotel.images ? hotel.images[0] : ""} alt="" className="mainImg" onClick={() => handleOpen(0)} />
+                  </div>
+                  <div className="hotelSubImg">
 
-                    <div className="hotelImgWrapper" key={i}>
-                      <img
-                        onClick={() => handleOpen(i)}
-                        src={photo}
-                        alt=""
-                        className="hotelImg"
-                      />
-                    </div>
-                  ))}
-                  {hotel.images?.length > 6 && <>
-
-                    <div className="lastImgbtn">
-                      <img
-                        onClick={() => handleOpen(5)}
-                        src={hotel.images[5]}
-                        alt=""
-                        className="hotelImg lastImg"
-                      />
-                      <button onClick={() => setOpen(true)} className="seeMoreBtn">
-                        see more
-                      </button>
-                    </div>
-
-                  </>
-                  }
+                    {hotel.images?.slice(1, 4).map((photo, i) => (
+                      <div className="hotelImgWrapper" key={i}>
+                        <img
+                          onClick={() => handleOpen(i)}
+                          src={photo}
+                          alt=""
+                          className="hotelImg"
+                        />
+                      </div>
+                    ))}
+                    {hotel.images?.length > 6 && <>
+                      <div className="lastImgBtn">
+                        <img
+                          onClick={() => handleOpen(5)}
+                          src={hotel.images[5]}
+                          alt=""
+                          className="hotelImg lastImg"
+                        />
+                        <button onClick={() => setOpen(true)} className="seeMoreBtn">
+                          see more
+                        </button>
+                      </div>
+                    </>
+                    }
+                  </div>
                 </div>
                 <h2 className="aboutHotel">Hotel Features</h2>
                 <span className="HotelFeatures">
@@ -233,7 +238,7 @@ const Hotel = () => {
                         </div>
                       ) : amenity === "Tea/Coffee Maker in All Rooms" ? (
                         <div className="inHotel">
-                          <h3 className="featureTitle">{amenity}</h3>
+                          <h3 className="featureTitle">Coffee Maker</h3>
                           <img src={CoffeeMaker} alt="" className="featureImages" />
                         </div>
                       ) : amenity === "Baggage storage" ? (
@@ -279,7 +284,7 @@ const Hotel = () => {
                       ) : (
                         <div className="inHotel">
                           <h3 className="featureTitle">{amenity}</h3>
-                          <img src={FamilyRooms} alt="" className="featureImages" />
+                          <img src={Check} alt="" className="featureImages" />
                         </div>
                       )}
                     </div>

@@ -3,6 +3,7 @@
 body {
     font-family: 'Lato', sans-serif;
     font-family: 'Outfit', sans-serif;
+    background-color: #f5f5f5;
 }
 
 .hotelContainer {
@@ -44,48 +45,72 @@ body {
     flex: 1;
 }
 
+// .hotelImages {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 12px;
+//     padding: 10px;
+//     border-radius: 15px;
+//     background-color: white;
+// }
 .hotelImages {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 10px;
+    flex-direction: column;
     border-radius: 15px;
     background-color: white;
-}
+    padding: 10px;
 
-.hotelImgWrapper {
-    width: 32%;
-}
+    .hotelMainImg {
+        width: 100%;
+        margin-bottom: 10px;
 
-.hotelImg {
-    width: 235px;
-    height: 200px;
-    border-radius: 15px;
-    object-fit: cover;
-    cursor: pointer;
-    
-    .lastimg {
-        position: relative;
+        .mainImg {
+            border-radius: 10px;
+            width: 100%;
+            height: 455px;
+            cursor: pointer;
+        }
+    }
+
+    .hotelSubImg {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 15px;
     }
 }
 
-.lastImgbtn {
+
+.hotelImg {
+    width: 175px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.lastImg {
+    position: relative;
+    width: 175px;
+    height: 150px;
+}
+
+.lastImgBtn {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .seeMoreBtn {
     position: absolute;
     font-size: 20px;
     opacity: 0.8;
-    width: 240px;
-    height: 200px;
+    width: 175px;
+    height: 150px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
-    padding: 10px;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
     border: none;
 }
@@ -148,7 +173,7 @@ body {
 }
 
 .hotelDesc {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .HotelFeatures {
@@ -167,14 +192,17 @@ body {
     flex-direction: column;
     width: 180px;
     height: 135px;
-    
+
 }
 
 .FeaturesWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 23%;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
-    
+
 }
 
 .featureTitle {
@@ -183,9 +211,8 @@ body {
 }
 
 .featureImages {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
+    width: 60px;
+    height: 60px;
     background-color: #fff;
 }
 
@@ -230,7 +257,7 @@ body {
     border-radius: 20px;
     cursor: pointer;
     background-color: white;
-    
+
 }
 
 .cardCounter {
@@ -248,6 +275,7 @@ body {
     width: 30px;
     height: 30px;
 }
+
 .lol {
     display: flex;
     flex-direction: column;
