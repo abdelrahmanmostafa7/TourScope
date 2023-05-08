@@ -1,126 +1,239 @@
-@import "../../global.scss";
+// @import "../../global.scss";
 
-.searchItem {
-  padding-right: 10px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 11px;
-  margin-bottom: 20px;
-  background-color: #fff;
-}
-.amenityImg{
-  width: 20px;
-  height: 20px;
-}
-.siImg {
-  width: 220px;
-  height: 210px;
-  // object-fit: cover;
-  border-radius: 10px 3px 3px 10px;
-}
+// .searchItem {
+//   padding-right: 10px;
+//   border-radius: 10px;
+//   display: flex;
+//   justify-content: space-between;
+//   gap: 11px;
+//   margin-bottom: 20px;
+//   background-color: #fff;
+// }
+// .amenityImg{
+//   width: 20px;
+//   height: 20px;
+// }
+// .hotelImg{
+//   display: flex;
+//   flex: 1.5;
+//   // padding: 10px;
+// }
+// .siImg {
+//   width: 100%;
+//   height: 200px;
+//   // object-fit: cover;
+//   border-radius: 10px 3px 3px 10px;
+// }
+// .siDesc {
+//   display: flex;
+//   flex-direction: column;
+//   flex: 3;
+//   // height: 180px;
+// }
 
-.siDesc {
+// .siTitle {
+//   cursor: pointer;
+//   font-size: 20px;
+//   color: #003580;
+//   margin: 5px 0 ;
+
+// }
+
+// .siTitle:hover {
+//   color: #031e43;
+// }
+
+// .siDistance {
+//   font-size: 15px;
+//   margin: 0;
+
+// }
+
+
+
+// .siFeatures {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap:4px;
+//   .siFeaturesWrapper {
+//     width: 29%;
+//     padding: 4px;
+//     font-size: 13px;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     .transText{
+//       color: transparent;
+//     }
+//   }
+// }
+
+// .siDetails {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: flex-end;
+//   box-sizing:border-box;
+//   margin-bottom:10px;
+// }
+
+// .siRating {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   button {
+//     border-radius: 5px;
+//   }
+// }
+
+// .saveRating {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .siRating>span {
+//   font-weight: 500;
+// }
+
+// .siRating>button {
+//   background-color: #003580;
+//   color: white;
+//   padding: 5px;
+//   font-weight: bold;
+//   border: none;
+// }
+
+// .siDetailTexts {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 5px;
+// }
+
+// .siPrice {
+//   display: flex;
+//   justify-content: center;
+//   font-size: 24px;
+//   color: #49D62F;
+// }
+
+// .siCheckButton {
+//   background-color: $buttonColor;
+//   color: white;
+//   font-weight: bold;
+//   padding: 10px 10px;
+//   border: none;
+//   cursor: pointer;
+//   border-radius: 50px;
+//   width: 120px;
+// }
+.hotelCardContainer {
   display: flex;
-  flex-direction: column;
   flex: 3;
-}
+  background-color: white;
+  width: 720px;
+  border-radius: 10px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-right: 10px;
 
-.siTitle {
-  cursor: pointer;
-  font-size: 20px;
-  color: #003580;
-  margin-bottom: 0px;
-}
-
-.siTitle:hover {
-  color: #031e43;
-}
-
-.siDistance {
-  font-size: 15px;
-  margin-top: 10px;
-
-}
-
-
-
-.siFeatures {
-  display: flex;
-  flex-wrap: wrap;
-  gap:4px;
-  .siFeaturesWrapper {
-    width: 29%;
-    padding: 5px;
-    font-size: 13px;
+  .hotelCardLeft {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    .transText{
-      color: transparent;
+    flex: 2;
+    width: 100%;
+
+    .hotelCardImg {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px 3px 3px 10px;
     }
   }
-}
 
-.siDetails {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  box-sizing:border-box;
-  margin-bottom:10px;
-}
+  .hotelCardCenter {
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    margin-bottom: 3px;
 
-.siRating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    // justify-content: space-between;
+    .hotelCenterTop {
+      padding-left: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
 
-  button {
-    border-radius: 5px;
+      .hotelTitle {
+        cursor: pointer;
+        font-size: 20px;
+        color: #003580;
+        margin: 5px 0;
+        text-align: left;
+      }
+
+      .hotelDistance {
+        font-size: 15px;
+        margin: 0;
+      }
+    }
+
+    .hotelCenterBottom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+
+      .hotelAmenity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: 29%;
+        padding: 3px;
+        font-weight: 500;
+        font-size: 13px;
+
+        .amenityIcon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
-}
 
-.saveRating {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
+  .hotelCardRight {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 
-.siRating>span {
-  font-weight: 500;
-}
+    .hotelRightTop {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
 
-.siRating>button {
-  background-color: #003580;
-  color: white;
-  padding: 5px;
-  font-weight: bold;
-  border: none;
-}
+      button {
+        border-radius: 5px;
+        background-color: #003580;
+        color: white;
+        padding: 5px;
+        font-weight: bold;
+        border: none;
+      }
+    }
 
-.siDetailTexts {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
+    .hotelRightBottom {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-.siPrice {
-  display: flex;
-  justify-content: center;
-  font-size: 24px;
-  color: #49D62F;
-}
-
-.siCheckButton {
-  background-color: $buttonColor;
-  color: white;
-  font-weight: bold;
-  padding: 10px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-  width: 120px;
+      .hotelPrice {
+        font-size: 20px;
+        color: #49D62F;
+      }
+    }
+  }
 }
