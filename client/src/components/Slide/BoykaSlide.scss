@@ -1,0 +1,22 @@
+.boykaSlider {
+    display: flex;
+    padding: 0px 0px 30px 0px;
+    justify-content: center;
+
+    .boykaSliderContainer {
+        width: 1024px;
+
+        .carousel-prev,
+        .carousel-next {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background-color: white;
+            opacity: 0;
+        }
+    }
+}

@@ -1,0 +1,54 @@
+@import "../../global.scss";
+
+.footer {
+    width: 100%;
+    position: relative;
+    font-size: 12px;
+    background-color: $footerColor;
+    padding-top: 30px;
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.row {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    margin: auto;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.fList {
+    list-style: none;
+    padding: 0;
+    color: white;
+}
+
+.fListItem {
+    margin-bottom: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.fText {
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 85%;
+
+}
+
+.hr {
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 75%;
+    width: 70%;
+}

@@ -1,0 +1,126 @@
+@import "../../global.scss";
+
+.searchItem {
+  padding-right: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 11px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+.amenityImg{
+  width: 20px;
+  height: 20px;
+}
+.siImg {
+  width: 220px;
+  height: 210px;
+  // object-fit: cover;
+  border-radius: 10px 3px 3px 10px;
+}
+
+.siDesc {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.siTitle {
+  cursor: pointer;
+  font-size: 20px;
+  color: #003580;
+  margin-bottom: 0px;
+}
+
+.siTitle:hover {
+  color: #031e43;
+}
+
+.siDistance {
+  font-size: 15px;
+  margin-top: 10px;
+
+}
+
+
+
+.siFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  gap:4px;
+  .siFeaturesWrapper {
+    width: 29%;
+    padding: 5px;
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .transText{
+      color: transparent;
+    }
+  }
+}
+
+.siDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  box-sizing:border-box;
+  margin-bottom:10px;
+}
+
+.siRating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    border-radius: 5px;
+  }
+}
+
+.saveRating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.siRating>span {
+  font-weight: 500;
+}
+
+.siRating>button {
+  background-color: #003580;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border: none;
+}
+
+.siDetailTexts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.siPrice {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  color: #49D62F;
+}
+
+.siCheckButton {
+  background-color: $buttonColor;
+  color: white;
+  font-weight: bold;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  width: 120px;
+}

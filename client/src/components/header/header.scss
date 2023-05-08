@@ -1,0 +1,401 @@
+@import "../../global.scss";
+
+.header {
+    background-image: url(../../image/background.png);
+    background-size: cover;
+    width: 100%;
+    height: 400px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    .headerContainer {
+        width: 100%;
+        max-width: 1024px;
+        margin: 10px 0px 100px 0px;
+    }
+    .homeError{
+        display: flex;
+        width: 200px;
+        position: absolute;
+        left: 1300px;
+        top: 100px;
+        
+    }
+   
+  
+    .HeaderNavbarContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .logo {
+            width: 150px;
+            margin-top: 10px;
+        }
+
+        .listContainer {
+            display: flex;
+            gap: 50px;
+            align-items: baseline;
+            background: fixed;
+        }
+
+        .headerListItem {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .navButton {
+            margin-left: 5px;
+            border: 1px solid white;
+            padding: 5px 10px;
+            cursor: pointer;
+            background: fixed;
+            color: white;
+            font-size: 15px;
+            border-radius: 5pc;
+            font-weight: 300;
+            align-items: baseline;
+            margin-top: 10px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: white;
+            position: relative;
+            z-index: 999;
+
+            .profileImg {
+                width: 32px;
+                height: 32px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .userName {
+                font-weight: 600;
+            }
+
+
+
+            .menuOptions {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                right: -10px;
+                padding: 20px;
+                background-color: white;
+                color: black;
+                border: 1px solid lightgrey;
+                border-radius: 10px;
+                width: 160px;
+
+
+                .option2 {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+
+                    span {
+                        display: flex;
+                        width: 150px;
+                        text-decoration: none;
+                    }
+
+                    .icon2 {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+
+                hr {
+                    width: 100%;
+                }
+
+            }
+        }
+    }
+
+
+    .line1 {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        span {
+            position: relative;
+            height: 1px;
+            background-color: white;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 50px;
+        }
+
+        .one {
+            width: 130px;
+            top: 90px;
+        }
+
+        .two {
+            width: 160px;
+            top: 120px;
+        }
+
+        .three {
+            width: 190px;
+            top: 150px;
+        }
+    }
+
+    .line2 {
+        display: flex;
+        flex-direction: column-reverse;
+        position: relative;
+
+        span {
+            position: relative;
+            height: 1px;
+            background-color: white;
+            border: 1px solid white;
+            border-radius: 50px;
+        }
+
+        .one {
+            width: 130px;
+            top: 150px;
+            left: 900px;
+        }
+
+        .two {
+            width: 160px;
+            top: 120px;
+            left: 870px;
+        }
+
+        .three {
+            width: 190px;
+            top: 90px;
+            left: 840px;
+        }
+    }
+
+
+    .AnimatedHeader {
+        margin-top: 65px;
+        font-weight: bold;
+        font-size: 30px;
+        font-family: #f0ffff;
+        display: block;
+        justify-content: center;
+        .FristWordTitle {
+            margin: 0px;
+            padding-right: 140px;
+        }
+
+        .SecoundWordTitle {
+            padding-left: 140px;
+            margin: 0px;
+            color: white;
+        }
+
+    }
+
+    .headerTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .searchTitle {
+        position: absolute;
+        bottom: 10px;
+
+        .searchP {
+            font-size: 15px;
+            font-weight: 100;
+        }
+    }
+
+    .headerSearch {
+        height: 30px;
+        background-color: $frameColor;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 10px;
+        border-radius: 5pc;
+        position: absolute;
+        bottom: -25px;
+        width: 90%;
+        max-width: 1000px;
+
+        .headerSearchItem {
+            display: flex;
+            height: 35px;
+            align-items: center;
+            background-color: #efefef;
+            border-radius: 50px;
+            text-align: center;
+            padding: 0px 10px 0px 10px;
+
+
+
+            .headerIcon {
+                color: rgb(0, 0, 0);
+            }
+
+            .searchIcon {
+                color: rgb(0, 0, 0);
+                width: 28px;
+                height: 28px;
+                padding: 3px;
+                cursor: pointer;
+            }
+
+            .headerSearchInput {
+                border: none;
+                outline: none;
+                color: black;
+                background-color: #efefef;
+                border-radius: 50px;
+                text-align: center;
+                height: 30px;
+                width: 270px;
+                font-size: 17px;
+            }
+
+            .headerSearchText {
+                color: rgb(0, 0, 0);
+                cursor: pointer;
+                background-color: #efefef;
+                border-radius: 50px;
+                text-align: center;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                width: 270px;
+                justify-content: center;
+            }
+
+
+            .tag-text {
+                display: none;
+                position: absolute;
+                opacity: 0.5;
+                top: 100%;
+                z-index: 1;
+                color: rgb(0, 0, 0);
+                padding: 11px;
+                background-color: #f0ffff;
+                border-top: none;
+            }
+
+
+            .headerBtn {
+                font-size: 15px;
+                font-weight: 500;
+                border: none;
+                border-radius: 50px;
+                width: 80px;
+                height: 35px;
+                cursor: pointer;
+            }
+
+            .headerBtn:hover+.tag-text {
+                display: block;
+            }
+
+            .date {
+                position: absolute;
+                top: 50px;
+                z-index: 10;
+                left: 300px;
+            }
+
+            .optionsContainer{
+                overflow-y: auto;
+                max-height: 420px;
+                scroll-behavior: smooth;
+                padding: 0px 5px;
+            }
+        
+            .options {
+                padding-top: 15px;
+                z-index: 10;  
+                position: absolute;              
+                top: 50px;
+                right:120px;
+                background-color: white;
+                color: rgb(0, 0, 0);
+                border-radius: 5px;
+                -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+                box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+
+                .optionsTitle{
+                    width: 200px;
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 5px;                    
+                }
+                .optionText{
+                   margin-left: 10%;
+                }
+
+                .optionItem {
+                    width: 200px;
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 10px 0px 10px 0px;
+                    text-align: center;
+                    align-items: center;
+
+
+                    .optionCounter {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        color: black;
+                    }
+
+                    .optionCounterButton {
+                        position: relative;
+                        width: 30px;
+                        height: 30px;
+                        background-color: white;
+                        border: 1px solid $mainColor;
+                        color: $mainColor;
+                        cursor: pointer;
+                        border-radius: 100%;
+                    }
+                }
+            }
+        }
+        .removebtn{
+            display: flex;
+            gap: 5px;
+            margin-right: 40px;
+            color: red;
+            background-color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+    }
+} .cards {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     padding-top: 15px;
+ }

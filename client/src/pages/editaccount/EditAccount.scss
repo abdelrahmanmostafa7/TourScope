@@ -1,0 +1,132 @@
+@import"../../global.scss";
+
+*:focus {
+  outline: none;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-family: 'Outfit', sans-serif;
+  background-color: $backgroundColor ;
+}
+
+.editAccountContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: $backgroundColor ;
+}
+.editAccountBottom{
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.editAccountWrapper {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.editAccount {
+  background-color: white;
+  width: 1024px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.editAccountImg {
+  margin-top: 10px;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+}
+
+.editImgSec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.editAccountSec {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editAccountLeft,
+.editAccountRight {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editAccountCenter {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editAccountCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.editAccountInput {
+  border: none;
+  background-color: #EFEFEF;
+  border-radius: 20px;
+  width: 230px;
+  height: 30px;
+  padding-left: 10px;
+  font-size: large;
+}
+
+.editAccountLabel {
+  font-size: 20px;
+  margin: 10px;
+}
+
+.editAccountButton {
+  border: none;
+  background-color: transparent;
+  width: 100px;
+  height: 30px;
+  text-decoration: underline;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  color: #142662;
+}
+
+.editAccountBtn {
+  border: none;
+  width: 100px;
+  height: 40px;
+  text-decoration: underline;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  border-radius: 25px;
+  background-color: #142662;
+  color: white;
+  text-decoration: none;
+}
+
+.editAccountLong {
+  width: 490px;
+}
+
+.editAccountSelect {
+  border: none;
+  background-color: #EFEFEF;
+  border-radius: 20px;
+  width: 240px;
+  height: 30px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}

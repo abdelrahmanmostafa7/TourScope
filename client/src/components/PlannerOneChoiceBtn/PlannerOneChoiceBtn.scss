@@ -1,0 +1,29 @@
+
+.plannerOneChoiceBtn  {
+  width: 430px;
+  display: flex;
+  justify-content: space-between;
+  button{
+    width: 100px;
+    height: 40px;
+    font-size: 17px;
+    color: #142662;
+    background-color: white;
+    border: 2px solid #142662;
+    border-radius: 50px;
+    cursor: pointer;
+    // margin-left: 15px;
+    
+  }
+  .plannerOneChoiceBtnActive {
+    width: 100px;
+    height: 40px;
+    font-size: 17px;
+    color: #142662;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: #142662;
+    color: white;
+  }
+}

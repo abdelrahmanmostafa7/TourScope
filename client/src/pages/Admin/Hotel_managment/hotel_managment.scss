@@ -1,0 +1,20 @@
+@import '../../../global.scss';
+
+.hotel_Managment_Container{
+  justify-content: start;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  
+}
+.hotel_managmnet_warper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1500px;
+  align-items: center;
+}
+
+.hotel_managment_header{
+  margin-bottom: 30px;
+}

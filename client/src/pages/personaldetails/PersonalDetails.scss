@@ -1,0 +1,75 @@
+@import"../../global.scss";
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-family: 'Outfit', sans-serif;
+  background-color: $backgroundColor ;
+}
+
+.personalDetailsContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: $backgroundColor ;
+
+  .personalDetailsWrapper {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
+}
+
+.personalDetails {
+  border-radius: 20px;
+  background-color: white;
+  margin: 20px 0;
+
+  .personalDetailsImgSec {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .personalDetailsImg {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      margin: 30px 0;
+    }
+
+    span {
+      font-size: x-large;
+    }
+  }
+
+  .personalDetailsSec {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    p {
+      width: 750px;
+      padding-left: 50px;
+    }
+
+    h2 {
+      width: 120px;
+      padding-left: 20px;
+      text-align: center;
+    }
+
+    button {
+      border: none;
+      width: 90px;
+      text-align: center;
+      text-decoration: underline;
+      background-color: transparent;
+      text-decoration: underline;
+      font-size: large;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+  }
+}

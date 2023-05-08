@@ -1,0 +1,89 @@
+@import '../../global.scss';
+
+
+.chart {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    color: rgb(0, 0, 0);
+  
+    .chart_title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+  
+    .chartGrid {
+      stroke: rgb(228, 225, 225);
+    }
+    .chart_top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-self: center;
+
+      margin-bottom: 10px;
+    }
+    
+
+
+  }
+  
+
+
+  .select-box {
+    position: relative;
+    width: 100%;
+    max-width: 150px;
+    font-size: 18px;
+
+  
+    select {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #e7e3e3;
+      color: #0f0f0f;
+      appearance: none;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+  
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px $buttonColor ;
+      }
+      &:hover {
+        outline: none;
+        box-shadow: 0 0 5px $buttonColor ;
+      }
+  
+  
+      option {
+        color: #131313;
+        background-color: #e7e3e3;
+      }
+     
+
+    }
+
+    option:hover {
+      background-color: blue;
+      color: white;
+    }
+
+    .select-arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 6px 0 6px;
+      border-color: #0f1010 transparent transparent transparent;
+      transition: all 0.3s ease-in-out;
+    }
+  
+ 
+  }
+  

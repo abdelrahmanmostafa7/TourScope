@@ -1,0 +1,20 @@
+@import '../../../global.scss';
+
+.reservation_Container{
+  justify-content: start;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  
+}
+.reservation_warper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1500px;
+  align-items: center;
+}
+
+.reservation_header{
+  margin-bottom: 30px;
+}

@@ -1,0 +1,117 @@
+@import '../../global.scss';
+
+
+#table_styling {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+
+}
+
+#table_styling td,
+#table_styling th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#table_styling tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#table_styling tr:hover {
+  background-color: #ddd;
+}
+
+#table_styling th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: $buttonColor;
+  color: white;
+
+}
+
+th {
+  font-size: 15px;
+  text-align-last: center;
+
+
+}
+
+.view_btn {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.view_btn:hover {
+  background-color: #3B61DD
+}
+
+.view_btn:focus {
+  border: 2px solid #439dff;
+  box-shadow: 0px 0px 10px 0px #439dff;
+
+}
+
+.edite_btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edite_btn:hover {
+  background-color: #298940
+}
+
+.edite_btn:focus {
+  border: 2px solid #30c853;
+  box-shadow: 0px 0px 10px 0px #30c853;
+
+}
+
+.delete_btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete_btn:hover {
+  background-color: #a42e39
+}
+
+.delete_btn:focus {
+  border: 2px solid #e14252;
+  box-shadow: 0px 0px 10px 0px #e14252;
+}
+.item{
+  width: 60px;
+  font-size: 12px;
+}

@@ -1,0 +1,266 @@
+@import "../../global.scss";
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-family: 'Outfit', sans-serif;
+}
+
+.hotelContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    background-color: $backgroundColor ;
+}
+
+
+.hotelWrapper {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 10px;
+    background-color: $backgroundColor;
+    flex-direction: column;
+    position: relative;
+}
+
+.hotelTitle {
+    text-align: center;
+}
+
+.hotelTop {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 10px;
+    top: 100px;
+}
+
+.hotelRight {
+    flex: 3;
+}
+
+.hotelLeft {
+    flex: 1;
+}
+
+.hotelImages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.hotelImgWrapper {
+    width: 32%;
+}
+
+.hotelImg {
+    width: 235px;
+    height: 200px;
+    border-radius: 15px;
+    object-fit: cover;
+    cursor: pointer;
+    
+    .lastimg {
+        position: relative;
+    }
+}
+
+.lastImgbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.seeMoreBtn {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.8;
+    width: 240px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+}
+
+.seeMoreBtn:hover {
+    opacity: 1;
+}
+
+.slider {
+    display: flex;
+    position: sticky;
+    top: 130px;
+    width: 100vw;
+    max-width: 1024px;
+    height: 80vh;
+    background-color: rgb(255, 255, 255);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.sliderWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderImg {
+    width: 95%;
+    height: 70vh;
+    border-radius: 15px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+
+.arrow {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.aboutHotel {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.hotelDesc {
+    font-size: 18px;
+}
+
+.HotelFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 19px;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    flex: 3;
+}
+
+.inHotel {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 180px;
+    height: 135px;
+    
+}
+
+.FeaturesWrapper {
+    width: 23%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    
+}
+
+.featureTitle {
+    text-align: center;
+    font-size: 15px;
+}
+
+.featureImages {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.hotelBottom {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.roomsBtn {
+    padding: 10px;
+    background-color: $buttonColor;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 15pc;
+    border: 7px solid white;
+    margin-bottom: 5px;
+}
+
+.roomCards {
+    display: flex;
+    width: 100%;
+    max-width: 1024px;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.arrows {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.buttonArrow {
+    margin-right: 1px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: white;
+    
+}
+
+.cardCounter {
+    margin-right: 1px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: white;
+    font-size: large;
+    font-weight: 600;
+}
+
+.iconArrow {
+    width: 30px;
+    height: 30px;
+}
+.lol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.locationHeading {
+    background-color: #fff;
+    border-radius: 15px;
+    width: 264.7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}

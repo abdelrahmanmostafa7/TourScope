@@ -1,0 +1,56 @@
+@import "../../global.scss";
+.reservation{
+  background-color:white;
+  border-radius:20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 1024px;
+  height: 340px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  p,
+  h2,
+  h3{
+    margin: 0;
+  }
+}
+.reservationImg{
+  height: 340px;
+  width: 480px;
+  border-radius: 20px;
+}
+.reservationLeft{
+  width: 490px;
+  height: 330px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reservationRight{
+  width: 500px;
+  height: 330px;
+}
+.reservationCol{
+  display:flex;
+  flex-direction:column;
+  width: 125px;
+}
+.reservationSec{
+  display: flex;
+  flex-direction: column;
+}
+.reservationDetails{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reservationBtn{
+  background-color: $buttonColor;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  width: 150px;
+  height: 30px;
+  font-weight:700;
+}

@@ -1,0 +1,69 @@
+@import '../../global.scss';
+
+.widget{
+    display: flex;
+    flex:1;
+    justify-content: center;
+    padding: 10px;
+    margin: 20px;
+    height: 8rem;
+    border-radius: 20px;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    color: gray;
+
+}
+.widget:hover{
+    box-shadow: -4px 4px 4px 4px rgba(0,0,0,0.3);
+
+    transition: 0.3s;
+}
+.left, .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.counter{
+    position: relative;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    bottom: 25px;
+}
+.card_dec{
+    position: relative;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    bottom: 25px;
+}
+.widget_shape_icon{
+
+justify-self: center;
+color: #011627
+}
+.widget_percentage{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-size: 1.5rem;
+    bottom: 35px;
+    left: 20px;
+    &.positive{
+        color: #2afe05;
+    }
+    &.negative{
+        color: #ff0000;
+    }
+   
+}
+.arrow{
+  
+    margin-bottom: -10px;
+    margin-left: 10px;
+}
+

@@ -1,0 +1,65 @@
+@import"../../global.scss";
+body {
+  font-family: 'Lato', sans-serif;
+  font-family: 'Outfit', sans-serif;
+  background-color: $backgroundColor ;
+}
+
+.contactContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  background-color: $backgroundColor ;
+
+  .contactWrapper {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    
+  }
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  
+    .way {
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      border-radius: 20px;
+      height: 250px;
+    }
+  
+    .sec {
+      background-color: $backgroundColor ;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 320px;
+      height: 230px;
+      margin-top: 10px;
+      border-radius: 20px;
+    }
+  
+    .icon {
+      width: 90px;
+      height: 90px;
+    }
+    h1,
+    p{
+      text-align:center;
+    }
+    h2{
+      margin-bottom:0;
+    }
+    h1{
+      font-size:50px;
+    }
+    span{
+      font-weight: 100;
+    }
+}

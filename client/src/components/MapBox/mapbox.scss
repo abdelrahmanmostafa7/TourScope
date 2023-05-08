@@ -1,0 +1,172 @@
+@import url('https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css');
+
+.map{
+  border: 10px solid white;
+  border-radius: 15px;
+}
+.mapboxgl-canvas{
+  border-radius: 15px;
+}
+.mapboxgl-children{
+  background-color: #e60b0b;
+}
+.mapboxgl-popup-close-button {
+  display: none;
+}
+.price_user {
+  display: inline-block;
+  max-width: 100%;
+  height: 1.2em; /* Or any other desired height */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.card {
+  width: 230px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  justify-content: space-around;
+  .hotelCardMapImg{
+    border-radius: 15px;
+    width: 200;
+    height: 150px;
+  }
+}
+
+// rgb(66, 184, 11)
+.name {
+  font-size: 18px;
+  font-family: 'outfit',sans-serif;
+  text-align: center;
+  margin: 5px;
+}
+.hotelMapCardDistance{
+    background-color: #F5F5F5;
+    border-radius: 50px;
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    padding: 5px;
+    
+}
+.hotelMapCardRating{
+  background-color: #003580;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 15px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+.hotelMapCardPrice{
+  text-align: center;
+  margin: 5px;
+  font-weight: 500;
+}
+.dollar {
+  color: rgb(66, 184, 11);
+}
+
+.mapboxgl-ctrl-geocoder {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.mapboxgl-popup-content {
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+label {
+  width: max-content;
+  color:#1c3174;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+
+  .classRating {
+      display: flex;
+      flex-direction: row;
+    }
+  .price{
+    display: flex;
+      flex-direction: column;
+  }
+
+
+
+
+
+
+.mapboxgl-ctrl-icon {
+  font-family: "Mapbox GL JS";
+}
+
+.app_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 15px;
+}
+
+
+.mapboxgl-ctrl-logo {
+  display: none;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+  display: none;
+}
+
+
+.button-34 {
+  background: #142662;
+  border-radius: 999px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  opacity: 1;
+  padding: 5px 15px;
+  width: fit-content;
+  border: none;
+  margin-top: 5px;
+}
+
+.rating {
+  width: 26px;
+  font-size: 20px;
+  margin: 5px;
+
+}
+
+
+
+.price {
+  width: 26px;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.btn_controllers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.close_btn {
+  background: #142662;
+  color: #FFFFFF;
+}

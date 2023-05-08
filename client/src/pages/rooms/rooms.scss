@@ -1,0 +1,58 @@
+@import "../../global.scss";
+body{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Outfit', sans-serif;
+}
+.roomsContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    background-color:$backgroundColor ;
+}
+.roomsWrapper{
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 10px;
+    background-color: $backgroundColor;
+    flex-direction: column;
+}
+.roomTitle{
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 600;
+
+}
+.roomsTypeButtons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.roomsTypeBtn{
+    padding: 10px;
+    background-color: white;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 15pc;
+    border: none;
+}
+.allRoomsBtn{
+    padding: 10px;
+    background-color: $buttonColor;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 15pc;
+}
+
+.roomCards{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+.roomCard{
+    width: 32%;
+}

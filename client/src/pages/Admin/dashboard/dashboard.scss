@@ -1,0 +1,76 @@
+@import '../../../global.scss';
+
+.dashboard_Container{
+  justify-content: start;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  
+}
+.dashboard_warper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1500px;
+  align-items: center;
+}
+
+.dashboard_header{
+  font-size: large;
+}
+.dash_widgets{
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 120px;
+  
+
+}
+.graphs{
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 300px;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 150px;
+}
+.curve{
+
+width: 60%;
+justify-content: center;
+align-items: center;
+margin-left: 10px;
+
+}
+
+.piechart{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 324px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+
+  .chart {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 10px;
+    color: gray;
+  
+    .pielabel {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+  }
+  
+
+
+
+}

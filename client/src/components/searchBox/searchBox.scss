@@ -1,0 +1,168 @@
+@import "../../global.scss";
+
+.listSearch {
+    flex: 1;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 15px;
+    top: 100px;
+    height: max-content;
+    margin-bottom: 10px;
+}
+
+.lsTitle {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.lsItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+
+}
+
+.lsItem>label {
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+}
+
+.lsItem>input {
+    height: 30px;
+    padding: 5px;
+    background-color: #efefef;
+    border: none;
+    border-radius: 50px;
+    text-align: center;
+}
+
+.lsItem>span {
+    height: 30px;
+    padding: 5px;
+    background-color: #efefef;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    justify-content: center;
+}
+
+
+
+.lsOptionItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    font-size: 12px;
+}
+
+.lsOptionText {
+    font-size: 15px;
+
+    p {
+        font-weight: normal;
+        font-size: 15px;
+    }
+}
+
+.lsOptionInput {
+    width: 50px;
+    border: none;
+    background-color: #efefef;
+    border-radius: 50px;
+    height: 30px;
+    text-align: center;
+    width: 80px;
+}
+
+.listSearch>button {
+    padding: 10px;
+    background-color: $buttonColor;
+    color: white;
+    border: none;
+    width: 100%;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 15pc;
+}
+
+.openOptions {
+    padding-top: 15px;
+    z-index: 10;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    text-align: center;
+
+    .optionsTitle {
+        width: 200px;
+        display: flex;
+        justify-content: space-between;
+        margin: 5px;
+    }
+
+    .optionText {
+        margin-left: 10%;
+    }
+
+    .optionItem {
+        width: 200px;
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0px 10px 0px;
+        text-align: center;
+        align-items: center;
+
+
+        .optionCounter {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: black;
+        }
+
+        .optionCounterButton {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border: 1px solid $mainColor;
+            color: $mainColor;
+            cursor: pointer;
+            border-radius: 100%;
+        }
+    }
+}
+
+.removebtn {
+    display: flex;
+    gap: 5px;
+    margin-right: 40px;
+    color: red;
+    background-color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+ .optionsContainer {
+     overflow-y: auto;
+     max-height: 420px;
+     scroll-behavior: smooth;
+     padding: 0px 5px;
+ }
+
+  .cards {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 15px;
+  }
