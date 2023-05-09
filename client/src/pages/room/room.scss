@@ -281,11 +281,11 @@ body {
 }
 
 .popup-content3 {
-    width: 600px;
+    width: 800px;
     height: 600px;
     background-color: #fff;
     border-radius: 10px;
-    // overflow: scroll;
+    overflow-y: scroll;
     opacity: 0;
         animation: fade-in 1s ease forwards;
     h2 {
@@ -298,12 +298,11 @@ body {
         flex-wrap: wrap;
         margin: 0;
         padding: 10px;
-        justify-content: space-around;
-
+        gap:35px;
         li {
             width: 45%;
             list-style: none;
-            height: 50px;
+            height: 30px;
             display: flex;
             align-items: center;
             padding: 5px;
