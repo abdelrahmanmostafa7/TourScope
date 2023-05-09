@@ -35,6 +35,9 @@ body {
 
 .roomLeft {
     flex: 1;
+    position:sticky;
+    top:90px;
+    height:250px;
 
     .vrOption {
         background-color: white;
@@ -44,20 +47,15 @@ body {
         justify-content: center;
         align-items: center;
         gap: 10px;
-
-
         span {
             font-size: 20px;
             font-weight: 600;
         }
-
         .headSet {
             width: 50px;
             height: 50px;
         }
-
     }
-
     .roomDetails {
         background-color: white;
         border-radius: 10px;
@@ -66,11 +64,9 @@ body {
         justify-content: center;
         align-items: center;
         gap: 10px;
-
         span {
             font-size: 15px;
         }
-
         p {
             font-weight: bold;
         }
@@ -88,7 +84,7 @@ body {
 
         span {
             color: #49D62F;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
     }
@@ -148,14 +144,13 @@ body {
     cursor: pointer;
 }
 
-.HotelFeatures {
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-}
+// .HotelFeatures {
+//     display: flex;
+//     border-radius: 10px;
+// }
 
-.hotelFeaturesLeft,
-.hotelFeaturesRight {
+.roomFeaturesLeft,
+.roomFeaturesRight {
     display: flex;
     flex: 1;
     width: 100%;
