@@ -15,16 +15,17 @@
         max-width: 1024px;
         margin: 10px 0px 100px 0px;
     }
-    .homeError{
+
+    .homeError {
         display: flex;
         width: 200px;
         position: absolute;
         left: 1300px;
         top: 100px;
-        
+
     }
-   
-  
+
+
     .HeaderNavbarContainer {
         display: flex;
         justify-content: space-between;
@@ -194,6 +195,7 @@
         font-family: #f0ffff;
         display: block;
         justify-content: center;
+
         .FristWordTitle {
             margin: 0px;
             padding-right: 140px;
@@ -216,12 +218,15 @@
 
     .searchTitle {
         position: absolute;
-        bottom: 10px;
+        bottom: 20px;
+    }
 
-        .searchP {
-            font-size: 15px;
-            font-weight: 100;
-        }
+    .searchP {
+        position: absolute;
+        font-size: 15px;
+        font-weight: 100;
+        margin: auto;
+        bottom: 25px;
     }
 
     .headerSearch {
@@ -320,33 +325,34 @@
                 left: 300px;
             }
 
-            .optionsContainer{
+            .optionsContainer {
                 overflow-y: auto;
                 max-height: 420px;
                 scroll-behavior: smooth;
                 padding: 0px 5px;
             }
-        
+
             .options {
                 padding-top: 15px;
-                z-index: 10;  
-                position: absolute;              
+                z-index: 10;
+                position: absolute;
                 top: 50px;
-                right:120px;
+                right: 120px;
                 background-color: white;
                 color: rgb(0, 0, 0);
                 border-radius: 5px;
                 -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
                 box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
 
-                .optionsTitle{
+                .optionsTitle {
                     width: 200px;
                     display: flex;
                     justify-content: space-between;
-                    margin: 5px;                    
+                    margin: 5px;
                 }
-                .optionText{
-                   margin-left: 10%;
+
+                .optionText {
+                    margin-left: 10%;
                 }
 
                 .optionItem {
@@ -379,7 +385,8 @@
                 }
             }
         }
-        .removebtn{
+
+        .removebtn {
             display: flex;
             gap: 5px;
             margin-right: 40px;
@@ -392,10 +399,12 @@
         }
 
     }
-} .cards {
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     padding-top: 15px;
- }
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}

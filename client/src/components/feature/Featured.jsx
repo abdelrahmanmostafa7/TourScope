@@ -6,7 +6,7 @@ const Featured = () => {
     const navigate = useNavigate()
     const navigateToDestination = (destination) => {
         navigate(`/hotels`, { state: { destination } })
-        window.location.reload();
+        window.scrollTo(0, 0);;
     }
     return (
         <div className="featured">

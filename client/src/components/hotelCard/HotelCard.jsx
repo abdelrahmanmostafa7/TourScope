@@ -9,7 +9,7 @@ const HotelCard = ({ item}) => {
   const navigate = useNavigate()
   const hotelDetails = () => {
     navigate(`/hotels/${item._id}`)
-    window.location.reload();
+    window.scrollTo(0, 0);
   }
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 

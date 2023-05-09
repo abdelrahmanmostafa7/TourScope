@@ -18,32 +18,45 @@
     height: 400px;
     object-fit: cover;
     border-radius: 10px;
-    filter: blur(3px);
+    filter: blur(2px) brightness(80%);
+}
+
+.PlannerAdContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 90px;
+    gap: 20px;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
 }
 
 .PlannerAdTitle {
-    position: absolute;
     color: rgb(255, 255, 255);
     text-align: center;
-    top: 70px;
+    margin: auto;
 }
 
 .PlannerAdDetails {
-    position: absolute;
     color: rgb(255, 255, 255);
     text-align: center;
-    top: 170px;
+    margin: auto;
 }
 
 .PlannerAdBtn {
-    position: absolute;
-    bottom: 110px;
     width: 150px;
     border: none;
     height: 35px;
-    border-radius: 50px;
+    font-weight: 600;
     color: $buttonColor;
     background-color: white;
+    border-radius: 50px;
     cursor: pointer;
-    font-weight: 600;
+    transition: background-color 0.3s ease-out, color 0.1s ease-out 0.2s;
+
+    &:hover {
+        color: white;
+        background-color: $buttonColor;
+    }
 }

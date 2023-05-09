@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import "./RoomCard.scss"
 
 
-const RoomCard = ( {item} ) => {
+const RoomCard = ({ item }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
     navigate(`/room/${item._id}`)
-    window.location.reload();
+    window.scrollTo(0, 0);;
 
   }
   return (

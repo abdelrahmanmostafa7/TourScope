@@ -64,25 +64,25 @@ const Header = ({ type }) => {
 
   const hotelPage = () => {
     navigate("/hotels", { state: { destination, date, options } })
-    window.location.reload();
+    window.scrollTo(0, 0);;
 
   }
 
   const contactBtn = () => {
     navigate("/contact")
-    window.location.reload();
+    window.scrollTo(0, 0);;
 
   }
   const logInBtn = () => {
     navigate("/logInOut")
-    window.location.reload();
+    window.scrollTo(0, 0);;
 
   }
   const signUp = () => {
 
     const signup = true
     navigate("/logInOut", { state: { signup } })
-    window.location.reload();
+    window.scrollTo(0, 0);;
 
   }
 
@@ -97,7 +97,7 @@ const Header = ({ type }) => {
       setshow(true)
     } else {
       navigate("/hotels", { state: { destination, date, options, rooms } })
-      window.location.reload();
+      window.scrollTo(0, 0);;
 
     }
   }
@@ -132,7 +132,7 @@ const Header = ({ type }) => {
       await newRequest.post("/auth/signout")
       localStorage.setItem("currentUser", null)
       navigate("/")
-      window.location.reload();
+      window.scrollTo(0, 0);;
     } catch (err) {
       console.log(err);
     }
@@ -323,7 +323,8 @@ const Header = ({ type }) => {
             </p>
           </div>
 
-          <h2 className="searchTitle">Find your next stay <br /><span className="searchP">Search low prices on hotels, homes and much more...</span></h2>
+          {/* <h2 className="searchTitle">Find your next stay</h2>
+          <span className="searchP">Search low prices on hotels, homes and much more...</span> */}
           {/* Search bar  */}
           <div className="headerSearch">
             <div className="headerSearchItem">
