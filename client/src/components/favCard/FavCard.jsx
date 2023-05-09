@@ -15,7 +15,7 @@ const FavCard = ({ item, checkCard}) => {
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-  const id = currentUser._id
+  const id = currentUser ? currentUser._id : null;
   const hotelId = item._id
   const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/favHotel/${id}`);
 
