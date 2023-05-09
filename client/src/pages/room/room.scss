@@ -35,6 +35,9 @@ body {
 
 .roomLeft {
     flex: 1;
+    position: sticky;
+    top: 90px;
+    height: 250px;
 
     .vrOption {
         background-color: white;
@@ -45,7 +48,6 @@ body {
         align-items: center;
         gap: 10px;
 
-
         span {
             font-size: 20px;
             font-weight: 600;
@@ -55,7 +57,6 @@ body {
             width: 50px;
             height: 50px;
         }
-
     }
 
     .roomDetails {
@@ -88,7 +89,7 @@ body {
 
         span {
             color: #49D62F;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
     }
@@ -148,14 +149,13 @@ body {
     cursor: pointer;
 }
 
-.HotelFeatures {
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-}
+// .HotelFeatures {
+//     display: flex;
+//     border-radius: 10px;
+// }
 
-.hotelFeaturesLeft,
-.hotelFeaturesRight {
+.roomFeaturesLeft,
+.roomFeaturesRight {
     display: flex;
     flex: 1;
     width: 100%;
@@ -250,4 +250,78 @@ body {
     display: flex;
     justify-content: center;
 
+}
+
+.seeMoreContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seeMore {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 101%;
+    right: 370px;
+    cursor: pointer;
+}
+
+.seeMore:hover {
+    top: 102%;
+    animation: 1.5s ease forwards;
+}
+
+.RoomFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.popup-content3 {
+    width: 800px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow-y: scroll;
+    opacity: 0;
+        animation: fade-in 1s ease forwards;
+    h2 {
+        color: #142662;
+        text-align: center;
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 10px;
+        gap:35px;
+        li {
+            width: 45%;
+            list-style: none;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            font-size: 20px;
+        }
+    }
+}
+@keyframes popup-content3 {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.Point {
+    width: 25px;
+    height: 25px;
 }
