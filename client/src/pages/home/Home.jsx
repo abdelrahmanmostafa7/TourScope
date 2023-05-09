@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import Loading from "../../components/Loading/Loading"
 import ScrollTop from "../../components/scrolltop/ScrollTop"
 import axios from 'axios';
+import PlannerAd from "../../components/PlannerAd/PlannerAd"
 
 
 const Home = () => {
@@ -62,6 +63,7 @@ const Home = () => {
           <Mapbox />
           <h2 className="homeTitle">Explore some city</h2>
           <Featured />
+          <PlannerAd />
           <h2 className="homeTitle">Recommended Hotel</h2>
           {loading ? (
             <Loading />

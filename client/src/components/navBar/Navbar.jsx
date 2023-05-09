@@ -45,10 +45,6 @@ function Navbar() {
         navigate("/logInOut" , {state: signup})
     }
 
-    const plannerBtn = () => {
-        navigate("/planner")
-    }
-
     const hotelPage = () => {
         navigate("/hotels", { state: { destination, date, options } })
     }
@@ -75,7 +71,6 @@ function Navbar() {
                 <div className="Items">
                     <h3 className="menuItem" onClick={homeBtn}>Home</h3>
                     <h3 className="menuItem " onClick={hotelPage}>Hotels</h3>
-                    <h3 className="menuItem " onClick={plannerBtn}>Planner</h3>
                     <h3 className="menuItem " onClick={contactBtn}>Contact</h3>
                 </div>
                 {!currentUser && <div className="navItem">

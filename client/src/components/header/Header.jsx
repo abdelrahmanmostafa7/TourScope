@@ -86,10 +86,7 @@ const Header = ({ type }) => {
 
   }
 
-  const plannerBtn = () => {
-    navigate("/planner")
-    window.location.reload();
-  }
+
 
 
   const handelSearch = () => {
@@ -233,9 +230,6 @@ const Header = ({ type }) => {
               </div>
               <div className="headerListItem">
                 <span onClick={hotelPage}>Hotels</span>
-              </div>
-              <div className="headerListItem">
-                <span onClick={plannerBtn}>Planner</span>
               </div>
               <div className="headerListItem">
                 <span onClick={contactBtn}>Contact</span>
