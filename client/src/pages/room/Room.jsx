@@ -45,6 +45,7 @@ import HandSanitizer from "../../image/liquid-soap.png"
 import AirPurifiers from "../../image/air-purifier.png"
 import Fax from "../../image/fax.png"
 import Point from "../../image/right-arrow (3).png"
+import Down from "../../image/download.png"
 
 function Room() {
   // To fetch data 
@@ -60,7 +61,6 @@ function Room() {
   const payment = () => {
     navigate("/payment")
   }
-  console.log(data.facilities)
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
@@ -84,22 +84,17 @@ function Room() {
     setSlideNumber(newSlideNumber)
   };
 
-  // const standardFacilities = data.facilities.filter((facility) =>{
-  //   return facility=== "Desk" || facility==="Free toiletries"
-  // });
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+  };
 
-  // console.log(standardFacilities);
-  //   const filteredFacilities = data.facilities.filter(facility => {
-  //     return [
-  //       "Safe",
-  //       "Shower",
-  //       "TV",
-  //       "Socket near the bed"
-  //     ].includes(facility);
-  //   });
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
 
-  // console.log(filteredFacilities);
-  // const 
   return (
     <div>
       <Navbar />
@@ -166,8 +161,8 @@ function Room() {
                     }
                   </div>
                 </div>
-                <h2 className="aboutHotel">Hotel Features</h2>
-                <span className="HotelFeatures">
+                <h2 className="aboutHotel">Room Features</h2>
+                <span className="RoomFeatures">
                   {data.facilities?.slice(0, 8).map((facilities, i) => (
                     <div className="FeaturesWrapper" key={i}>
                       {facilities === "Free toiletries" ? (
@@ -185,7 +180,7 @@ function Room() {
                           <h3 className="featureTitle">{facilities}</h3>
                           <img src={shower} alt="" className="featureImages" />
                         </div>
-                          ) : facilities === "Shower" ? (
+                      ) : facilities === "Shower" ? (
                         <div className="inHotel">
                           <h3 className="featureTitle">{facilities}</h3>
                           <img src={shower} alt="" className="featureImages" />
@@ -363,8 +358,24 @@ function Room() {
                       )}
                     </div>
                   ))}
-
+                  <div className="seeMoreContainer">
+                    <img src={Down} alt="" className="seeMore" onClick={togglePopUp} />
+                  </div>
                 </span>
+
+                {showPopUp && <div className="popup-background" onClick={closePopUp}>
+                  <div className="popup-content3" >
+                    <h2>Facilities</h2>
+                    <ul>
+                      {
+                        data.facilities?.map((facilities, i) => (
+                      <li key={i}><img src={Point} alt="" className="Point"/>{facilities}</li>
+                      )
+                        )}
+                    </ul>
+                  </div>
+                </div>
+                }
               </div>
               <div className="roomLeft">
                 <div className="vrOption">
