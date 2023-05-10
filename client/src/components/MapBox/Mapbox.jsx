@@ -14,12 +14,12 @@ import GetCity from './GetCity.jsx'
 function Mapbox({ viewmap }) {
   const [current_clicked, setcurrent_clicked] = useState(null);
   const [viewport, setViewport] = useState({
-    longitude: -100,
-    latitude: 40,
-    zoom: 4,
-
+    longitude: -2.5278115216167407,
+    latitude: 40.58631643466279,
+    zoom: 2,
   });
 
+ 
   const [customStyle, setStyle] = useState({
     height: '400px',
     width: '1000px'
@@ -36,15 +36,7 @@ function Mapbox({ viewmap }) {
   const hotelDetails = (hotel) => {
     navigate(`/hotels/` + hotel._id.$oid, { state: { destination: hotel.city } })
   }
-  const getRatingColor = (rating) => {
-    if (rating < 3) {
-      return "red";
-    } else if (rating >= 3 && rating <= 3.5) {
-      return "yellow";
-    } else {
-      return "rgb(66, 184, 11)";
-    }
-  };
+
 
   const hander_close = () => {
     setcurrent_clicked(null)
@@ -97,7 +89,9 @@ function Mapbox({ viewmap }) {
           onMove={evt => setViewport(evt.viewState)}
           transitionDuration="200"
           style={customStyle}
-          mapStyle="mapbox://styles/anterman/clgmvchb800db01qy9nndhvay"
+          mapStyle="mapbox://styles/anterman/clhi3klmr01il01p676e49zzo"
+          // mapStyle="mapbox://styles/anterman/clhht4e2801gm01qy2t3d72n6"
+          // mapStyle="mapbox://styles/anterman/clgmvchb800db01qy9nndhvay"
           mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
         >
           <GeocoderControl mapboxAccessToken={token} position="top-right" />
@@ -120,8 +114,8 @@ function Mapbox({ viewmap }) {
                   onClick={() => handleMapClick(hotel._id, hotel.location.coordinates[0], hotel.location.coordinates[1], viewport.zoom)}
                 >
                   <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
-                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#2b384f" }} />
-                    <div style={{ position: 'absolute', bottom: '20px', color: "white", left: 0, right: 0, fontSize: 15, fontStyle: "inherit" }}>
+                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
+                    <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit" ,fontWeight:600}}>
                       <span className="price_user">{hotel.price} &#36;</span>
                     </div>
                   </div>

@@ -59,12 +59,13 @@ const Home = () => {
       <Header />
       {loading ? <Loading /> : (
         <div className="homeContainer">
-          <h2 className="homeTitle">Explore some city</h2>
-          <PlannerAd />
-          <Featured />
           <h2 className="homeTitle">Explore Hotels On Map </h2>
           <Mapbox />
-          <h2 className="homeTitle">Recommended Hotel</h2>
+          <h2 className="homeTitle">Explore Some City</h2>
+          <Featured />
+          <h2 className="homeTitle">Explore More City By Planner </h2>
+          <PlannerAd />
+          <h2 className="homeTitle">Recommended Hotel For You</h2>
           {loading ? (
             <Loading />
           ) : (

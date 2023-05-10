@@ -5,7 +5,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 // import newRequest from '../../utils/newRequest';
 
-const HotelCard = ({ item}) => {
+const HotelCard = ({ item }) => {
   const navigate = useNavigate()
   const hotelDetails = () => {
     navigate(`/hotels/${item._id}`)
@@ -23,6 +23,8 @@ const HotelCard = ({ item}) => {
 
   return (
     <div className='hotelCard'>
+      <img src={item.images} alt="" className='hotelCardImg' />
+
       <div className="ratingAndCheckboxContainer">
         <span className='favCardRating'> {item.rating}⭐</span>
         <Checkbox
@@ -37,10 +39,13 @@ const HotelCard = ({ item}) => {
           }}
         />
       </div>
-      <img src={item.images} alt="" className='hotelCardImg' />
-      <p className='hotelCardDetails'>{item.country} - {item.city} || {item.distanceFromCityCenter}Km from center</p>
-      <h3 className='hotelCardName'>{item.name}</h3>
-      <button className='btn' onClick={hotelDetails}>View Hotel</button>
+
+
+      <div className="hotelCardDetailsContainer">
+        <p className='hotelCardDetails'>{item.country} - {item.city} || {item.distanceFromCityCenter}Km from center</p>
+        <h4 className='hotelCardName'>{item.name}</h4>
+        <button className='btn' onClick={hotelDetails}>View Hotel</button>
+      </div>
     </div>
   )
 }

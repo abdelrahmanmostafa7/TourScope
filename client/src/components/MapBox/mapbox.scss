@@ -1,12 +1,14 @@
 @import url('https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css');
 
 .map{
-  border: 10px solid white;
+  border: 7px solid white;
   border-radius: 15px;
 }
 .mapboxgl-canvas{
-  border-radius: 15px;
+  border-radius: 10px;
+  filter:brightness(95%);
 }
+
 .mapboxgl-children{
   background-color: #e60b0b;
 }

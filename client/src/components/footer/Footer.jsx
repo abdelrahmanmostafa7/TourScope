@@ -8,8 +8,8 @@
             <div className="row">
                 <div className="fList">
                     <img src={logo} className="logo" alt="" />            
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit illo <br />
-                    necessitatibus cumque hic quibusdam voluptates?</p>
+                    <p>Choose Your Room in Your Room,
+                        <br />  A website that books hotels and has VR options allows users <br /> to search and book hotels online while providing them with <br /> a virtual reality experience  of the hotel rooms and facilities.</p>
                 </div>
                 <ul className="fList">
                     <li className="fListItem">Countries</li>
