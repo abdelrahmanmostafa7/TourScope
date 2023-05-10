@@ -10,7 +10,7 @@ const RoomSchema = new Schema({
     type: Number,
     required: true,
   },
-  maxPeople: {
+  maxpeople: {
     type: Number,
   },
   facilities: {
@@ -31,6 +31,12 @@ const RoomSchema = new Schema({
   hotel_name: {
     type: String,
   },
+  room_availability: [{
+    number: String, unavailableDates: [{
+      startDate: { type: Date },
+      endDate: { type: Date }
+    }]
+  }],
   hotel_id: {
     type: String,
   }

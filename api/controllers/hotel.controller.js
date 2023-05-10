@@ -1,8 +1,5 @@
 import Hotel from "../models/hotel.model.js";
 import User from "../models/user.model.js";
-
-import createError from "../utils/createError.js";
-import { error } from "console";
 //CREATE
 export const createHotel = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
@@ -40,13 +37,15 @@ export const deleteHotel = async (req, res, next) => {
 
 //GET
 export const getHotel = async (req, res, next) => {
+    const { min, max, city, startdate, enddate, roomsoption, } = req.query;
     try {
-        const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter rating price images description rooms amenities');
-       res.status(201).send(hotel) 
-      
-      } catch (err) {
+        const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter rating price images description rooms');
+
+        res.status(201).send(hotel)
+
+    } catch (err) {
         next(err);
-      }
+    }
 };
 
 // Get fav Hotels
@@ -62,92 +61,143 @@ export const getFavHotels = async (req, res, next) => {
 
 // GET ALL
 export const getHotels = async (req, res, next) => {
-    const { min, max, city, startdate, enddate } = req.query;
+    const { min, max, city, startdate, enddate, roomsoption } = req.query;
+    const currentDate = new Date()
+    currentDate.setHours(currentDate.getHours() + 1)
+
+    // if ( startDate  === endDate || currentDate > startDate){
+    //     return next(createError(404,"invalid date"));
+    //  }
+
+    // console.log(endDate)
+    // console.log(currentDate.toLocaleTimeString())
+
+    // if (start >= startDate && start <= endDate) {
+    //   console.log('Date is within the interval.');
+    // } else {
+    //   console.log('Date is outside the interval.');
+    // }
+
+
+    const roomoptions = JSON.parse(roomsoption ?? '[]');
+    const sumOfAdults = roomoptions.reduce((total, room) => {
+        return total + room.adult;
+    }, 0);
+
     try {
-        // const options = { year: 'numeric', day: '2-digit', month: '2-digit' };
-        // const startDate = new Date(startdate).toLocaleDateString(undefined, options);
-        // const endDate = new Date(enddate).toLocaleDateString(undefined, options);
-        // const currentDate = new Date().toLocaleDateString(undefined, options)
-
-
-
-        // if ( startDate  === endDate || currentDate > startDate){
-        //     return next(createError(404,"invalid date"));
-        // }
-        // console.log(startDate);
-        // console.log(endDate);
-
-        const hotels = await Hotel.find({
-            city: {
-                $regex: new RegExp(city, "i")
+        await Hotel.aggregate([
+            {
+                $lookup: {
+                    from: "rooms",
+                    localField: "rooms",
+                    foreignField: "_id",
+                    as: "rooms",
+                },
             },
-            price: { $gt: min | 50, $lt: max || 9999 },
+            {
+                $unwind: "$rooms",
+            },
+            {
+                $match: {
+                    city: { $regex: new RegExp(city, "i") },
+                    price: { $gt: Number(min) || 50, $lt: Number(max) || 9999 },
 
-        }).limit(req.query.limit).select("name amenities rating price images city country distanceFromCityCenter ");
+                },
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    name: { $first: "$name" },
+                    city: { $first: "$city" },
+                    price: { $first: "$price" },
+                    rating: { $first: "$rating" },
+                    images: { $first: "$images" },
+                    amenities: { $first: "$amenities" },
+                    distanceFromCityCenter: { $first: "$distanceFromCityCenter" },
+                    checkInout: { $first: "$checkInout" },
+                    rooms: { $push: { room_availability: "$rooms.room_availability", _id: "$rooms._id", price: "$rooms.price", maxpeople: "$rooms.maxpeople" } },
+                },
+            },
+            {
+                $sort: {
+                    price: 1,
+                },
+            },
+            {
+                $limit: Number(req.query.limit),
+            },
 
-        res.status(200).json(hotels);
+        ]).then((hotels_res) => {
+            const user_startDate = new Date(startdate)
+            const user_endDate = new Date(enddate)
+            const timeDiff = Math.abs(user_endDate.getTime() - user_startDate.getTime());
+            const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            user_startDate.setHours(24)
+            user_endDate.setHours(24)
+            let roomscalculator = []
+
+            const updatedHotels = hotels_res.map((hotel) => {
+                const updatedRooms = hotel.rooms.map((room) => {
+                    const updatedAvailability = room.room_availability.filter((ro) => {
+                        const availableDates = ro.unavailableDates.filter((date) => {
+                            if (!(user_startDate >= date.startDate && user_startDate < date.endDate ||
+                                user_endDate <= date.endDate && user_endDate > date.startDate ||
+                                user_startDate < date.startDate && user_endDate >= date.endDate ||
+                                user_startDate < date.startDate && user_endDate >= date.endDate
+
+                            )) {
+                                return date
+                            }
+                        });
+
+                        if (availableDates.length > 0) {
+                            ro.unavailableDates = availableDates;
+                            return true;
+                        }
+                    });
+                    if (updatedAvailability.length > 0) {
+                        roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
+                        return { ...room, room_availability: updatedAvailability };
+
+                    } else {
+                        return null
+                    }
+                });
+
+                const filteredRooms = updatedRooms.filter((r) => r !== null);
+                let bestDeal = null;
+                let nearestDeal = null;
+                let diff = Infinity;
+                let deals = {};
+
+                roomscalculator.forEach((room) => {
+                    if (room.id === hotel._id) {
+                        if (room.maxpeople >= sumOfAdults && room.roomcounter >= 1) {
+                            if (!bestDeal || (room.price < bestDeal.price || (room.price === bestDeal.price && room.roomcounter < bestDeal.roomcounter))) {
+                                bestDeal = room;
+                            }
+                        }
+                        if (!nearestDeal || room.roomcounter > nearestDeal.roomcounter) {
+                            nearestDeal = room;
+                        }
+                    }
+                });
+                if (bestDeal) {
+                    deals = bestDeal;
+                    deals.rooms = 1;
+                } else if (nearestDeal) {
+                    const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
+                    deals = nearestDeal;
+                    deals.rooms = numRooms;
+                }
+                return { ...hotel, rooms: filteredRooms, deals };
+            });
+            const availableHotels = updatedHotels.filter((h) => h !== null);
+            res.status(201).send(updatedHotels)
+        });
+
     } catch (err) {
         next(err);
     }
+
 };
-
-
-// export const getHotels = async (req, res, next) => {
-//     try {
-//         const page = parseInt(req.query.page) || 1; // current page number
-//         const limit = parseInt(req.query.limit) || 10; // number of items per page
-//         const skip = (page - 1) * limit; // number of items to skip
-
-//         const hotels = await Hotel.find(req.query).skip(skip).limit(limit);
-//         const count = await Hotel.countDocuments(req.query); // total number of items
-
-//         const totalPages = Math.ceil(count / limit); // total number of pages
-//         const hasNextPage = page < totalPages; // whether there's a next page
-//         const hasPrevPage = page > 1; // whether there's a previous page
-
-//         res.status(200).json({
-//             hotels,
-//             pageInfo: {
-//                 currentPage: page,
-//                 totalPages,
-//                 hasNextPage,
-//                 hasPrevPage,
-//                 totalItems: count,
-//                 itemsPerPage: limit
-//             }
-//         });
-//     } catch (err) {
-//         next(err);
-//     }
-// };
-
-
-//get hotel and pass rooms id
-// const loc = await Hotel.find()
-//         let counter = 0;
-//         for (const element1 of loc) {
-//                 const room = await Room.find({ hotel_id: element1._id });
-//                 for (const element2 of room){
-//                     element1.rooms.push(element2._id);
-//                     counter++;
-//                     console.log(counter)
-//                 }
-//                 element1.save();
-//         }
-
-
-//get room and pass hotel id
-// const loc = await Room.find()
-//         let counter = 0;
-//         for (const element of loc) {
-//             if (element.hotel_name == null) {
-//                 console.log("No properties");
-//             } else {
-//                 const hotel = await Hotel.findOne({ name: element.hotel_name });
-
-//                 element.hotel_id = hotel.id;
-//                 element.save();
-//                 counter++;
-//                 console.log(counter)
-//             }
-//         }

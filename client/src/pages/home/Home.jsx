@@ -59,11 +59,11 @@ const Home = () => {
       <Header />
       {loading ? <Loading /> : (
         <div className="homeContainer">
+          <h2 className="homeTitle">Explore some city</h2>
+          <PlannerAd />
+          <Featured />
           <h2 className="homeTitle">Explore Hotels On Map </h2>
           <Mapbox />
-          <h2 className="homeTitle">Explore some city</h2>
-          <Featured />
-          <PlannerAd />
           <h2 className="homeTitle">Recommended Hotel</h2>
           {loading ? (
             <Loading />

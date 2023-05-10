@@ -30,8 +30,8 @@ const HotelSchema = new mongoose.Schema({
   images: {
     type: [String],
   },
-  virtualTour:{
-    type:String
+  virtualTour: {
+    type: String
   },
   amenities: {
     type: [String],
@@ -44,13 +44,27 @@ const HotelSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
-  admin: {
+  rooms: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Room",
+    },
+  ], admin: {
     type: [String]
 
+  },
+  checkInout: {
+    timeIn: {
+      type: String,
+      default: '14:00'
+    },
+    timeout: {
+      type: String,
+      default: '12:00'
+    },
   }
 
 });
 
-export default mongoose.model("Hotel", HotelSchema);
 
+export default mongoose.model("Hotel", HotelSchema);
