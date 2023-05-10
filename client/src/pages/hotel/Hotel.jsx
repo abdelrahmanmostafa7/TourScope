@@ -35,9 +35,7 @@ import parking from "../../image/parking-area.png"
 import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
-import styled from "@emotion/styled";
 import Check from "../../image/check (1).png"
-
 
 const Hotel = () => {
   // To fetch data 
@@ -158,7 +156,7 @@ const Hotel = () => {
                   </div>
                 </div>
                 <h2 className="aboutHotel">Hotel Features</h2>
-                <span className="HotelFeatures">
+                <div className="HotelFeatures">
                   {hotel.amenities?.slice(0, 8).map((amenity, i) => (
                     <div className="FeaturesWrapper" key={i}>
                       {amenity === "Free WiFi" ? (
@@ -289,7 +287,7 @@ const Hotel = () => {
                       )}
                     </div>
                   ))}
-                </span>
+                </div>
                 <div className="hotelDetailsTexts">
                   <h2 className="aboutHotel">Details about Hotel</h2>
                   <p className="hotelDesc">

@@ -39,7 +39,7 @@ export const deleteHotel = async (req, res, next) => {
 export const getHotel = async (req, res, next) => {
     const { min, max, city, startdate, enddate, roomsoption, } = req.query;
     try {
-        const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter rating price images description rooms');
+        const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter amenities rating price images description rooms');
 
         res.status(201).send(hotel)
 

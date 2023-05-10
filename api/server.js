@@ -31,28 +31,26 @@ const connect = async () => {
 app.use(express.json())
 app.use(cookieParser())
 app.use(session({
-  secret:'keykeykey',
-  resave:false,
+  secret: 'keykeykey',
+  resave: false,
   saveUninitialized: true,
-  cookie:{ secure:false }
-}) );
+  cookie: { secure: false }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: "http://localhost:5173",
-  methods: "GET,POST,PUT,DELETE", credentials: true
-}))
-// app.use(cors({
-//   origin: "http://localhost:5174",
-//   methods: "GET,POST,PUT,DELETE", credentials: true
-// }))
+  origin: ["http://localhost:5173", "http://localhost:5174"],
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true
+}));
+
 
 // routes 
 app.use("/api/user", userRoute)
 app.use("/api/hotel", hotelRoute)
 app.use("/api/room", roomRoute)
 app.use("/api/auth", authRoute)
-app.use("/api/reservation", reservationRoute )
+app.use("/api/reservation", reservationRoute)
 
 // error handling middleware
 app.use((err, req, res, next) => {
@@ -60,10 +58,10 @@ app.use((err, req, res, next) => {
   const errorMessage = err.message || "Something went wrong!";
   // return res.status(errorStatus).send(errorMessage);
   return res.status(errorStatus).json({
-    success:false,
-    status:errorStatus,
-    message:errorMessage,
-    stack:err.stack
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack
   })
 })
 

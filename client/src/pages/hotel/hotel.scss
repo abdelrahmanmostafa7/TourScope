@@ -186,13 +186,22 @@ body {
     flex: 3;
 }
 
+
 .inHotel {
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 180px;
     height: 135px;
+    position: relative;
 
+    .amenitiesDeleteIcon {
+            position: absolute;
+            color: red;
+            top:3px;
+            right: 3px;
+            cursor: pointer;
+        }
 }
 
 .FeaturesWrapper {
@@ -202,7 +211,6 @@ body {
     width: 23%;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
-
 }
 
 .featureTitle {

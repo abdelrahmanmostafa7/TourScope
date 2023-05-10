@@ -29,7 +29,7 @@ const Sidebar = () => {
           </li>
 
           <p className="title">Hotel</p>
-          <Link style={{ textDecoration: "none" }}>
+          <Link to="/HotelEdit" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
               <span>Hotel Management</span>

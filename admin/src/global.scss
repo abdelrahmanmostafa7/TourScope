@@ -1,0 +1,51 @@
+$mainColor: #000;
+$footerColor:#011627;
+$navColor: #011627;
+$buttonColor: #142662;
+$backgroundColor: #F5F5F5;
+$frameColor:#fff;
+$base: #263238;
+$lite: #0d3b66;
+$brand: #8d0801;
+$size: 48px;
+*{
+    text-decoration: none; 
+    color: inherit;
+}
+
+// .Container {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 20px;
+//     background-color:$backgroundColor ;
+// }
+
+// .Wrapper {
+//     width: 100%;
+//     max-width: 1024px;
+//     display: flex;
+//     gap: 10px;
+//     background-color: backgroundColor;
+// }
+
+// .empty{
+//     position: fixed;
+//     width: 100vw;
+//     height: 100vh;
+//     top: 0;
+//     bottom: 0;
+//     right: 0;
+//     left: 0;
+// }
+
+// .btn{
+//     width: 120px;
+//     height: 35px;
+//     border: none;
+//     border-radius: 50px;
+//     color: white;
+//     text-align: center;
+//     background-color: $buttonColor;
+//     cursor: pointer;
+// }
+
