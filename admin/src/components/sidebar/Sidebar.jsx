@@ -1,18 +1,13 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+
 
 const Sidebar = () => {
   return (
@@ -32,33 +27,39 @@ const Sidebar = () => {
               <span>Dashboard</span>
             </Link>
           </li>
+
           <p className="title">Hotel</p>
           <Link style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineIcon className="icon" />
+              <InsertChartIcon className="icon" />
               <span>Hotel Management</span>
             </li>
           </Link>
+          <li>
+            <StoreIcon className="icon" />
+            <span>Room Management</span>
+          </li>
+
+          <p className="title">Status</p>
+          <Link to="/UserStatus" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
-              <span>Room Management</span>
-            </li>
-          <p className="title">Users</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
-            <li>
-              <InsertChartIcon className="icon" />
-              <span>Stats</span>
+              <PersonOutlineIcon className="icon" />
+              <span>User</span>
             </li>
           </Link>
-          <p className="title">SERVICE</p>
-          <li>
-            <SettingsSystemDaydreamOutlinedIcon className="icon" />
-            <span>Reservations</span>
-          </li>
-          <li>
-            <SettingsApplicationsIcon className="icon" />
-            <span>Settings</span>
-          </li>
+          <Link to="RoomStatus" style={{ textDecoration: "none" }}>
+            <li>
+              <InsertChartIcon className="icon" />
+              <span>ٌRooms</span>
+            </li>
+          </Link>
+          <Link to="/ReservationStatus" style={{ textDecoration: "none" }}>
+            <li>
+              <SettingsSystemDaydreamOutlinedIcon className="icon" />
+              <span>Reservations</span>
+            </li>
+          </Link>
+
           <p className="title">Admin</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
