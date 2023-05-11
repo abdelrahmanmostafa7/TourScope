@@ -28,15 +28,16 @@ const List = () => {
   //   children: 0,
   //   room: 1,
   // })
-  const [options, setOptions] = useState({
+  const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
     children: 0,
     room: 1
   })
-  const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : {
+  console.log(options)
+  const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : [{
     adult: 1,
     children: 0,
-  })
+  }])
 
   const [addroomsbtn, setaddactive] = useState(false);
   const [removebtn, setactiveremove] = useState(false);
@@ -91,10 +92,10 @@ const List = () => {
 
   const addRoom = () => {
     setOptions((perv_options) => {
-      return { ...perv_options, room: options.room + 1, adult: options.adult + 2, children: options.children + 0 }
+      return { ...perv_options, room: options.room + 1, adult: options.adult + 1, children: options.children + 0 }
     });
     setRooms([...rooms, {
-      adult: 2, children: 0
+      adult: 1, children: 0
     }]);
 
   };
@@ -132,7 +133,6 @@ const List = () => {
     }
   };
 
-  console.log(rooms);
 
   const [openDate, setOpenDate] = useState(false)
   const [min, setMin] = useState(undefined);
