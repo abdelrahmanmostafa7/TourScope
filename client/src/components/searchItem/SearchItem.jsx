@@ -353,8 +353,23 @@ const SearchItem = ({ item }) => {
                         />
                     </div>
                     <div className="hotelRightBottom">
-                        <span className='hotelPrice'>{item.price} EGP</span>
-                        <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                        {
+                            item.deals.rooms ? (<>
+                                <span className='hotelPrice'>{item.price} EGP</span>
+                                <span className='hotelPrice'>{item.deals.rooms}xRoom</span>
+
+                                <span className='hotelPrice'>Total price{item.deals.price}</span>
+                                <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                            </>) : (
+                                <>
+
+                                    <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                                    <span className='hotelPrice'>NO AVILABLE ROOMS</span>
+                                </>
+
+
+                            )
+                        }
                     </div>
                 </div>
             </div>
