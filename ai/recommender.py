@@ -28,7 +28,7 @@ def get_data(user_id,client):
     # select database and collections to read from
     db = client["test"]
     hotels_collection = db["hotels"]
-    reservations_collection = db["recommender_reservations"]
+    reservations_collection = db["reservations"]
     
     # get users reservations
     user_id = ObjectId(user_id)

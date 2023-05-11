@@ -52,7 +52,7 @@ const Header = ({ type }) => {
     room: 1
   })
   const [rooms, setRooms] = useState([{
-    adult: 2,
+    adult: 1,
     children: 0,
   }]);
 
@@ -90,12 +90,12 @@ const Header = ({ type }) => {
 
 
   const handelSearch = () => {
-    const options = { year: 'numeric', day: '2-digit', month: '2-digit' };
+    const option = { year: 'numeric', day: '2-digit', month: '2-digit' };
 
-    if (date[0].startDate.toLocaleDateString(undefined, options) == new Date(date[0].endDate).toLocaleDateString(undefined, options)) {
-      setshow(true)
+    if (date[0].startDate.toLocaleDateString(undefined, option) == new Date(date[0].endDate).toLocaleDateString(undefined, option)) {
       setshow(true)
     } else {
+      console.log(options)
       navigate("/hotels", { state: { destination, date, options, rooms } })
       window.scrollTo(0, 0);;
 
@@ -198,10 +198,10 @@ const Header = ({ type }) => {
 
   const addRoom = () => {
     setOptions((perv_options) => {
-      return { ...perv_options, room: options.room + 1, adult: options.adult + 2, children: options.children + 0 }
+      return { ...perv_options, room: options.room + 1, adult: options.adult + 1, children: options.children + 0 }
     });
     setRooms([...rooms, {
-      adult: 2, children: 0
+      adult: 1, children: 0
     }]);
 
   };
