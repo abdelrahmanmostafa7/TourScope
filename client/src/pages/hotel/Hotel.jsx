@@ -41,9 +41,17 @@ const Hotel = () => {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${id}`);
 
-
+  const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : [{
+    adult: 1,
+    children: 0,
+  }])
+  const [date, setDate] = useState(location.state?.date ? location.state.date : [{
+    startDate: new Date(),
+    endDate: new Date().setDate(new Date().getDate() + 1),
+    key: "selection",
+  }])
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}`)
   // Fetch Room Data 
   const [sliderLoaded, setSliderLoaded] = useState(false);
   useEffect(() => {
@@ -296,7 +304,56 @@ const Hotel = () => {
                 </div>
               </div>
               <div className="hotelLeft">
-                <SearchBox />
+                {/* search box */}
+                {/* <div className="listSearch">
+                  <h1 className="lsTitle">Search</h1>
+                  <div className="lsItem">
+                    <label className="lsLabel">Check-in Date</label>
+                    <span onClick={() => setOpenDate(!openDate)}>{`${format(
+                      date[0].startDate,
+                      "MM/dd/yyyy"
+                    )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                    {openDate && (
+                      <DateRange
+                        onChange={(item) => setDate([item.selection])}
+                        minDate={new Date()}
+                        ranges={date}
+                      />
+                    )}
+                  </div>
+                  <div className="lsItem">
+                    <div className="lsOptions">
+                      <div className="lsOptionItem">
+                        <span className="lsOptionText">Adult</span>
+                        <input
+                          type="number"
+                          min={1}
+                          className="lsOptionInput"
+                          placeholder={options.adult}
+                        />
+                      </div>
+                      <div className="lsOptionItem">
+                        <span className="lsOptionText">Children</span>
+                        <input
+                          type="number"
+                          min={0}
+                          className="lsOptionInput"
+                          placeholder={options.children}
+                        />
+                      </div>
+                      <div className="lsOptionItem">
+                        <span className="lsOptionText">Room</span>
+                        <input
+                          type="number"
+                          min={1}
+                          className="lsOptionInput"
+                          placeholder={options.room}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <button onClick={handelSearch}>Search</button>
+                </div> */}
                 <LocationBox id={hotel._id} />
               </div>
             </div>
