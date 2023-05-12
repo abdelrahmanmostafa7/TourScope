@@ -16,13 +16,13 @@ function Mapbox({ viewmap }) {
   const [viewport, setViewport] = useState({
     longitude: -2.5278115216167407,
     latitude: 40.58631643466279,
-    zoom: 2,
+    zoom: 1,
   });
 
- 
+
   const [customStyle, setStyle] = useState({
     height: '400px',
-    width: '1000px'
+    width: '1000px',
   });
 
 
@@ -82,18 +82,22 @@ function Mapbox({ viewmap }) {
   return (
     <div className="app_container">
       <div className='map'>
+
         <GetCity />
         <Map
-
           {...viewport}
           onMove={evt => setViewport(evt.viewState)}
           transitionDuration="200"
           style={customStyle}
-          mapStyle="mapbox://styles/anterman/clhi3klmr01il01p676e49zzo"
-          // mapStyle="mapbox://styles/anterman/clhht4e2801gm01qy2t3d72n6"
-          // mapStyle="mapbox://styles/anterman/clgmvchb800db01qy9nndhvay"
+          mapStyle="mapbox://styles/anterman/clhiduscq01hg01qy1do77vbs"
           mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
         >
+          <div className="mapTitles">
+            <h1 className='mapTitle1'>You Can Search On Map</h1>
+            <h1 className='mapTitle2'>To find hotels by price</h1>
+          </div>
+
+
           <GeocoderControl mapboxAccessToken={token} position="top-right" />
 
           <FullscreenControl
@@ -115,7 +119,7 @@ function Mapbox({ viewmap }) {
                 >
                   <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
                     <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
-                    <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit" ,fontWeight:600}}>
+                    <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit", fontWeight: 600 }}>
                       <span className="price_user">{hotel.price} &#36;</span>
                     </div>
                   </div>
@@ -152,6 +156,7 @@ function Mapbox({ viewmap }) {
           ))}
 
         </Map>
+
       </div>
     </div >
   )
