@@ -1,15 +1,21 @@
 import mongoose from "mongoose";
 
 const ReservationScheme = new mongoose.Schema({
-    hotel_id: {
-        type: String,
-        required: true,
-    },
-    room_id: {
-        type: [String],
-        required: true,
 
-    },
+    hotel_id: 
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Hotel",
+        },
+      
+      room_id: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Room",
+        },
+      ],
+
+
     total_price: {
         type: Number,
         required: true

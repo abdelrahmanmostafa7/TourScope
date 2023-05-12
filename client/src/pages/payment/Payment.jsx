@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Payment = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-  const id = currentUser._id
+  const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
