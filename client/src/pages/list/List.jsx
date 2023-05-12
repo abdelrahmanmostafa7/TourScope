@@ -19,7 +19,7 @@ const List = () => {
   const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: new Date().setDate(new Date().getDate() + 1),
     key: "selection",
   }])
 
@@ -33,7 +33,6 @@ const List = () => {
     children: 0,
     room: 1
   })
-  console.log(options)
   const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : [{
     adult: 1,
     children: 0,
@@ -135,9 +134,10 @@ const List = () => {
 
 
   const [openDate, setOpenDate] = useState(false)
-  const [min, setMin] = useState(undefined);
-  const [max, setMax] = useState(undefined);
+  const [min, setMin] = useState(50);
+  const [max, setMax] = useState(9999);
   const { data, loading, reFetch } = useFetch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}&min=${min || 50}&max=${max || 9999}&limit=${20}`)
+  console.log(data)
   const handelSearch = () => {
     reFetch()
   }
@@ -253,6 +253,7 @@ const List = () => {
                   </span>
                   <input
                     type="number"
+                    value={min}
                     onChange={(e) => setMin(e.target.value)}
                     className="lsOptionInput"
                   />
@@ -263,6 +264,7 @@ const List = () => {
                   </span>
                   <input
                     type="number"
+                    value={max}
                     onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
                   />
