@@ -12,11 +12,40 @@ export const createHotel = async (req, res, next) => {
 };
 
 //UPDATE
+// export const updateHotel = async (req, res, next) => {
+//     try {
+//         const updatedHotel = await Hotel.findByIdAndUpdate(
+//             req.params.id,
+//             { $set: req.body },
+//             { new: true }
+//         );
+//         res.status(200).json(updatedHotel);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+// export const updateHotel = async (req, res, next) => {
+//     try {
+//         const { collection, id } = req.params;
+//         const updatedData = await mongoose.model(collection).findByIdAndUpdate(
+//             id,
+//             { $set: req.body },
+//             { new: true }
+//         );
+//         res.status(200).json(updatedData);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
 export const updateHotel = async (req, res, next) => {
     try {
+        const { id } = req.params;
+        const { images } = req.body;
         const updatedHotel = await Hotel.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body },
+            id,
+            { $set: { images } },
             { new: true }
         );
         res.status(200).json(updatedHotel);
@@ -24,7 +53,6 @@ export const updateHotel = async (req, res, next) => {
         next(err);
     }
 };
-
 //DELETE
 export const deleteHotel = async (req, res, next) => {
     try {
@@ -56,6 +84,15 @@ export const getFavHotels = async (req, res, next) => {
     } catch (error) {
         console.log(error);
         next(error);
+    }
+};
+//GETTop ALL
+export const getTopHotels = async (req, res, next) => {
+    try {
+        const hotels = await Hotel.find(req.query).limit(req.query.limit);
+        res.status(200).json(hotels);
+    } catch (err) {
+        next(err);
     }
 };
 

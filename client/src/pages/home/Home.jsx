@@ -17,7 +17,7 @@ const Home = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userId = currentUser ? currentUser._id : null;
   const [responseData, setResponseData] = useState([]);
-  const { data, loading } = useFetch(`/hotel?limit=${9}`);
+  const { data, loading } = useFetch(`/hotel/topHotels?limit=${9}`);
   const [sliderLoaded, setSliderLoaded] = useState(false);
 
   async function fetchData() {

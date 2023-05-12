@@ -4,6 +4,7 @@ import New from "./pages/NewUser/NewUser";
 import ReservationStatus from "./pages/ReservationStatus/ReservationStatus";
 import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
+import LogInOut from "./pages/Login-out/LogInOut";
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/LogInOut" element={<LogInOut />} />
           <Route path="/ReservationStatus" element={<ReservationStatus />} />
           <Route path="/New" element={<New />} />
           <Route path="/UserStatus" element={<UserStatus />} />

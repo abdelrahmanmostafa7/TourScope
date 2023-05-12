@@ -22,7 +22,7 @@ function Mapbox({ viewmap }) {
 
   const [customStyle, setStyle] = useState({
     height: '400px',
-    width: '1000px'
+    width: '1000px',
   });
 
 
@@ -82,75 +82,80 @@ function Mapbox({ viewmap }) {
   return (
     <div className="app_container">
       <div className='map'>
+
         <GetCity />
-          <Map
-            {...viewport}
-            onMove={evt => setViewport(evt.viewState)}
-            transitionDuration="200"
-            style={customStyle}
-            mapStyle="mapbox://styles/anterman/clhiduscq01hg01qy1do77vbs"
-            mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
-            className='boykaMap'
-          >
-            {/* <h1 className='zayaed'>hello to map </h1> */}
-            <GeocoderControl mapboxAccessToken={token} position="top-right" />
+        <Map
+          {...viewport}
+          onMove={evt => setViewport(evt.viewState)}
+          transitionDuration="200"
+          style={customStyle}
+          mapStyle="mapbox://styles/anterman/clhiduscq01hg01qy1do77vbs"
+          mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
+        >
+          <div className="mapTitles">
+            <h1 className='mapTitle1'>You Can Search On Map</h1>
+            <h1 className='mapTitle2'>To find hotels by price</h1>
+          </div>
 
-            <FullscreenControl
-              position='bottom-right' />
-            <GeolocateControl
-              showAccuracyCircle={false}
-              positionOptions={positionOptions}
-              position='bottom-left'
-              fitBoundsOptions={{ maxZoom: 18 }}
-            />
 
-            {filterLocations().map((hotel) => (
-              <>
-                {viewport.zoom > 5 &&
-                  <Marker
+          <GeocoderControl mapboxAccessToken={token} position="top-right" />
+
+          <FullscreenControl
+            position='bottom-right' />
+          <GeolocateControl
+            showAccuracyCircle={false}
+            positionOptions={positionOptions}
+            position='bottom-left'
+            fitBoundsOptions={{ maxZoom: 18 }}
+          />
+
+          {filterLocations().map((hotel) => (
+            <>
+              {viewport.zoom > 5 &&
+                <Marker
+                  longitude={hotel.location.coordinates[0]}
+                  latitude={hotel.location.coordinates[1]}
+                  onClick={() => handleMapClick(hotel._id, hotel.location.coordinates[0], hotel.location.coordinates[1], viewport.zoom)}
+                >
+                  <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
+                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
+                    <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit", fontWeight: 600 }}>
+                      <span className="price_user">{hotel.price} &#36;</span>
+                    </div>
+                  </div>
+
+
+                </Marker>
+              }
+              {
+                hotel._id === current_clicked && (
+                  <Popup
+                    key={hotel._id}
                     longitude={hotel.location.coordinates[0]}
                     latitude={hotel.location.coordinates[1]}
-                    onClick={() => handleMapClick(hotel._id, hotel.location.coordinates[0], hotel.location.coordinates[1], viewport.zoom)}
+                    closeButton={true}
+                    closeOnClick={false}
+                    onClose={() => setcurrent_clicked(null)}
+                    anchor='left'
                   >
-                    <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
-                      <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
-                      <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit", fontWeight: 600 }}>
-                        <span className="price_user">{hotel.price} &#36;</span>
+                    <div className="card">
+                      <img src={hotel.image} alt="" className='hotelCardMapImg' />
+                      <p className='hotelMapCardDistance'>Start Price:{hotel.price}<span className='dollar'>$</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
+                      <h1 className='name'>{hotel.name}</h1>
+                      <span className='hotelMapCardRating'> {hotel.rating}⭐</span>
+                      <div className='btn_controllers'>
+                        <button class="button-34" role="button" onClick={() => hotelDetails(hotel)}>View Hotel</button>
+                        <button class="button-34 close_btn" onClick={hander_close} role="button">Close</button>
+
                       </div>
                     </div>
+                  </Popup>
+                )
+              }
+            </>
+          ))}
 
-
-                  </Marker>
-                }
-                {
-                  hotel._id === current_clicked && (
-                    <Popup
-                      key={hotel._id}
-                      longitude={hotel.location.coordinates[0]}
-                      latitude={hotel.location.coordinates[1]}
-                      closeButton={true}
-                      closeOnClick={false}
-                      onClose={() => setcurrent_clicked(null)}
-                      anchor='left'
-                    >
-                      <div className="card">
-                        <img src={hotel.image} alt="" className='hotelCardMapImg' />
-                        <p className='hotelMapCardDistance'>Start Price:{hotel.price}<span className='dollar'>$</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
-                        <h1 className='name'>{hotel.name}</h1>
-                        <span className='hotelMapCardRating'> {hotel.rating}⭐</span>
-                        <div className='btn_controllers'>
-                          <button class="button-34" role="button" onClick={() => hotelDetails(hotel)}>View Hotel</button>
-                          <button class="button-34 close_btn" onClick={hander_close} role="button">Close</button>
-
-                        </div>
-                      </div>
-                    </Popup>
-                  )
-                }
-              </>
-            ))}
-
-          </Map>
+        </Map>
 
       </div>
     </div >
