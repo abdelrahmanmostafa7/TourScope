@@ -297,8 +297,8 @@ export const getHotels = async (req, res, next) => {
                         }
                     });
                     if (updatedAvailability.length > 0) {
-                        //roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
-                        //return { ...room, room_availability: updatedAvailability };
+                        roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
+                        return { ...room, room_availability: updatedAvailability };
 
                     } else {
                         return null
