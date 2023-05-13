@@ -6,31 +6,33 @@ import locations from "../MapBox/location.json";
 
 function LocationBox() {
   const [showPopUp, setShowPopUp] = useState(false);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const size = useState({
     "hight": 800,
     "width": 1000,
   });
 
   const togglePopUp = () => {
-    if (showPopUp) {
-      setShowPopUp(true);
-      // setLoading(false); 
-    } else {
+    setShowPopUp(true);
+    setLoading(false)
+  };
+
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
       setShowPopUp(false);
-      // setLoading(true); 
+      setLoading(true)
     }
   };
 
 
   return (
-    <div className="HotelLocationBox" onClick={togglePopUp}>
-      <div className="HotelLocationBoxCover">
+    <div className="HotelLocationBox" >
+      <div className="HotelLocationBoxCover" onClick={togglePopUp}>
         <img src={mapboximg} className="HotelLocationBoxImg" alt="" />
         <h2 className="HotelLocationTitle">Search On Map</h2>
       </div>
-      {showPopUp && (
-        <div className="closePopupBackGround" onClick={togglePopUp}>
+      {!loading &&showPopUp && (
+        <div className="closePopupBackGround" onClick={closePopUp}>
           <div className="popup-content">
             <Mapbox size={size} />
           </div>

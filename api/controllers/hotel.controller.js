@@ -328,8 +328,8 @@ export const getHotels = async (req, res, next) => {
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;
+                    deals.price = numRooms * deals.price
                 }
-
                 return { ...hotel, deals };
             });
 

@@ -215,7 +215,7 @@ const SearchItem = ({ item }) => {
                             <p>For {item.deals.rooms}xRoom</p>
                             <p className='hotelPrice'>Total Price {item.deals.price} EGP</p>
                         </div>
-                        <button className='btn' >View Hotel</button>
+                        <button className='btn' onClick={hotelDetails}>View Hotel</button>
                     </div>
                 </div>
             </div>

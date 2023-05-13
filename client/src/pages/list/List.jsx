@@ -84,15 +84,7 @@ const List = () => {
   };
 
 
-  const addRoom = () => {
-    setOptions((perv_options) => {
-      return { ...perv_options, room: options.room + 1, adult: options.adult + 1, children: options.children + 0 }
-    });
-    setRooms([...rooms, {
-      adult: 1, children: 0
-    }]);
 
-  };
 
 
   const scrollableRef = useRef(null);
@@ -132,7 +124,6 @@ const List = () => {
   const [min, setMin] = useState(50);
   const [max, setMax] = useState(9999);
   const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}&min=${min || 50}&max=${max || 9999}&limit=${20}`)
-  console.log(data)
   const handelSearch = () => {
     reFetch()
   }
@@ -188,15 +179,8 @@ const List = () => {
                   <span onClick={toggleroom} className="headerSearchText ">{`${options.adult} adult . ${options.children} children . ${options.room} room`}</span>
                   {openOptions && <div ref={refcomponent} className="openOptions">
                     <div ref={scrollableRef} className="optionsContainer">
-                      <label>Travelers</label>
                       {rooms.map((room, index) => (
                         <div className="cards">
-                          <div className="optionsTitle">
-                            <label>Room {index + 1}</label>
-                            <button onClick={() => removeRoom(index)} className="removebtn" {
-                              ...removebtn && { style: { display: "none" } }
-                            }><FontAwesomeIcon icon={faTrashCan} className="roomstable_icon" />Remove</button>
-                          </div>
                           <div className="optionItem">
                             <span className="optionText">Adult</span>
                             <div className="optionCounter">
@@ -229,9 +213,27 @@ const List = () => {
                               </button>
                             </div>
                           </div>
+                          <div className="optionItem">
+                            <span className="optionText">Room</span>
+                            <div className="optionCounter">
+                              <button
+                                className="optionCounterButton"
+                                disabled={room.room <= 0}
+                                onClick={() => handleOption("room", "d", index)}
+                              >
+                                -
+                              </button>
+                              <span className="optionCounterNumber">{room.room}</span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("room", "i", index)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       ))}
-                      <button disabled={addroomsbtn} onClick={addRoom} style={{ marginBottom: '10px' }} className="button-34">add room</button>
                     </div>
                   </div>
                   }
