@@ -35,10 +35,12 @@ const Sidebar = () => {
               <span className="pageName">Hotel Management</span>
             </li>
           </Link>
-          <li>
-            <StoreIcon className="icon" />
-            <span className="pageName">Room Management</span>
-          </li>
+          <Link to="/editRooms" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span className="pageName">Room Management</span>
+            </li>
+          </Link>
 
           <p className="title">Status</p>
           <Link to="/UserStatus" style={{ textDecoration: "none" }}>
