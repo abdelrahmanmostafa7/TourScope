@@ -34,7 +34,7 @@ const RoomCard = ({ item, data }) => {
           <div className="roomDescription">
             <h4>{item.name}</h4>
           </div>
-          {item.deals ? (
+          {item.deal.price != null  ? (
             <div className="roomPrice">
               <p><span>${item.price} </span>/ Night</p>
               <p>{item.deal.roomscount}XRooms</p>

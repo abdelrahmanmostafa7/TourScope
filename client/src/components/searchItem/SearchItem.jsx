@@ -209,9 +209,11 @@ const SearchItem = ({ item }) => {
                             }}
                         />
                     </div>
+                    {console.log(item)}
+
                     <div className="hotelRightBottom">
                         {
-                            item.deals.rooms ? (<>
+                            item.deals ? (<>
                                 <span className='hotelPrice'>{item.price} EGP</span>
                                 <span className='hotelPrice'>{item.deals.rooms}xRoom</span>
                                 <span className='hotelPrice'>Total price{item.deals.price}</span>

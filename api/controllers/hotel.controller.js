@@ -80,6 +80,7 @@ export const deleteHotel = async (req, res, next) => {
 //GET
 export const getHotel = async (req, res, next) => {
     const { startdate, enddate, roomsoption, } = req.query;
+
     try {
         const currentDate = new Date()
         currentDate.setHours(currentDate.getHours() + 1)
@@ -220,15 +221,14 @@ export const getHotels = async (req, res, next) => {
     const currentDate = new Date()
     currentDate.setHours(currentDate.getHours() + 1)
     const roomoptions = JSON.parse(roomsoption ?? '[]');
-    console.log(roomoptions)
-        let sumOfAdults = null;
-        if (Array.isArray(roomoptions)) {
-            sumOfAdults = roomoptions.reduce((total, room) => {
-                return total + room.adult;
-            }, 0);
-        } else {
-            sumOfAdults = roomoptions.adult;
-        }
+    let sumOfAdults = null;
+    if (Array.isArray(roomoptions)) {
+        sumOfAdults = roomoptions.reduce((total, room) => {
+            return total + room.adult;
+        }, 0);
+    } else {
+        sumOfAdults = roomoptions.adult;
+    }
 
     try {
         await Hotel.aggregate([
@@ -315,6 +315,7 @@ export const getHotels = async (req, res, next) => {
                 let diff = Infinity;
                 let deals = {};
 
+
                 roomscalculator.forEach((room) => {
                     if (room.id === hotel._id) {
                         if (room.maxpeople >= sumOfAdults && room.roomcounter >= 1) {
@@ -323,7 +324,10 @@ export const getHotels = async (req, res, next) => {
                             }
                         }
                         if (!nearestDeal || room.roomcounter > nearestDeal.roomcounter) {
+
                             nearestDeal = room;
+
+
                         }
                     }
                 });
@@ -331,12 +335,19 @@ export const getHotels = async (req, res, next) => {
                     deals = bestDeal;
                     deals.rooms = 1;
                 } else if (nearestDeal) {
+                    console.log(nearestDeal)
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;
                     deals.price = numRooms * deals.price
                 }
-                return { ...hotel, deals };
+                if (deals.roomcounter >= deals.rooms) {
+                    return { ...hotel, deals };
+
+                }else{
+                    return { ...hotel };
+
+                }
             });
 
             res.status(201).send(updatedHotels)
