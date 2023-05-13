@@ -17,9 +17,7 @@ const RoomCard = ({ item, data }) => {
   return (
     <div>
       <div className="Room">
-        <div className="roomTop">
-          <img src={item.images[0]} alt="" className='roomImg' />
-        </div>
+        <img src={item.images[0]} alt="" className='roomImg' />
         <div className="roomBottom">
           <div className="roomInfo">
             <div className="numberOfPeople">
@@ -31,22 +29,12 @@ const RoomCard = ({ item, data }) => {
               <p>Size : {item.size}</p>
             </div>
           </div>
-          <div className="roomDescription">
-            <h4>{item.name}</h4>
+          <h4 className='roomName'>{item.name.slice(0,25)}</h4>
+          <p className='roomPricePerNight'><span>{item.price} EGP</span>/Night</p> 
+          <div className="roomPrice">
+            <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span> </p>
+            <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
           </div>
-          {item.deals ? (
-            <div className="roomPrice">
-              <p><span>${item.price} </span>/ Night</p>
-              <p>{item.deal.roomscount}XRooms</p>
-              <p>Total Price {item.deal.price}</p>
-              <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
-            </div>
-          ) : (
-            <>
-              <span className='hotelPrice'>NO AVAILABLE ROOMS <br /> For this number of guests
-              </span>
-            </>
-          )}
         </div>
       </div>
     </div>

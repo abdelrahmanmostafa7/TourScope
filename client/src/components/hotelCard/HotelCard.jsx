@@ -42,7 +42,7 @@ const HotelCard = ({ item }) => {
 
 
       <div className="hotelCardDetailsContainer">
-        <p className='hotelCardDetails'>{item.country} - {item.city} || {item.distanceFromCityCenter}Km from center</p>
+        <p className='hotelCardDetails'>{item.city}   ||  {item.distanceFromCityCenter}Km from center</p>
         <h4 className='hotelCardName'>{item.name}</h4>
         <button className='btn' onClick={hotelDetails}>View Hotel</button>
       </div>
