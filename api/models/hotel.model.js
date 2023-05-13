@@ -29,6 +29,13 @@ const HotelSchema = new mongoose.Schema({
   },
   images: {
     type: [String],
+    validate: {
+      validator: function (v) {
+        const urlPattern = /^(http|https):\/\/.*\.(jpg|jpeg|png|gif)$/;
+        return v.every((url) => urlPattern.test(url));
+      },
+      message: "Invalid image URL",
+    },
   },
   virtualTour: {
     type: String

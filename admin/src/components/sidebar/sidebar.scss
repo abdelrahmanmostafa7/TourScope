@@ -11,9 +11,9 @@
     justify-content: center;
 
     .logo {
-      font-size: 20px;
-      font-weight: bold;
-      color: #142662;
+      margin-top: 10px;
+      width: 210px;
+      height: 40px;
     }
   }
 
@@ -31,7 +31,7 @@
       padding: 0;
 
       .title {
-        font-size: 10px;
+        font-size: 15px;
         font-weight: bold;
         color: #999;
         margin-top: 15px;
@@ -43,7 +43,9 @@
         align-items: center;
         padding: 5px;
         cursor: pointer;
-          list-style: none;
+        list-style: none;
+        font-size: 30px;
+
         .dashboardTitle {
           display: flex;
           align-items: center;
@@ -52,13 +54,18 @@
           list-style: none;
         }
 
+        .pageName {
+          font-size: 18px;
+          color: #142662;
+        }
+
         &:hover {
           background-color: #d8e1ff;
         }
 
         .icon {
-          font-size: 18px;
-          color:#142662;
+          font-size: 25px;
+          color: #142662;
         }
 
         span {

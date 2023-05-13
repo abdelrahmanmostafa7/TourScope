@@ -1,5 +1,6 @@
 import Hotel from "../models/hotel.model.js";
 import User from "../models/user.model.js";
+import mongoose from "mongoose";
 //CREATE
 export const createHotel = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
@@ -12,11 +13,40 @@ export const createHotel = async (req, res, next) => {
 };
 
 //UPDATE
+// export const updateHotel = async (req, res, next) => {
+//     try {
+//         const updatedHotel = await Hotel.findByIdAndUpdate(
+//             req.params.id,
+//             { $set: req.body },
+//             { new: true }
+//         );
+//         res.status(200).json(updatedHotel);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+// export const updateHotel = async (req, res, next) => {
+//     try {
+//         const { collection, id } = req.params;
+//         const updatedData = await mongoose.model(collection).findByIdAndUpdate(
+//             id,
+//             { $set: req.body },
+//             { new: true }
+//         );
+//         res.status(200).json(updatedData);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
 export const updateHotel = async (req, res, next) => {
     try {
+        const { id } = req.params;
+        const { images } = req.body;
         const updatedHotel = await Hotel.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body },
+            id,
+            { $set: { images } },
             { new: true }
         );
         res.status(200).json(updatedHotel);
@@ -24,7 +54,6 @@ export const updateHotel = async (req, res, next) => {
         next(err);
     }
 };
-
 //DELETE
 export const deleteHotel = async (req, res, next) => {
     try {
@@ -36,17 +65,127 @@ export const deleteHotel = async (req, res, next) => {
 };
 
 //GET
+// export const getHotel = async (req, res, next) => {
+//     const { min, max, city, startdate, enddate, roomsoption, } = req.query;
+//     try {
+//         const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter amenities rating price images description rooms');
+
+//         res.status(201).send(hotel)
+
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+//GET
 export const getHotel = async (req, res, next) => {
-    const { min, max, city, startdate, enddate, roomsoption, } = req.query;
+    const { startdate, enddate, roomsoption, } = req.query;
     try {
-        const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter amenities rating price images description rooms');
+        const currentDate = new Date()
+        currentDate.setHours(currentDate.getHours() + 1)
+        const roomoptions = JSON.parse(roomsoption ?? '[]');
+        const sumOfAdults = roomoptions.reduce((total, room) => {
+            return total + room.adult;
+        }, 0);
+        const hotelId = new mongoose.Types.ObjectId(req.params.id);
+        await Hotel.aggregate([
+            {
+                $match: {
+                    _id: hotelId
 
-        res.status(201).send(hotel)
+                },
+            },
+            {
+                $lookup: {
+                    from: "rooms",
+                    localField: "rooms",
+                    foreignField: "_id",
+                    as: "rooms",
+                },
+            },
+            {
+                $unwind: "$rooms",
+            },
 
+            {
+                $group: {
+                    _id: "$_id",
+                    name: { $first: "$name" },
+                    address: { $first: "$address" },
+                    country: { $first: "$country" },
+                    city: { $first: "$city" },
+                    description: { $first: "$description" },
+                    price: { $first: "$price" },
+                    rating: { $first: "$rating" },
+                    images: { $first: "$images" },
+                    amenities: { $first: "$amenities" },
+                    distanceFromCityCenter: { $first: "$distanceFromCityCenter" },
+                    checkInout: { $first: "$checkInout" },
+                    rooms: { $push: "$rooms" },
+                },
+            },
+        ]).then((hotel_res) => {
+            const user_startDate = new Date(startdate)
+            const user_endDate = new Date(enddate)
+            const timeDiff = Math.abs(user_endDate.getTime() - user_startDate.getTime());
+            const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            user_startDate.setHours(24)
+            user_endDate.setHours(24)
+            const updatedRooms = hotel_res[0].rooms.map((room) => {
+                const updatedAvailability = room.room_availability.filter((ro) => {
+                    const availableDates = ro.unavailableDates.filter((date) => {
+                        if (!(user_startDate >= date.startDate && user_startDate < date.endDate ||
+                            user_endDate <= date.endDate && user_endDate > date.startDate ||
+                            user_startDate < date.startDate && user_endDate >= date.endDate ||
+                            user_startDate < date.startDate && user_endDate >= date.endDate
+
+                        )) {
+                            return date
+                        }
+                    });
+
+                    if (availableDates.length > 0) {
+                        ro.unavailableDates = availableDates;
+                        return true;
+                    }
+                });
+                if (updatedAvailability.length > 0) {
+                    let deal = { roomscount: 0 };
+                    let n = 1;
+                    do {
+
+                        if (room.maxpeople * n >= sumOfAdults) {
+                            if (n <= updatedAvailability.length) {
+                                deal.roomscount = n
+                                deal.price = n * room.price
+                                break;
+
+                            } else {
+                                deal.roomscount = []
+                                break;
+
+                            }
+                        }
+                        n++;
+                    } while (true);
+
+                    delete room.room_availability
+                    return { ...room, deal };
+
+                } else {
+                    return { ...room, room_availability: [] };
+                }
+            });
+            hotel_res[0].rooms = updatedRooms;
+            const obj = hotel_res[0]
+            res.status(200).send(obj)
+        });
+        //res.status(201).send(hotel)
     } catch (err) {
         next(err);
     }
 };
+
 
 // Get fav Hotels
 export const getFavHotels = async (req, res, next) => {
@@ -58,27 +197,22 @@ export const getFavHotels = async (req, res, next) => {
         next(error);
     }
 };
+//GETTop ALL
+export const getTopHotels = async (req, res, next) => {
+    try {
+        const hotels = await Hotel.find(req.query).limit(req.query.limit);
+        res.status(200).json(hotels);
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 // GET ALL
 export const getHotels = async (req, res, next) => {
     const { min, max, city, startdate, enddate, roomsoption } = req.query;
     const currentDate = new Date()
     currentDate.setHours(currentDate.getHours() + 1)
-
-    // if ( startDate  === endDate || currentDate > startDate){
-    //     return next(createError(404,"invalid date"));
-    //  }
-
-    // console.log(endDate)
-    // console.log(currentDate.toLocaleTimeString())
-
-    // if (start >= startDate && start <= endDate) {
-    //   console.log('Date is within the interval.');
-    // } else {
-    //   console.log('Date is outside the interval.');
-    // }
-
-
     const roomoptions = JSON.parse(roomsoption ?? '[]');
     const sumOfAdults = roomoptions.reduce((total, room) => {
         return total + room.adult;

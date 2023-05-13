@@ -7,14 +7,14 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
-
+import logo from "../../image/logo.png"
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">TourScope</span>
+          <img src={logo} alt=""  className="logo"/>
         </Link>
       </div>
       <hr />
@@ -24,15 +24,15 @@ const Sidebar = () => {
           <li>
             <Link to="/" className="dashboardTitle" style={{ textDecoration: "none" }}>
               <DashboardIcon className="icon" />
-              <span>Dashboard</span>
+              <span className="pageName">Dashboard</span>
             </Link>
           </li>
 
-          <p className="title">Hotel</p>
+          <p className="title">Management</p>
           <Link to="/HotelEdit" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
-              <span>Hotel Management</span>
+              <span className="pageName">Hotel Management</span>
             </li>
           </Link>
           <Link to="/editRooms" style={{ textDecoration: "none" }}>
@@ -46,30 +46,30 @@ const Sidebar = () => {
           <Link to="/UserStatus" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>User</span>
+              <span className="pageName">User</span>
             </li>
           </Link>
           <Link to="RoomStatus" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
-              <span>ٌRooms</span>
+              <span className="pageName">ٌRooms</span>
             </li>
           </Link>
           <Link to="/ReservationStatus" style={{ textDecoration: "none" }}>
             <li>
               <SettingsSystemDaydreamOutlinedIcon className="icon" />
-              <span>Reservations</span>
+              <span className="pageName">Reservations</span>
             </li>
           </Link>
 
           <p className="title">Admin</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
+            <span className="pageName">Profile</span>
           </li>
           <li>
             <ExitToAppIcon className="icon" />
-            <span>Logout</span>
+            <span className="pageName">Logout</span>
           </li>
         </ul>
       </div>

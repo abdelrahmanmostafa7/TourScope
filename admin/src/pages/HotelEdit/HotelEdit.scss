@@ -56,26 +56,63 @@ body {
     }
 
     .addHotelImg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
         width: 310px;
         height: 250px;
         background-color: rgb(225, 225, 225);
         border: none;
         border-radius: 15px;
-        cursor: pointer;
-        font-weight: 300;
-        font-size: 100px;
+
+        .addHotelImgLabel{
+            font-size: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            .addImgIcon{
+                font-size: 50px;
+            }
+        }
+
+        .addHotelImgInput{
+            display: none;
+        }
+
+       
+
+        .DoneBtn{
+            width: 120px;
+                    height: 35px;
+                    border: none;
+                    border-radius: 50px;
+                    color: white;
+                    text-align: center;
+                    background-color: $buttonColor;
+                    cursor: pointer;
+        }
     }
 
     .ImageDeleteIcon {
         position: absolute;
         color: red;
         top: 2px;
-        right: 10px;
+        right: 15px;
         cursor: pointer;
         font-size: 30px;
     }
 }
 
+ .NewHotelImg {
+     width: 310px;
+     height: 250px;
+     border-radius: 10px;
+     object-fit: cover;
+     cursor: pointer;
+     margin-bottom: 5px;
+ }
 
 
 

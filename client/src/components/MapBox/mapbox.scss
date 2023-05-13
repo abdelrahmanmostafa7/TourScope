@@ -1,36 +1,50 @@
 @import url('https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css');
 
-// .map {
-//   border: 7px solid white;
-//   border-radius: 15px;
-//   position: relative;
-  
-// .boykaMap{
-// filter: brightness(70%) blur(3px);
-//   transition: ease-out 0.2s;
-// }
-//   .zayaed {
-//     position: absolute;
-//     color: white;
-//     font-size: 50px;
-//     top: 150px;
-//     right: 350px;
-//   }
+.map {
+  border: 7px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  position: relative;
+  transition: all 0.9s ease;
 
-//   &:hover {
-//     .boykaMap {
-//         filter: brightness(100%) blur(0px);
-//       }
-//     .zayaed {
-//       display: none;
-//     }
+  .mapboxgl-canvas {
+    border-radius: 10px;
+    filter: brightness(60%) blur(3px) grayscale(0%);
+    transition: all 0.5s ease;
+  }
 
-//   }
-// }
+  .mapTitles {
+    position: absolute;
+    top: 130px;
+    right: 280px;
+    text-align: center;
+    color: white;
+    transition: all 0.7s ease;
 
-.mapboxgl-canvas {
-  border-radius: 10px;
+    .mapTitle1 {
+      font-size: 40px;
+    }
+
+    .mapTitle2 {
+      font-size: 35px;
+    }
+  }
+
+  &:hover {
+    .mapboxgl-canvas {
+      filter: brightness(90%) blur(0px);
+    }
+
+    .mapTitles {
+     top: -110px;
+    }
+  }
 }
+
+
+
 
 .zayaed {
   position: absolute;

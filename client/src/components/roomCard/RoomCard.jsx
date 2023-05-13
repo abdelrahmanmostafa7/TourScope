@@ -35,6 +35,8 @@ const RoomCard = ({ item }) => {
           </div>
           <div className="roomPrice">
             <p><span>${item.price} </span>/ Night</p>
+            <p>{item.deal.roomscount}XRooms</p>
+            <p>Total Price {item.deal.price}</p>
             <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
           </div>
         </div>

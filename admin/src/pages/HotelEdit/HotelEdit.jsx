@@ -5,9 +5,6 @@ import { useState } from 'react';
 import useFetch from "../../hook/useFetch"
 import Loading from "../../components/Loading/Loading";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CloseIcon from '@mui/icons-material/Close';
 import Wifi from "../../image/wif1i.png"
 import Bar from "../../image/martini.png"
 import Laundry from "../../image/washe1r.png"
@@ -29,55 +26,40 @@ import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import Check from "../../image/check (1).png"
 import EditIcon from '@mui/icons-material/Edit';
-
+import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import axios from 'axios';
+import newRequest from '../../utils/newRequest'
 const HotelEdit = () => {
+
+  const hotelId = "643bb10810a61c109435fe44";
   // To fetch data 
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/643bb10810a61c109435fe44`);
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
+  const [file, setFile] = useState("");
 
-  const [open, setOpen] = useState(false);
-  const [imgNumber, setNumber] = useState(6);
-
-  const handleOpen = (i) => {
-    setSlideNumber(i);
-    setOpen(true);
-    setNumber(hotel.images.length)
-  };
-
-  const handleMove = (direction) => {
-    let newSlideNumber;
-
-    if (direction === "l") {
-      newSlideNumber = slideNumber === 0 ? imgNumber : slideNumber - 1;
-    } else {
-      newSlideNumber = slideNumber === imgNumber ? 0 : slideNumber + 1;
+  const upload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "upload");
+    try {
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dipyn1unm/image/upload",
+        formData
+      );
+      const { url } = uploadRes.data;
+      const updatedImages = [...hotel.images, url];
+      await newRequest.put(`/hotel/update/${hotel._id}`, { images: updatedImages });
+    } catch (err) {
+      console.log(err);
     }
-    setSlideNumber(newSlideNumber)
   };
   return (
     <div className='hotelEdit'>
-      <Sidebar className='sideBarHotel' />
+      <Sidebar />
       {hotelLoading ? <Loading /> :
         (<div className="hotelContainer">
           <div className="hotelWrapper">
-            {open && (
-              <div className="slider">
-                <CloseIcon className="close"
-                  onClick={() => setOpen(false)} />
-                <ArrowBackIcon className="arrow"
-                  onClick={() => handleMove("l")} />
-                <div className="sliderWrapper">
-                  <img
-                    src={hotel.images[slideNumber]}
-                    alt=""
-                    className="sliderImg"
-                  />
-                </div>
-                <ArrowForwardIcon className="arrow"
-                  onClick={() => handleMove("r")} />
-              </div>
-            )}
             <h1 className="hotelTitle">{hotel.name}</h1>
-
             <div className="hotelImages">
               {hotel.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
@@ -90,7 +72,22 @@ const HotelEdit = () => {
                   <RemoveCircleOutlineIcon className="ImageDeleteIcon" />
                 </div>
               ))}
-              <button className='addHotelImg'>+</button>
+              {file && <img src={URL.createObjectURL(file)} alt="" className='NewHotelImg' />}
+              <form className="addHotelImg" onSubmit={upload} encType="multipart/form-data">
+                <label htmlFor="file" className="addHotelImgLabel">
+                  <DriveFolderUploadOutlinedIcon htmlFor="file" className="addImgIcon" /> <br />
+                  Click To Add New Photo
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className="addHotelImgInput"
+                />
+                <button className="DoneBtn" type="submit">
+                  Done
+                </button>
+              </form>
             </div>
 
             <h2 className="aboutHotel">Hotel Features</h2>
@@ -254,9 +251,9 @@ const HotelEdit = () => {
             </span>
             <div className="hotelDetailsTexts">
               <h2 className="aboutHotel">Details about Hotel  </h2>
-              <EditIcon className='hotelDetailsEdit'/>
+              <EditIcon className='hotelDetailsEdit' />
             </div>
-              <p className="hotelDesc"> {hotel.description}</p>
+            <p className="hotelDesc"> {hotel.description}</p>
           </div>
         </div>)}
     </div>
