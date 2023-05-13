@@ -86,14 +86,14 @@ export const getHotel = async (req, res, next) => {
         const roomoptions = JSON.parse(roomsoption ?? '[]');
         let sumOfAdults = null;
         if (Array.isArray(roomoptions)) {
-          sumOfAdults = roomoptions.reduce((total, room) => {
-            return total + room.adult;
-          }, 0);
+            sumOfAdults = roomoptions.reduce((total, room) => {
+                return total + room.adult;
+            }, 0);
         } else {
-          sumOfAdults = roomoptions.adult;
+            sumOfAdults = roomoptions.adult;
         }
-        
-        
+
+
         const hotelId = new mongoose.Types.ObjectId(req.params.id);
         await Hotel.aggregate([
             {
@@ -170,7 +170,6 @@ export const getHotel = async (req, res, next) => {
                             } else {
                                 deal.roomscount = []
                                 break;
-
                             }
                         }
                         n++;
@@ -297,7 +296,7 @@ export const getHotels = async (req, res, next) => {
                         }
                     });
                     if (updatedAvailability.length > 0) {
-                        //roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
+                        roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
                         //return { ...room, room_availability: updatedAvailability };
 
                     } else {
@@ -331,7 +330,7 @@ export const getHotels = async (req, res, next) => {
                     deals.rooms = numRooms;
                 }
 
-                return { ...hotel,  deals };
+                return { ...hotel, deals };
             });
 
             res.status(201).send(updatedHotels)
