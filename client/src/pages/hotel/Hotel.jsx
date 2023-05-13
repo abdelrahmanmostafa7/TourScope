@@ -9,7 +9,6 @@ import RoomCard from "../../components/roomCard/RoomCard";
 import useSearch from "../../hook/useSearch.js"
 import { format } from "date-fns";
 import { DateRange } from "react-date-range"
-
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -44,29 +43,30 @@ const Hotel = () => {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
+  const [openOptions, setOpenOptions] = useState(false);
+  const [openDate, setOpenDate] = useState(false)
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
     endDate: new Date().setDate(new Date().getDate() + 1),
     key: "selection",
   }])
+  
   const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
     children: 0,
     room: 1
   })
-  const [openOptions, setOpenOptions] = useState(false);
-  useEffect(() => {
-    document.addEventListener("mousedown", handleclickoutsidecomponent, true);
-  }, []);
-  const refcomponent = useRef(null);
-  const handleclickoutsidecomponent = (e) => {
-    if (refcomponent.current && !refcomponent.current.contains(e.target)) {
-      setOpenDate(false);
-      setOpenOptions(false);
-      refcomponent.current = null;
-    }
+
+  const handleOption = (name, operation) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
+      };
+    });
   };
-  const [openDate, setOpenDate] = useState(false)
+
+
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
     reFetch()
@@ -331,53 +331,95 @@ const Hotel = () => {
                   <h1 className="lsTitle">Search</h1>
                   <div className="lsItem">
                     <label className="lsLabel">Check-in Date</label>
-                    <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                      date[0].startDate,
-                      "MM/dd/yyyy"
-                    )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                    <span onClick={() => setOpenDate(!openDate)}>
+                      {`${format(
+                        date[0].startDate,
+                        "MM/dd/yyyy"
+                      )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                     {openDate && (
                       <DateRange
-                        onChange={(item) => setDate([item.selection])}
-                        minDate={new Date()}
+                        onChange={(item) => {
+                          const { selection } = item;
+                          if (selection.startDate.getTime() === selection.endDate.getTime()) {
+                            selection.endDate = new Date(selection.endDate.getTime() + 86400000);
+                          }
+                          setDate([selection]);
+                        }} minDate={new Date()}
                         ranges={date}
                       />
                     )}
                   </div>
                   <div className="lsItem">
-                    <div className="lsOptions">
-                      <div className="lsOptionItem">
-                        <span className="lsOptionText">Adult</span>
-                        <input
-                          type="number"
-                          min={1}
-                          className="lsOptionInput"
-                          placeholder={options.adult}
-                          onChange={(e) => setOptions({ ...options, adult: Number(e.target.value) })}
-                        />
-
-                      </div>
-                      <div className="lsOptionItem">
-                        <span className="lsOptionText">Children</span>
-                        <input
-                          type="number"
-                          min={0}
-                          className="lsOptionInput"
-                          placeholder={options.children}
-                          onChange={(e) => setOptions({ ...options, children: Number(e.target.value) })}
-
-                        />
-                      </div>
-                      <div className="lsOptionItem">
-                        <span className="lsOptionText">Room</span>
-                        <input
-                          type="number"
-                          min={1}
-                          className="lsOptionInput"
-                          placeholder={options.room}
-                          onChange={(e) => setOptions({ ...options, room: Number(e.target.value) })}
-
-                        />
-                      </div>
+                    <label className="lsLabel">Options</label>
+                    <div className="headerSearchItem">
+                      <span onClick={() => setOpenOptions(!openOptions)} className="headerSearchText ">{`${options.adult} adult . ${options.children} children . ${options.room} room`}</span>
+                      {openOptions && (
+                        <div className="ListOptions">
+                          <div className="optionItem">
+                            <span className="optionText">Adult</span>
+                            <div className="optionCounter">
+                              <button
+                                disabled={options.adult <= 1}
+                                className="optionCounterButton"
+                                onClick={() => handleOption("adult", "d")}
+                              >
+                                -
+                              </button>
+                              <span className="optionCounterNumber">
+                                {options.adult}
+                              </span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("adult", "i")}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="optionItem">
+                            <span className="optionText">Children</span>
+                            <div className="optionCounter">
+                              <button
+                                disabled={options.children <= 0}
+                                className="optionCounterButton"
+                                onClick={() => handleOption("children", "d")}
+                              >
+                                -
+                              </button>
+                              <span className="optionCounterNumber">
+                                {options.children}
+                              </span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("children", "i")}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="optionItem">
+                            <span className="optionText">Room</span>
+                            <div className="optionCounter">
+                              <button
+                                disabled={options.room <= 1}
+                                className="optionCounterButton"
+                                onClick={() => handleOption("room", "d")}
+                              >
+                                -
+                              </button>
+                              <span className="optionCounterNumber">
+                                {options.room}
+                              </span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("room", "i")}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button onClick={handelSearch}>Search</button>

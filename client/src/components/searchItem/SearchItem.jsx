@@ -210,12 +210,19 @@ const SearchItem = ({ item }) => {
                         />
                     </div>
                     <div className="hotelRightBottom">
-                        <div className="priceDetails">
-                            <span >{item.price} EGP</span>
-                            <p>For {item.deals.rooms}xRoom</p>
-                            <p className='hotelPrice'>Total Price {item.deals.price} EGP</p>
-                        </div>
-                        <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                        {
+                            item.deals.rooms ? (<>
+                                <span className='hotelPrice'>{item.price} EGP</span>
+                                <span className='hotelPrice'>{item.deals.rooms}xRoom</span>
+                                <span className='hotelPrice'>Total price{item.deals.price}</span>
+                                <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                            </>) : (
+                                <>
+                                    <button className='btn' onClick={hotelDetails}>View Hotel</button>
+                                    <span className='hotelPrice'>NO AVAILABLE ROOMS</span>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
             </div>

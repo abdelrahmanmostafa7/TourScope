@@ -38,7 +38,7 @@ const List = () => {
 
   const [min, setMin] = useState(50);
   const [max, setMax] = useState(9999);
-  const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&options=${encodeURIComponent(JSON.stringify(options))}&min=${min || 50}&max=${max || 9999}&limit=${20}`)
+  const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&min=${min || 50}&max=${max || 9999}&limit=${20}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
     reFetch()
   }
