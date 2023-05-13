@@ -25,21 +25,6 @@ body{
     flex: 1;
 }
 
-.filter{
-    flex: 1;
-    background-color:rgb(255, 255, 255);
-    padding: 10px;
-    border-radius: 15px;
-    height: max-content;
-    margin-bottom: 10px;
-
-    .priceRange{
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        accent-color: #142662;
-    }
-}
 .starRating{
     input[type=checkbox]{
         accent-color: #142662;

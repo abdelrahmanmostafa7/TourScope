@@ -1,15 +1,15 @@
 import "./list.scss"
+import HotelLocationBox from "../../components/HotelslocationBox/HotelsLocationBox"
 import Navbar from "../../components/navBar/Navbar";
 import SearchItem from "../../components/searchItem/SearchItem"
 import Footer from "../../components/footer/Footer";
 import { useEffect, useRef, useState } from "react";
-import useFetch from "../../hook/useFetch.js"
+import useSearch from "../../hook/useSearch.js"
 import { useLocation } from "react-router-dom"
 import { format } from "date-fns";
 import { DateRange } from "react-date-range"
 import Loading from "../../components/Loading/Loading";
 import ScrollTop from "../../components/scrolltop/ScrollTop";
-import Aleart from "../../components/Aleart/Aleart"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faTrashCan,
@@ -23,11 +23,6 @@ const List = () => {
     key: "selection",
   }])
 
-  // const [options, setOptions] = useState(location.state?.options ? location.state.options : {
-  //   adult: 1,
-  //   children: 0,
-  //   room: 1,
-  // })
   const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
     children: 0,
@@ -136,7 +131,7 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false)
   const [min, setMin] = useState(50);
   const [max, setMax] = useState(9999);
-  const { data, loading, reFetch } = useFetch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}&min=${min || 50}&max=${max || 9999}&limit=${20}`)
+  const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}&min=${min || 50}&max=${max || 9999}&limit=${20}`)
   console.log(data)
   const handelSearch = () => {
     reFetch()
@@ -172,9 +167,9 @@ const List = () => {
                 <label className="lsLabel">Check-in Date</label>
                 <span onClick={() => setOpenDate(!openDate)}>
                   {`${format(
-                  date[0].startDate,
-                  "MM/dd/yyyy"
-                )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                    date[0].startDate,
+                    "MM/dd/yyyy"
+                  )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                 {openDate && (
                   <DateRange
                     onChange={(item) => {
@@ -191,61 +186,57 @@ const List = () => {
               <div className="lsItem">
                 <div className="headerSearchItem">
                   <span onClick={toggleroom} className="headerSearchText ">{`${options.adult} adult . ${options.children} children . ${options.room} room`}</span>
-                  { openOptions && <div ref={refcomponent} className="openOptions">
-                      <div ref={scrollableRef} className="optionsContainer">
-                        <label>Travelers</label>
-                        {rooms.map((room, index) => (
-                          <div className="cards">
-                            <div className="optionsTitle">
-                              <label>Room {index + 1}</label>
-                              <button onClick={() => removeRoom(index)} className="removebtn" {
-                                ...removebtn && { style: { display: "none" } }
-                              }><FontAwesomeIcon icon={faTrashCan} className="roomstable_icon" />Remove</button>
-                            </div>
-                            <div className="optionItem">
-                              <span className="optionText">Adult</span>
-                              <div className="optionCounter">
-                                <button
-                                  className="optionCounterButton"
-                                  disabled={room.adult <= 1}
-                                  onClick={() => handleOption("adult", "d", index)}> - </button>
-                                <span className="optionCounterNumber">{room.adult}</span>
-                                <button
-                                  className="optionCounterButton"
-                                  onClick={() => handleOption("adult", "i", index)}> + </button>
-                              </div>
-                            </div>
-                            <div className="optionItem">
-                              <span className="optionText">Children</span>
-                              <div className="optionCounter">
-                                <button
-                                  className="optionCounterButton"
-                                  disabled={room.children <= 0}
-                                  onClick={() => handleOption("children", "d", index)}
-                                >
-                                  -
-                                </button>
-                                <span className="optionCounterNumber">{room.children}</span>
-                                <button
-                                  className="optionCounterButton"
-                                  onClick={() => handleOption("children", "i", index)}
-                                >
-                                  +
-                                </button>
-                              </div>
+                  {openOptions && <div ref={refcomponent} className="openOptions">
+                    <div ref={scrollableRef} className="optionsContainer">
+                      <label>Travelers</label>
+                      {rooms.map((room, index) => (
+                        <div className="cards">
+                          <div className="optionsTitle">
+                            <label>Room {index + 1}</label>
+                            <button onClick={() => removeRoom(index)} className="removebtn" {
+                              ...removebtn && { style: { display: "none" } }
+                            }><FontAwesomeIcon icon={faTrashCan} className="roomstable_icon" />Remove</button>
+                          </div>
+                          <div className="optionItem">
+                            <span className="optionText">Adult</span>
+                            <div className="optionCounter">
+                              <button
+                                className="optionCounterButton"
+                                disabled={room.adult <= 1}
+                                onClick={() => handleOption("adult", "d", index)}> - </button>
+                              <span className="optionCounterNumber">{room.adult}</span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("adult", "i", index)}> + </button>
                             </div>
                           </div>
-                        ))}
-                        <button disabled={addroomsbtn} onClick={addRoom} style={{ marginBottom: '10px' }} className="button-34">add room</button>
-                      </div>
+                          <div className="optionItem">
+                            <span className="optionText">Children</span>
+                            <div className="optionCounter">
+                              <button
+                                className="optionCounterButton"
+                                disabled={room.children <= 0}
+                                onClick={() => handleOption("children", "d", index)}
+                              >
+                                -
+                              </button>
+                              <span className="optionCounterNumber">{room.children}</span>
+                              <button
+                                className="optionCounterButton"
+                                onClick={() => handleOption("children", "i", index)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      <button disabled={addroomsbtn} onClick={addRoom} style={{ marginBottom: '10px' }} className="button-34">add room</button>
                     </div>
+                  </div>
                   }
                 </div>
               </div>
-              <button onClick={handelSearch}>Search</button>
-            </div>
-            <div className="filter">
-              <h2 className="lsTitle" >Filter</h2>
               <div className="lsOptions">
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
@@ -270,16 +261,9 @@ const List = () => {
                   />
                 </div>
               </div>
-              <div className="starRating">
-                <p>Star Rating:</p>
-                <input type="checkbox" />
-                <label for="vehicle1" > 3 star</label><br />
-                <input type="checkbox" />
-                <label for="vehicle2"> 4 start</label><br />
-                <input type="checkbox" />
-                <label for="vehicle3"> 5 start</label>
-              </div>
+              <button onClick={handelSearch}>Search</button>
             </div>
+            <HotelLocationBox />
           </div>
         </div>
       </div>

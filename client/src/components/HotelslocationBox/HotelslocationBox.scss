@@ -1,0 +1,73 @@
+@import "../../global.scss";
+
+.HotelLocationBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 15px 0px;
+}
+
+.HotelLocationBoxCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .HotelLocationBoxImg {
+    position: relative;
+    width: 260px;
+    height: 220px;
+    border-radius: 15px;
+    filter: brightness(80%) blur(1px);
+    transition: all 0.5s ease;
+  }
+
+  .HotelLocationTitle {
+    position: absolute;
+    color: white;
+    transition: all 0.7s ease;
+  }
+
+  &:hover {
+    .HotelLocationBoxImg {
+      filter: brightness(100%) blur(0px);
+    }
+
+    .HotelLocationTitle {
+      display: none;
+    }
+  }
+}
+
+.closePopupBackGround{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+
+.popup-content {
+  width: 100%;
+  max-width: 1024px;
+  height: max-content;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: black;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+}

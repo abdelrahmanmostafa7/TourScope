@@ -11,7 +11,7 @@
 
   .mapboxgl-canvas {
     border-radius: 10px;
-    filter: brightness(60%) blur(3px) grayscale(0%);
+    filter: brightness(50%) blur(3px) grayscale(0%) hue-rotate(15deg);
     transition: all 0.5s ease;
   }
 

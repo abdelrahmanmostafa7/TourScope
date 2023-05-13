@@ -65,7 +65,7 @@ const SearchItem = ({ item }) => {
 
     return (
         <div>
-            <div className="hotelCardContainer" onClick={hotelDetails}>
+            <div className="hotelCardContainer" >
                 <div className="hotelCardLeft">
                     <img src={item.images[0]} alt="" className='hotelCardImg' />
                 </div>
@@ -211,9 +211,9 @@ const SearchItem = ({ item }) => {
                     </div>
                     <div className="hotelRightBottom">
                         <div className="priceDetails">
-                            <span className='hotelPrice'>{item.price} EGP</span>
+                            <span >{item.price} EGP</span>
                             <p>For {item.deals.rooms}xRoom</p>
-                            <p>Total Price {item.deals.price}</p>
+                            <p className='hotelPrice'>Total Price {item.deals.price} EGP</p>
                         </div>
                         <button className='btn' >View Hotel</button>
                     </div>
