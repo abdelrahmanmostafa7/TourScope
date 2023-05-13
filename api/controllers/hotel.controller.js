@@ -220,9 +220,15 @@ export const getHotels = async (req, res, next) => {
     const currentDate = new Date()
     currentDate.setHours(currentDate.getHours() + 1)
     const roomoptions = JSON.parse(roomsoption ?? '[]');
-    const sumOfAdults = roomoptions.reduce((total, room) => {
-        return total + room.adult;
-    }, 0);
+    console.log(roomoptions)
+        let sumOfAdults = null;
+        if (Array.isArray(roomoptions)) {
+            sumOfAdults = roomoptions.reduce((total, room) => {
+                return total + room.adult;
+            }, 0);
+        } else {
+            sumOfAdults = roomoptions.adult;
+        }
 
     try {
         await Hotel.aggregate([
