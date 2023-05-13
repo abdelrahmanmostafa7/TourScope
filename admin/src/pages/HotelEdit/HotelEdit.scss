@@ -39,8 +39,8 @@ body {
     flex-wrap: wrap;
     border-radius: 15px;
     background-color: white;
-    padding: 10px 0px 5px 10px;
-
+    padding: 10px;
+    // gap: 10px calc(40px/3);
     .hotelImgWrapper {
         width: 25%;
         position: relative;
@@ -133,6 +133,7 @@ body {
     width: 180px;
     height: 135px;
     position: relative;
+    gap: 5px;
 
     .amenitiesDeleteIcon {
         position: absolute;
