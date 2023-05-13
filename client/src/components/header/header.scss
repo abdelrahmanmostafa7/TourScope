@@ -245,6 +245,7 @@
         .headerSearchItem {
             display: flex;
             height: 35px;
+            justify-content: center;
             align-items: center;
             background-color: #efefef;
             border-radius: 50px;
@@ -333,7 +334,12 @@
             }
 
             .options {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
                 padding-top: 15px;
+                text-align: center;
                 z-index: 10;
                 position: absolute;
                 top: 50px;
@@ -348,18 +354,15 @@
                     width: 200px;
                     display: flex;
                     justify-content: space-between;
-                    margin: 5px;
                 }
 
-                .optionText {
-                    margin-left: 10%;
-                }
+
 
                 .optionItem {
                     width: 200px;
                     display: flex;
                     justify-content: space-between;
-                    margin: 10px 0px 10px 0px;
+                    margin: 0px  10px 10px 10px;
                     text-align: center;
                     align-items: center;
 
@@ -384,18 +387,6 @@
                     }
                 }
             }
-        }
-
-        .removebtn {
-            display: flex;
-            gap: 5px;
-            margin-right: 40px;
-            color: red;
-            background-color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
         }
 
     }
