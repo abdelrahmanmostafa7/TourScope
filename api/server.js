@@ -45,6 +45,10 @@ app.use(passport.session());
 //   credentials: true
 // }));
 app.use(cors());
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 66ad87092f70f1160baa0a5ba352653099f17274
 
 // routes 
 app.use("/api/user", userRoute)
