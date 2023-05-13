@@ -15,6 +15,7 @@ const RoomSchema = new Schema({
   },
   facilities: {
     type: [String],
+    default: []
   },
   images: {
     type: [String],

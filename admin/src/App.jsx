@@ -4,6 +4,7 @@ import New from "./pages/NewUser/NewUser";
 import ReservationStatus from "./pages/ReservationStatus/ReservationStatus";
 import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
+import EditRooms from './pages/RoomsEdit/RoomsEdit';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/New" element={<New />} />
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />
+          <Route path="/editRooms" element={<EditRooms />} />
           
 
         </Routes>
