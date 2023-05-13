@@ -40,12 +40,9 @@ function LocationBox({ id }) {
 
   return (
     <div className="locationBox">
-      <h1 className="lTitle">Location</h1>
-      <div className="viewLocation">
-        <img src={mapboximg} className="tab_location" alt="" />
-        <button className="viewMap seeMapBtn" onClick={togglePopUp}>
-          View Map
-        </button>
+      <div className="HotelLocationBoxCover" onClick={togglePopUp}>
+        <img src={mapboximg} className="HotelLocationBoxImg" alt="" />
+        <h2 className="HotelLocationTitle">View Hotel On Map</h2>
       </div>
 
       {!loading && showPopUp && (
