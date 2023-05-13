@@ -3,7 +3,7 @@ import "./LogInOut.scss"
 import { useState, useEffect } from 'react'
 import newRequest from '../../utils/newRequest'
 import Aleart from "../Aleart/Aleart"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useMatch, useSearchParams } from "react-router-dom";
 import Close from "../../image/right-arrow.png"
 import FaceBook from "../../image/facebook.png"
 import Google from "../../image/search.png"
@@ -18,6 +18,10 @@ const LogInOut = () => {
   const [error, setError] = useState(null)
   const [isSignIn, setIsSignIn] = useState(location.state?.signup ? false : true);
   const [user, setUser] = useState({})
+  const navigate = useNavigate();
+
+  //const match = useMatch();
+  const previousRoute = location.state?.from || null
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -40,14 +44,14 @@ const LogInOut = () => {
     e.preventDefault()
     try {
       const res = await newRequest.post("/auth/signin", { email, password })
-      const verifyrole = await newRequest.get("/auth/role");
 
       localStorage.setItem("currentUser", JSON.stringify(res.data))
-      if (verifyrole.data === "redirect to Dashboard") {
-        navigate("/dashboard")
-      }
-      else
+      if (previousRoute && res.data) {
+        navigate("/payment")
+      }else{
         navigate("/")
+
+      }
     }
     catch (err) {
       setError(err.response.data)
@@ -78,7 +82,6 @@ const LogInOut = () => {
   const handleSignUp = () => {
     setIsSignIn(false);
   };
-  const navigate = useNavigate()
 
   const closeBtn = () => {
     navigate("/");

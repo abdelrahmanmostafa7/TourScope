@@ -84,9 +84,16 @@ export const getHotel = async (req, res, next) => {
         const currentDate = new Date()
         currentDate.setHours(currentDate.getHours() + 1)
         const roomoptions = JSON.parse(roomsoption ?? '[]');
-        const sumOfAdults = roomoptions.reduce((total, room) => {
+        let sumOfAdults = null;
+        if (Array.isArray(roomoptions)) {
+          sumOfAdults = roomoptions.reduce((total, room) => {
             return total + room.adult;
-        }, 0);
+          }, 0);
+        } else {
+          sumOfAdults = roomoptions.adult;
+        }
+        
+        
         const hotelId = new mongoose.Types.ObjectId(req.params.id);
         await Hotel.aggregate([
             {
@@ -248,7 +255,6 @@ export const getHotels = async (req, res, next) => {
                     images: { $first: "$images" },
                     amenities: { $first: "$amenities" },
                     distanceFromCityCenter: { $first: "$distanceFromCityCenter" },
-                    checkInout: { $first: "$checkInout" },
                     rooms: { $push: { room_availability: "$rooms.room_availability", _id: "$rooms._id", price: "$rooms.price", maxpeople: "$rooms.maxpeople" } },
                 },
             },
@@ -280,25 +286,25 @@ export const getHotels = async (req, res, next) => {
                                 user_startDate < date.startDate && user_endDate >= date.endDate
 
                             )) {
-                                return date
+                                //return date
+                                return "data"
                             }
                         });
 
                         if (availableDates.length > 0) {
-                            ro.unavailableDates = availableDates;
+                            ro.unavailableDates = "avilable";
                             return true;
                         }
                     });
                     if (updatedAvailability.length > 0) {
-                        roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
-                        return { ...room, room_availability: updatedAvailability };
+                        //roomscalculator.push({ id: hotel._id, roomcounter: updatedAvailability.length, price: room.price, maxpeople: room.maxpeople });
+                        //return { ...room, room_availability: updatedAvailability };
 
                     } else {
                         return null
                     }
                 });
 
-                const filteredRooms = updatedRooms.filter((r) => r !== null);
                 let bestDeal = null;
                 let nearestDeal = null;
                 let diff = Infinity;
@@ -324,9 +330,10 @@ export const getHotels = async (req, res, next) => {
                     deals = nearestDeal;
                     deals.rooms = numRooms;
                 }
-                return { ...hotel, rooms: filteredRooms, deals };
+
+                return { ...hotel,  deals };
             });
-            const availableHotels = updatedHotels.filter((h) => h !== null);
+
             res.status(201).send(updatedHotels)
         });
 

@@ -50,16 +50,25 @@ import Down from "../../image/download.png"
 function Room() {
   // To fetch data 
   const location = useLocation()
-  console.log(location);
   const id = location.pathname.split("/")[2]
+  const paymentinfo  = location.state.item;
+  const reservationDetails = location.state.data;
+  console.log(reservationDetails)
+
   const { data, loading } = useFetch(`/room/find/${id}`)
   // To navigate to all rooms 
   const navigate = useNavigate()
-  const roomsBtn = () => {
-    navigate("/rooms")
-  }
+
   const payment = () => {
-    navigate("/payment")
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
+    if (currentUser == null) {
+      const from = "/room"
+      navigate("/logInOut", {state:{from , reservationDetails}} )
+    } else {
+      navigate("/payment" , {state:{reservationDetails}})
+
+    }
   }
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
@@ -369,8 +378,8 @@ function Room() {
                     <ul>
                       {
                         data.facilities?.map((facilities, i) => (
-                      <li key={i}><img src={Point} alt="" className="Point"/>{facilities}</li>
-                      )
+                          <li key={i}><img src={Point} alt="" className="Point" />{facilities}</li>
+                        )
                         )}
                     </ul>
                   </div>
@@ -383,13 +392,18 @@ function Room() {
                   <img src={headSet} alt="" className="headSet" />
                 </div>
                 <div className="roomDetails">
-                  <span>Adult : 2</span>
+                  <span>Adult : {data.maxpeople}</span>
                   <p>|</p>
-                  <span>Size : 50ft</span>
+                  <span>Size : {data.size}ft</span>
                 </div>
                 <div className="roomPrice">
                   <span>{data.price} EGP</span>
                   <p>per night</p>
+                </div>
+                <div className="roomPrice">
+                  <span>{paymentinfo.deal.price} EGP</span>
+                  <p>{paymentinfo.deal.roomscount}XRooms</p>
+                  <p>Total Price</p>
                 </div>
                 <div className="roomReservation">
                   <button className="bookBtn" onClick={payment}>BOOK NOW</button>

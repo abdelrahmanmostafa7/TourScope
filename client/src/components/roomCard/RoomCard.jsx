@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import "./RoomCard.scss"
 
 
-const RoomCard = ({ item }) => {
+const RoomCard = ({ item,data }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
-    navigate(`/room/${item._id}`)
+
+    navigate(`/room/${item._id}`, {state:{item , data}})
     window.scrollTo(0, 0);;
 
   }
@@ -23,7 +24,7 @@ const RoomCard = ({ item }) => {
           <div className="roomInfo">
             <div className="numberOfPeople">
               <img src={item.images[0]} alt="" className='roomIcon' />
-              <p>Adults : 4</p>
+              <p>Adults : {item.maxpeople}</p>
             </div>
             <div className="roomSize">
               <img src={Size} alt="" className='roomIcon' />

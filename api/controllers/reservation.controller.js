@@ -8,6 +8,8 @@ import mongoose from 'mongoose';
 export const user_reservations = async (req, res, next) => {
     try {
         const userdata = await Reservation.find({ user_id: req.body.user_id })
+        .populate({ path: 'hotel_id', select: 'name images' });
+              userdata[0].hotel_id.images = userdata[0].hotel_id.images[0];
         res.status(201).send(userdata)
     } catch (err) {
         next(err)
