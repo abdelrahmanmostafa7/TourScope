@@ -134,7 +134,7 @@ export const addOrRemove = async (req, res, next) => {
       }
     }
     // Save the updated room to the database
-    const updatedRoom = await room.save();
+    await room.save();
     res.json(room.facilities);
   } catch (err) {
     next(err);

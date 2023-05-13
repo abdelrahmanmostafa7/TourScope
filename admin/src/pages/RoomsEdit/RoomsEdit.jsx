@@ -58,21 +58,8 @@ import newRequest from '../../utils/newRequest'
 // import Loading from "./../../components/Loading/Loading";
 import { useEffect } from "react"
 function RoomEdit() {
-  // To fetch data 
-  // const location = useLocation()
-  // console.log(location);
-  // const id = location.pathname.split("/")[2]
-  const { data, loading } = useFetch(`/room/find/643af6e310a61c109435e5dc`)
-  // To navigate to all rooms 
-  const navigate = useNavigate()
-  const roomsBtn = () => {
-    navigate("/rooms")
-  }
-  const payment = () => {
-    navigate("/payment")
-  }
-  // Slider states & functions 
-  const [slideNumber, setSlideNumber] = useState(0);
+  const [path, setPath] = useState(`/room/find/643af6e310a61c109435e5dc`)
+  const { data, loading } = useFetch(path)
   const [open, setOpen] = useState(false);
   const features = [
     "Free toiletries",
@@ -120,28 +107,25 @@ function RoomEdit() {
       setShowPopUp(false);
     }
   };
-  // const [fac, setFac] = useState(Array.from(data.facilities));
-  // const fac = data.facilities
-  const [fac, setFac] = useState(Array.isArray(data.facilities) ? data.facilities : []);
-  // const [fac, setFac] = useState(data.facilities);
-  console.log(fac);
+  const fac = data.facilities
 
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  // selectedCheckboxes = [...data.facilities]
-  // console.log(data.facilities)
+
   const handleSubmit = async (e) => {
+    console.log("ay 7aga2")
     e.preventDefault();
     try {
       const requestBody = {
         facilities: selectedCheckboxes
       };
       await newRequest.put("/room/update/643af6e310a61c109435e5dc", requestBody)
+
     } catch (err) {
       console.log(err)
     }
   }
 
-  // handle the response
+  const [toggle, setToggle] = useState(false)
   const handleCheckboxChange = (e) => {
     const checkboxValue = e.target.value;
     if (e.target.checked) {
@@ -149,16 +133,22 @@ function RoomEdit() {
     } else {
       setSelectedCheckboxes(selectedCheckboxes.filter((value) => value !== checkboxValue));
     }
+    e.currentTarget.querySelector('input').checked = !e.currentTarget.querySelector('input').checked
+
   };
-  console.log(selectedCheckboxes)
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [isChecked, setIsChecked] = useState(true)
 
   useEffect(() => {
-    if (!loading && fac.length > 0 && !dataLoaded) {
+    if (data.facilities)
       setDataLoaded(true);
-    }
-  }, [loading, data, dataLoaded]);
-
+    console.log("ay 7aga ")
+  }, [data])
+  const handelSelection = (evt) => {
+    const inputClassName = evt.currentTarget.querySelector('input');
+    evt.currentTarget.querySelector('input').checked = !evt.currentTarget.querySelector('input').checked
+    console.log(inputClassName)
+  };
   return (
     <div>
       <div className="RoomEdit">
@@ -552,35 +542,22 @@ function RoomEdit() {
                     </div>
                   </div>
                   }
-
-
-
-
-
-                  {loading ? (<Loading/>):
-                    (
-                    <div className="popup">
-                    {dataLoaded ?(<form className="options" >
-                      {features.map((facility, i) => (
+                  <div className="popup">
+                    <form className="options" onClick={(evt) => handelSelection(evt)} >
+                      {dataLoaded && features.map((facility, i) => (
                         <div key={i} className="row">
                           <input
                             type="checkbox"
                             value={facility}
-                            checked={fac.includes(facility)}
                             onChange={handleCheckboxChange}
+                            checked={isChecked}
                           />
                           <label>{facility}</label>
                         </div>
                       ))}
-                      <button className="btn" onSubmit={handleSubmit}>Submit</button>
-                        </form>) : (<Loading />)}
-                  </div>)
-                  }
-
-
-
-
-
+                      <button className="btn" onClick={handleSubmit}>Submit</button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
