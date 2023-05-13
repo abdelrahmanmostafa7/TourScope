@@ -5,6 +5,7 @@ import ReservationStatus from "./pages/ReservationStatus/ReservationStatus";
 import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
 import EditRooms from './pages/RoomsEdit/RoomsEdit';
+import LogInOut from './pages/Login-out/LogInOut';
 
 function App() {
 
