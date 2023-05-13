@@ -142,8 +142,8 @@ function RoomEdit() {
   useEffect(() => {
     if (data.facilities)
       setDataLoaded(true);
-    console.log("ay 7aga ")
   }, [data])
+
   const handelSelection = (evt) => {
     const inputClassName = evt.currentTarget.querySelector('input');
     evt.currentTarget.querySelector('input').checked = !evt.currentTarget.querySelector('input').checked
