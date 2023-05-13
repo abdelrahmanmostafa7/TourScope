@@ -24,6 +24,8 @@ import Aleart from "../../components/Aleart/Aleart"
 const Header = () => {
   const [openDate, setOpenDate] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false)
+
 
   const [destination, setDestination] = useState(localStorage.getItem("userCity") ? localStorage.getItem("userCity") : "london")
   const [date, setDate] = useState([
