@@ -11,13 +11,14 @@ import { useState } from "react";
 const Rooms = () => {
     const location = useLocation()
     const id = location.pathname.split("/")[2]
-    const [roomsdata,setdata] = useState(location.state.roomsdata) 
-    
-    
-    
-    
-    
-   const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
+    const [reservationData, setdata] = useState(location.state.reservationData)
+
+
+
+
+
+
+    const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
 
     return (
         <div>
@@ -27,9 +28,9 @@ const Rooms = () => {
                     <h1 className="roomTitle">Choose your Room</h1>
                     <div className="roomCards">
                         {roomsLoading ? <Loading /> : <>
-                            {roomsdata.map((item) => (  
-                        <RoomCard item={item} key={item._id} />
-                      ))}
+                            {reservationData.roomsdata.map((item) => (
+                                <RoomCard item={item} data={reservationData} key={item._id} />
+                            ))}
                         </>}
                     </div>
                 </div>

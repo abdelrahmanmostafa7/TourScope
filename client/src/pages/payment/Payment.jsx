@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Payment.scss"
 import useFetch from './../../hook/useFetch';
 import Navbar from './../../components/navBar/Navbar';
@@ -7,9 +7,48 @@ import MasterCard from "../../image/master-card.png"
 import DefaultMaster from "../../image/credit-card (2).png"
 import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Payment = () => {
+  const location = useLocation()
+
+
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [countries, setCountries] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+    setPhoneNumber('');
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
+  const getCountryPhoneCode = () => {
+    const selectedCountryData = countries.find((country) => country.cca2 === selectedCountry);
+    console.log(selectedCountryData)
+    if (selectedCountryData && selectedCountryData.callingCodes && selectedCountryData.callingCodes.length > 0) {
+      console.log(selectedCountryData.callingCodes[0])
+      return selectedCountryData.callingCodes[0];
+    }
+    return '';
+  };
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
@@ -44,6 +83,7 @@ const Payment = () => {
     }
   };
 
+  const reservationDetails = location.state.reservationDetails;
   const navigate = useNavigate();
   const reservation = () => {
     navigate("/reservations");
@@ -75,12 +115,21 @@ const Payment = () => {
                 </div>
                 <div className="colShow">
                   <label htmlFor="phone_number">Phone</label>
-                  <input type="text" name="phone_number" placeholder={data.phone_number || ""} />
+                  <input type="text" name="phone_number" value={phoneNumber} onChange={handlePhoneNumberChange} placeholder={getCountryPhoneCode()} />
                 </div>
+
                 <div className="colShow">
                   <label htmlFor="Country">Country</label>
-                  <input type="text" name="country" />
+                  <select name="country" value={selectedCountry} onChange={handleCountryChange}>
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country.cca2} value={country.cca2}>
+                        {country.name.common}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div className="colShow">
                   <label htmlFor="zip_code">Zip Code</label>
                   <input type="text" name="zip_code" />
@@ -105,6 +154,7 @@ const Payment = () => {
                         onChange={handleCardNumberChange}
                       />
                     </div>
+
                     <div className="beside">
                       <div className="colShow2">
                         <label htmlFor="Expiration_date">
@@ -134,8 +184,8 @@ const Payment = () => {
                       <p>Number of people : </p>
                       <p>2 adults</p>
                     </div>
-                    
-                    
+
+
                     <div className="resetRow">
                       <p>check in Data :</p>
                       <p>5-5-2023</p>

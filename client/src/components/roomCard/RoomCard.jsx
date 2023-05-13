@@ -6,12 +6,11 @@ import { useNavigate } from "react-router-dom";
 import "./RoomCard.scss"
 
 
-const RoomCard = ({ item }) => {
+const RoomCard = ({ item,data }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
-    const roomdata = item
 
-    navigate(`/room/${item._id}`, {state:{roomdata}})
+    navigate(`/room/${item._id}`, {state:{item , data}})
     window.scrollTo(0, 0);;
 
   }

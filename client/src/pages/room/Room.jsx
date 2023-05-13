@@ -51,13 +51,24 @@ function Room() {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-const [payinfo , setdata] = useState(location.state.roomdata)
+  const paymentinfo  = location.state.item;
+  const reservationDetails = location.state.data;
+  console.log(reservationDetails)
+
   const { data, loading } = useFetch(`/room/find/${id}`)
   // To navigate to all rooms 
   const navigate = useNavigate()
-  
+
   const payment = () => {
-    navigate("/payment")
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
+    if (currentUser == null) {
+      const from = "/room"
+      navigate("/logInOut", {state:{from , reservationDetails}} )
+    } else {
+      navigate("/payment" , {state:{reservationDetails}})
+
+    }
   }
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
@@ -367,8 +378,8 @@ const [payinfo , setdata] = useState(location.state.roomdata)
                     <ul>
                       {
                         data.facilities?.map((facilities, i) => (
-                      <li key={i}><img src={Point} alt="" className="Point"/>{facilities}</li>
-                      )
+                          <li key={i}><img src={Point} alt="" className="Point" />{facilities}</li>
+                        )
                         )}
                     </ul>
                   </div>
@@ -390,8 +401,8 @@ const [payinfo , setdata] = useState(location.state.roomdata)
                   <p>per night</p>
                 </div>
                 <div className="roomPrice">
-                  <span>{payinfo.deal.price} EGP</span>
-                  <p>{payinfo.deal.roomscount}XRooms</p>
+                  <span>{paymentinfo.deal.price} EGP</span>
+                  <p>{paymentinfo.deal.roomscount}XRooms</p>
                   <p>Total Price</p>
                 </div>
                 <div className="roomReservation">
