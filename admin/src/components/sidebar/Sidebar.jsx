@@ -38,7 +38,7 @@ const Sidebar = () => {
           <Link to="/editRooms" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Room Management</span>
+              <span className="pageName">Room Management</span>
             </li>
           </Link>
 
