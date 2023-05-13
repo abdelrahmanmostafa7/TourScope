@@ -50,14 +50,12 @@ import Down from "../../image/download.png"
 function Room() {
   // To fetch data 
   const location = useLocation()
-  console.log(location);
   const id = location.pathname.split("/")[2]
+const [payinfo , setdata] = useState(location.state.roomdata)
   const { data, loading } = useFetch(`/room/find/${id}`)
   // To navigate to all rooms 
   const navigate = useNavigate()
-  const roomsBtn = () => {
-    navigate("/rooms")
-  }
+  
   const payment = () => {
     navigate("/payment")
   }
@@ -383,13 +381,18 @@ function Room() {
                   <img src={headSet} alt="" className="headSet" />
                 </div>
                 <div className="roomDetails">
-                  <span>Adult : 2</span>
+                  <span>Adult : {data.maxpeople}</span>
                   <p>|</p>
-                  <span>Size : 50ft</span>
+                  <span>Size : {data.size}ft</span>
                 </div>
                 <div className="roomPrice">
                   <span>{data.price} EGP</span>
                   <p>per night</p>
+                </div>
+                <div className="roomPrice">
+                  <span>{payinfo.deal.price} EGP</span>
+                  <p>{payinfo.deal.roomscount}XRooms</p>
+                  <p>Total Price</p>
                 </div>
                 <div className="roomReservation">
                   <button className="bookBtn" onClick={payment}>BOOK NOW</button>

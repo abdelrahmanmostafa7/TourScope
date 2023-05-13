@@ -84,9 +84,16 @@ export const getHotel = async (req, res, next) => {
         const currentDate = new Date()
         currentDate.setHours(currentDate.getHours() + 1)
         const roomoptions = JSON.parse(roomsoption ?? '[]');
-        const sumOfAdults = roomoptions.reduce((total, room) => {
+        let sumOfAdults = null;
+        if (Array.isArray(roomoptions)) {
+          sumOfAdults = roomoptions.reduce((total, room) => {
             return total + room.adult;
-        }, 0);
+          }, 0);
+        } else {
+          sumOfAdults = roomoptions.adult;
+        }
+        
+        
         const hotelId = new mongoose.Types.ObjectId(req.params.id);
         await Hotel.aggregate([
             {

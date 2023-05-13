@@ -5,12 +5,19 @@ import RoomCard from "../../components/roomCard/RoomCard";
 import { useLocation } from "react-router-dom"
 import useFetch from "../../hook/useFetch.js"
 import Loading from "../../components/Loading/Loading";
+import { useState } from "react";
 
 
-function Rooms() {
+const Rooms = () => {
     const location = useLocation()
     const id = location.pathname.split("/")[2]
-    const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
+    const [roomsdata,setdata] = useState(location.state.roomsdata) 
+    
+    
+    
+    
+    
+   const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
 
     return (
         <div>
@@ -20,9 +27,9 @@ function Rooms() {
                     <h1 className="roomTitle">Choose your Room</h1>
                     <div className="roomCards">
                         {roomsLoading ? <Loading /> : <>
-                            {rooms.map(item =>
-                                <RoomCard item={item} key={item._id} />
-                            )}
+                            {roomsdata.map((item) => (  
+                        <RoomCard item={item} key={item._id} />
+                      ))}
                         </>}
                     </div>
                 </div>

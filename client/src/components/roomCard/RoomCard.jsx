@@ -9,7 +9,9 @@ import "./RoomCard.scss"
 const RoomCard = ({ item }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
-    navigate(`/room/${item._id}`)
+    const roomdata = item
+
+    navigate(`/room/${item._id}`, {state:{roomdata}})
     window.scrollTo(0, 0);;
 
   }
@@ -23,7 +25,7 @@ const RoomCard = ({ item }) => {
           <div className="roomInfo">
             <div className="numberOfPeople">
               <img src={item.images[0]} alt="" className='roomIcon' />
-              <p>Adults : 4</p>
+              <p>Adults : {item.maxpeople}</p>
             </div>
             <div className="roomSize">
               <img src={Size} alt="" className='roomIcon' />

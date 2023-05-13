@@ -1,12 +1,15 @@
 import "./hotel.scss";
 import { useLocation } from "react-router-dom"
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
 import SearchBox from '../../components/searchBox/SearchBox'
 import LocationBox from '../../components/locationBox/LocationBox'
 import RoomCard from "../../components/roomCard/RoomCard";
 import useFetch from "../../hook/useFetch.js"
+import { format } from "date-fns";
+import { DateRange } from "react-date-range"
+
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -41,24 +44,132 @@ const Hotel = () => {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-
-  const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : [{
-    adult: 1,
-    children: 0,
-  }])
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
     endDate: new Date().setDate(new Date().getDate() + 1),
     key: "selection",
   }])
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify(rooms))}`)
+  const [options, setOptions] = useState(location.state?.options ? location.state.options : {
+    adult: 1,
+    children: 0,
+    room: 1
+  })
+
+  // const [rooms, setRooms] = useState(location.state?.rooms ? location.state.rooms : [{
+  //   adult: 1,
+  //   children: 0,
+  // }])
+  const [addroomsbtn, setaddactive] = useState(false);
+  const [removebtn, setactiveremove] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false);
+
+  // useEffect(() => {
+
+  //   if (rooms.length == 1) {
+  //     setactiveremove(true)
+  //   } else {
+  //     setactiveremove(false)
+
+  //   }
+
+  //   if (rooms.length > 9) {
+  //     setaddactive(true)
+  //   } else {
+  //     setaddactive(false)
+
+  //   }
+  // }, [rooms])
+
+  // const removeRoom = (index) => {
+  //   const updatedRoomsList = [...rooms];
+  //   const updatedOptions = {
+  //     room: options.room - 1,
+  //     adult: options.adult - updatedRoomsList[index].adult,
+  //     children: options.children - updatedRoomsList[index].children
+  //   };
+  //   setOptions(updatedOptions);
+  //   updatedRoomsList.splice(index, 1);
+  //   setRooms(updatedRoomsList);
+  // };
+
+
+  // const handleOption = (name, action, index) => {
+  //   const value = options[name];
+  //   const roomslist = [...rooms];
+  //   if (action === "i") {
+  //     setOptions({ ...options, [name]: value + 1 });
+  //     roomslist[index] = { ...roomslist[index], [name]: roomslist[index][name] + 1 };
+  //     setRooms(roomslist);
+  //   } else if (action === "d") {
+  //     if (value > 0) {
+  //       setOptions({ ...options, [name]: value - 1 });
+  //       roomslist[index] = { ...roomslist[index], [name]: roomslist[index][name] - 1 };
+  //       setRooms(roomslist);
+  //     }
+  //   }
+  // };
+
+
+  // const addRoom = () => {
+  //   setOptions((perv_options) => {
+  //     return { ...perv_options, room: options.room + 1, adult: options.adult + 1, children: options.children + 0 }
+  //   });
+  //   setRooms([...rooms, {
+  //     adult: 1, children: 0
+  //   }]);
+
+  // };
+
+
+  // const scrollableRef = useRef(null);
+  // useEffect(() => {
+  //   const scrollable = scrollableRef.current;
+  //   if (scrollable) {
+  //     scrollable.scrollTop = scrollable.scrollHeight;
+  //   }
+  // }, [rooms.length]);
+
+
+
+  // hide and show content header  
+  // const [showTagText, setShowTagText] = useState(false);
+  // const toggleroom = () => {
+  //   setOpenDate(false);
+  //   setOpenOptions(!openOptions);
+  // };
+  // const toggledate = () => {
+  //   setOpenOptions(false);
+  //   setOpenDate(!openDate);
+  // };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleclickoutsidecomponent, true);
+  }, []);
+  const refcomponent = useRef(null);
+  const handleclickoutsidecomponent = (e) => {
+    if (refcomponent.current && !refcomponent.current.contains(e.target)) {
+      setOpenDate(false);
+      setOpenOptions(false);
+      refcomponent.current = null;
+    }
+  };
+
+
+  const [openDate, setOpenDate] = useState(false)
+  const [path, setpath] = useState(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
+
+  const { data: hotel, loading: hotelLoading, reFetch } = useFetch(path)
+  const handelSearch = () => {
+    setpath(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
+    console.log(hotel)
+    reFetch()
+  }
   // Fetch Room Data 
   const [sliderLoaded, setSliderLoaded] = useState(false);
   useEffect(() => {
     if (hotel.rooms) {
       setSliderLoaded(true);
     }
-  }, [hotelLoading, hotel, sliderLoaded]);
+  }, [hotel]);
 
   const settings = {
     slidesToShow: 3,
@@ -69,11 +180,14 @@ const Hotel = () => {
     swipe: true,
   };
 
+
+
+
   // To navigate to all rooms 
   const navigate = useNavigate()
-  const datauser = []
-  datauser.push(hotel.rooms)
-  const roomsBtn = () => { navigate(`/rooms/${id}`) }
+  const roomsdata = hotel.rooms
+
+  const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { roomsdata } }) }
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
@@ -305,7 +419,7 @@ const Hotel = () => {
               </div>
               <div className="hotelLeft">
                 {/* search box */}
-                {/* <div className="listSearch">
+                <div className="listSearch">
                   <h1 className="lsTitle">Search</h1>
                   <div className="lsItem">
                     <label className="lsLabel">Check-in Date</label>
@@ -330,7 +444,9 @@ const Hotel = () => {
                           min={1}
                           className="lsOptionInput"
                           placeholder={options.adult}
+                          onChange={(e) => setOptions({ ...options, adult: Number(e.target.value) })}
                         />
+
                       </div>
                       <div className="lsOptionItem">
                         <span className="lsOptionText">Children</span>
@@ -339,6 +455,8 @@ const Hotel = () => {
                           min={0}
                           className="lsOptionInput"
                           placeholder={options.children}
+                          onChange={(e) => setOptions({ ...options, children: Number(e.target.value) })}
+
                         />
                       </div>
                       <div className="lsOptionItem">
@@ -348,12 +466,14 @@ const Hotel = () => {
                           min={1}
                           className="lsOptionInput"
                           placeholder={options.room}
+                          onChange={(e) => setOptions({ ...options, room: Number(e.target.value) })}
+
                         />
                       </div>
                     </div>
                   </div>
                   <button onClick={handelSearch}>Search</button>
-                </div> */}
+                </div>
                 <LocationBox id={hotel._id} />
               </div>
             </div>
