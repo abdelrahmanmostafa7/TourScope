@@ -8,8 +8,8 @@ import mongoose from 'mongoose';
 export const user_reservations = async (req, res, next) => {
     try {
         const userdata = await Reservation.find({ user_id: req.body.user_id })
-        .populate({ path: 'hotel_id', select: 'name images' });
-              userdata[0].hotel_id.images = userdata[0].hotel_id.images[0];
+            .populate({ path: 'hotel_id', select: 'name images' });
+        userdata[0].hotel_id.images = userdata[0].hotel_id.images[0];
         res.status(201).send(userdata)
     } catch (err) {
         next(err)
@@ -18,45 +18,92 @@ export const user_reservations = async (req, res, next) => {
 
 export const make_reservation = async (req, res, next) => {
     try {
-        const rooms_id = req.body.rooms_id
-        const roomIds = rooms_id.map(id => new mongoose.Types.ObjectId(id));
-        console.log(roomIds)
-        const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } });
+
+        const { roomoptions, roomId, date,deal,user_id } = req.body.userdata;
+        const roomIds = new mongoose.Types.ObjectId(roomId);
+        const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } }).populate({ path: 'rooms', match: { _id: roomId } });
+        const room = await Room.findById(roomIds).select('room_availability price maxpeople')
+        const user_startDate = new Date(date[0].startDate)
+        const user_endDate = new Date(date[0].endDate)
+        //res.status(201).send(room)
 
 
-        // get hotel id
-        if (!hotel) {
-            return next(createError(404, "something went wrong"))
-        }
-        //cheak room available
+        room.room_availability.some(ro => {
+            let isAvailable = false;
 
+            for (let i = 0; i < ro.unavailableDates.length; i++) {
+                const date = ro.unavailableDates[i];
+                if (!(user_startDate >= date.startDate && user_startDate < date.endDate ||
+                    user_endDate <= date.endDate && user_endDate > date.startDate ||
+                    user_startDate < date.startDate && user_endDate >= date.endDate)) {
+                    isAvailable = true;
+                    ro.unavailableDates.push({ startDate: user_startDate, endDate: user_endDate });
+                    break;
+                }
 
+            }
+            if (isAvailable) {
+                return true
+            } else {
+                return next(createError(403, "Something Went Wrong"))
+            }
+        });
 
-        //Sum of Total price
-        let total_price = 0;
-        for (let id of rooms_id) {
-            const r = await Room.findOne({ _id: id });
-            total_price += r.price;
-        }
-        //create reservation 
+        // if(deal.roomscount < 1){
+        //     return next(createError(403, "Something Went Wrong"))
+
+        // }
+    
+        const totalprice = deal.price 
+        // console.log(room.price * deal.roomscount)
+        // if (room.price * deal.roomscount !== totalprice) {
+        //     return next(createError(403, "Something Went Wrong"))
+
+        // }
         const newreservation = await Reservation.create({
-            user_id: req.body.user,
-            guests: req.body.guests,
-            room_id: rooms_id,
+            guests: {
+                adults:  roomoptions.adult
+                ,
+                child: roomoptions.children
+                ,
+            }, room_id: roomIds,
             hotel_id: hotel._id,
-            total_price: total_price,
-            check_in_out: req.body.check_in_out,
-            user_id: req.body.user_id
+            total_price: totalprice,
+            check_in_out: {
+                in: user_startDate,
+                out: user_endDate,
+            },
+            user_id: user_id
 
         });
         await newreservation.save();
+        await room.save();
         res.status(201).send(newreservation)
 
-        // assign new dates for new room
 
 
 
 
+
+
+   
+
+
+
+
+
+
+        //     const availableDates = hotel.rooms.ro.unavailableDates.filter((date) => {
+        //     //  if (!(user_startDate >= date.startDate && user_startDate < date.endDate ||
+        //     //     user_endDate <= date.endDate && user_endDate > date.startDate ||
+        //     //     user_startDate < date.startDate && user_endDate >= date.endDate ||
+        //     //     user_startDate < date.startDate && user_endDate >= date.endDate
+
+        //     // )) {
+        //     //      //return date
+        //     //      return "data"
+        //     // }
+        //  });
 
 
 

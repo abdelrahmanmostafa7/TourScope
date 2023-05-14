@@ -8,10 +8,11 @@ import DefaultMaster from "../../image/credit-card (2).png"
 import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation } from 'react-router-dom';
+import newRequest from '../../utils/newRequest'
 
 const Payment = () => {
   const location = useLocation()
-
+  const userdata = location.state.reservationDetails;
 
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState([]);
@@ -50,7 +51,8 @@ const Payment = () => {
     return '';
   };
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-  const id = currentUser ? currentUser._id : null;
+  const id = currentUser._id
+
   const { data, loading } = useFetch(`/user/find/${id}`);
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
@@ -62,8 +64,21 @@ const Payment = () => {
   }
 
   const [showPopUp, setShowPopUp] = useState(false);
-  const togglePopUp = () => {
-    setShowPopUp(true);
+  const togglePopUp = async () => {
+    
+try {
+      await newRequest.post("/reservation/make_reservation", { userdata })
+      setIsSignIn(true)
+    }
+    catch (err) {
+      console.log(err)
+    }
+
+
+
+    
+
+    //setShowPopUp(true);
   };
 
   const closePopUp = (event) => {
@@ -118,7 +133,7 @@ const Payment = () => {
                   <input type="text" name="phone_number" value={phoneNumber} onChange={handlePhoneNumberChange} placeholder={getCountryPhoneCode()} />
                 </div>
 
-                <div className="colShow">
+                {/* <div className="colShow">
                   <label htmlFor="Country">Country</label>
                   <select name="country" value={selectedCountry} onChange={handleCountryChange}>
                     <option value="">Select a country</option>
@@ -128,7 +143,7 @@ const Payment = () => {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
 
                 <div className="colShow">
                   <label htmlFor="zip_code">Zip Code</label>
@@ -139,7 +154,7 @@ const Payment = () => {
                 <h1>How do you want to pay?</h1>
               </div>
               <div className="paymentMethodContainer">
-                <div className="paymentMethod">
+              <div className="paymentMethod">
                   <div className="left">
                     <div className="colShow">
                       <label htmlFor="name">Cardholder's Name <span>*</span></label>
@@ -175,7 +190,6 @@ const Payment = () => {
                 {showPopUp && <div className="popup-background" onClick={closePopUp}>
                   <div className="popup-content2" >
                     <h1>Hotel Name</h1>
-                    {/* <p className='userName'>{userName}</p> */}
                     <div className="resetRow">
                       <p>Number of rooms :</p>
                       <p>1 Room</p>

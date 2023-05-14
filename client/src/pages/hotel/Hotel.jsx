@@ -57,6 +57,7 @@ const Hotel = () => {
     room: 1
   })
 
+ 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -92,8 +93,11 @@ const Hotel = () => {
   const navigate = useNavigate()
   const reservationData = {
     roomsdata: hotel.rooms,
-    roomdate: date,
-    roomoptions: options
+    userDate: date,
+    roomoptions: options,
+  
+
+
   };
   const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { reservationData } }) }
   // Slider states & functions 
@@ -435,7 +439,7 @@ const Hotel = () => {
                   {sliderLoaded ? (
                     <BoykaSlider {...settings}>
                       {hotel.rooms.map((item) => (
-                        <RoomCard item={item} key={item._id} />
+                        <RoomCard item={item} passreservation={reservationData}  key={item._id} />
                       ))}
                     </BoykaSlider>
                   ) : (

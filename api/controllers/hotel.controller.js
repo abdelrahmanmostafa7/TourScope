@@ -335,7 +335,6 @@ export const getHotels = async (req, res, next) => {
                     deals = bestDeal;
                     deals.rooms = 1;
                 } else if (nearestDeal) {
-                    console.log(nearestDeal)
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;

@@ -62,13 +62,13 @@ const HotelSchema = new mongoose.Schema({
   },
   checkInout: {
     timeIn: {
-      type: String,
-      default: '14:00'
+      type: Date,
+      default: Date.parse('1970-01-01T14:00:00.000Z')
     },
     timeout: {
-      type: String,
-      default: '12:00'
-    },
+      type: Date,
+      default: Date.parse('1970-01-01T12:00:00.000Z')
+    }
   }
 
 });
