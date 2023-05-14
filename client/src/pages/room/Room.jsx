@@ -57,7 +57,7 @@ function Room() {
   const Useroptions = location.state.data;
   const { data, loading } = useFetch(`/room/find/${id}`)
   const hotelId = data.hotel_id
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`)
+  const { data: hotel } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))

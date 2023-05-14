@@ -51,17 +51,16 @@ const SearchItem = ({ item }) => {
 
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-    // const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-    // const id = currentUser._id
-    // const hotelId = item._id
-
-    // const handleButton = async () => {
-    //     try {
-    //         await newRequest.put(`/user/addOrRemove/${id}`, { hotelId })
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+    const id = currentUser ? currentUser._id : null;
+    const hotelId = item._id
+    const handleButton = async () => {
+        try {
+            await newRequest.put(`/user/addOrRemove/${id}`, { hotelId })
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div>
@@ -207,6 +206,7 @@ const SearchItem = ({ item }) => {
                                     color: "#142662",
                                 },
                             }}
+                            onClick={handleButton}
                         />
                     </div>
 
