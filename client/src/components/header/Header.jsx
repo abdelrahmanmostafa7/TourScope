@@ -103,15 +103,9 @@ const Header = () => {
           <div className="HeaderNavbarContainer">
             <img src={logo} className="logo" alt="" />
             <div className="listContainer">
-              <div className="headerListItem active ">
-                <span >Home</span>
-              </div>
-              <div className="headerListItem">
-                <span onClick={hotelPage}>Hotels</span>
-              </div>
-              <div className="headerListItem">
-                <span onClick={contactBtn}>Contact</span>
-              </div>
+                <span className="headerListItem">Home</span>
+                <span className="headerListItem" onClick={hotelPage}>Hotels</span>
+                <span className="headerListItem" onClick={contactBtn}>Contact</span>
             </div>
 
             {!currentUser && <div className="navItem">

@@ -23,7 +23,7 @@ const List = () => {
 
   const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
-    children: 0,
+    children:0,
     room: 1
   })
 
@@ -101,19 +101,13 @@ const List = () => {
                             <button
                               disabled={options.adult <= 1}
                               className="optionCounterButton"
-                              onClick={() => handleOption("adult", "d")}
-                            >
-                              -
-                            </button>
+                              onClick={() => handleOption("adult", "d")}>-</button>
                             <span className="optionCounterNumber">
                               {options.adult}
                             </span>
                             <button
                               className="optionCounterButton"
-                              onClick={() => handleOption("adult", "i")}
-                            >
-                              +
-                            </button>
+                              onClick={() => handleOption("adult", "i")}>+</button>
                           </div>
                         </div>
                         <div className="optionItem">
@@ -122,19 +116,13 @@ const List = () => {
                             <button
                               disabled={options.children <= 0}
                               className="optionCounterButton"
-                              onClick={() => handleOption("children", "d")}
-                            >
-                              -
-                            </button>
+                              onClick={() => handleOption("children", "d")}>-</button>
                             <span className="optionCounterNumber">
                               {options.children}
                             </span>
                             <button
                               className="optionCounterButton"
-                              onClick={() => handleOption("children", "i")}
-                            >
-                              +
-                            </button>
+                              onClick={() => handleOption("children", "i")}>+</button>
                           </div>
                         </div>
                         <div className="optionItem">
@@ -143,19 +131,13 @@ const List = () => {
                             <button
                               disabled={options.room <= 1}
                               className="optionCounterButton"
-                              onClick={() => handleOption("room", "d")}
-                            >
-                              -
-                            </button>
+                              onClick={() => handleOption("room", "d")}>-</button>
                             <span className="optionCounterNumber">
                               {options.room}
                             </span>
                             <button
                               className="optionCounterButton"
-                              onClick={() => handleOption("room", "i")}
-                            >
-                              +
-                            </button>
+                              onClick={() => handleOption("room", "i")}>+</button>
                           </div>
                         </div>
                       </div>

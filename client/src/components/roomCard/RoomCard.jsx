@@ -31,7 +31,7 @@ const RoomCard = ({ item, data }) => {
           </div>
           <h4 className='roomName'>{item.name.slice(0,25)}</h4>
           <p className='roomPricePerNight'><span>{item.price} EGP</span>/Night</p> 
-          {/* <div className="roomPrice">
+          <div className="roomPrice">
             <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span> </p>
             <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
           </div>
@@ -47,7 +47,7 @@ const RoomCard = ({ item, data }) => {
               <span className='hotelPrice'>NO AVAILABLE ROOMS <br /> For this number of guests
               </span>
             </>
-          )} */}
+          )}
         </div>
       </div>
     </div>

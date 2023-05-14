@@ -1,5 +1,6 @@
 @import "../../global.scss";
-.navbar{
+
+.navbar {
     background-color: $navColor;
     height: 90px;
     display: flex;
@@ -7,96 +8,110 @@
     position: sticky;
     z-index: 1000;
     top: 0;
+
     .navContainer {
         width: 100%;
         max-width: 1024px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-    .logo {
-        width: 150px;
-        margin-top: 10px;
-    }
-    .Items {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .menuItem {
-        font-size: 20px;
-        margin-right: 25px;
-        margin-left: 25px;
-        margin-top: 25px;
-        cursor: pointer;
-        color: rgb(255, 255, 255);
-        font-weight: 400;
-        &.active {
-            border-bottom: 1px solid white;
-            padding: 5px;
+
+        .logo {
+            width: 150px;
+            margin-top: 10px;
+        }
+
+        .Items {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menuItem {
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-right: 25px;
+            margin-left: 25px;
+            margin-top: 25px;
+            cursor: pointer;
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+
+            &:hover {
+                border-bottom: 2px solid rgb(255, 255, 255);
             }
         }
-    .navButton {
-        margin-left: 5px;
-        border:2px solid #EFEFEF;
-        padding: 5px 10px;
-        cursor: pointer;
-        background: fixed;
-        color: white;
-        font-size: 15px;
-        border-radius: 5pc;
-        font-weight: 300;
-        align-items: baseline;
-        margin-top: 10px;
+
+        .navButton {
+            margin-left: 5px;
+            border: 2px solid #EFEFEF;
+            padding: 5px 10px;
+            cursor: pointer;
+            background: fixed;
+            color: white;
+            font-size: 15px;
+            border-radius: 5pc;
+            font-weight: 300;
+            align-items: baseline;
+            margin-top: 10px;
         }
-    .user{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        color: white;
-        position: relative;
-    .profileImg{
-            width: 32px;
-            height: 32px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-    .userName{
-            font-weight: 600;
-        }
-        
-    .options{
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 50px;
-        right: -10px;
-        padding: 20px;
-        background-color: white;
-        color: black;
-        border: 1px solid lightgrey;
-        border-radius: 10px;
-        width: 160px;
-    .option2{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        span{
+
+        .user {
             display: flex;
-            width: 150px;   
-            text-decoration: none; 
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: white;
+            position: relative;
+
+            .profileImg {
+                width: 32px;
+                height: 32px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .userName {
+                font-weight: 600;
+            }
+
+            .options {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                right: -10px;
+                padding: 20px;
+                background-color: white;
+                color: black;
+                border: 1px solid lightgrey;
+                border-radius: 10px;
+                width: 160px;
+
+                .option2 {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+
+                    span {
+                        display: flex;
+                        width: 150px;
+                        text-decoration: none;
+                    }
+
+                    .icon2 {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+
+                hr {
+                    width: 100%;
+                }
+            }
         }
-        .icon2{
-            width: 25px;
-            height: 25px;
-        }
-    }
-    hr{
-        width: 100%;
-    }
-        }
-    }
     }
 }
