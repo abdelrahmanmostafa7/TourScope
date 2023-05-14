@@ -35,7 +35,7 @@ const RoomCard = ({ item, data }) => {
             <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span> </p>
             <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
           </div>
-          {item.deal.price != null  ? (
+          {/* {item.deal.price != null  ? (
             <div className="roomPrice">
               <p><span>${item.price} </span>/ Night</p>
               <p>{item.deal.roomscount}XRooms</p>
@@ -47,7 +47,7 @@ const RoomCard = ({ item, data }) => {
               <span className='hotelPrice'>NO AVAILABLE ROOMS <br /> For this number of guests
               </span>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>

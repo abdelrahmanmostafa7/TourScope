@@ -9,7 +9,7 @@ import {
   faCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 import headSet from "../../image/headSet.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "../../hook/useFetch.js"
 import { useLocation } from "react-router-dom"
 import Loading from './../../components/Loading/Loading';
@@ -46,6 +46,8 @@ import AirPurifiers from "../../image/air-purifier.png"
 import Fax from "../../image/fax.png"
 import Point from "../../image/right-arrow (3).png"
 import Down from "../../image/download.png"
+import BoykaSlider from "../../components/Slide/BoykaSlider";
+import RoomCard from "../../components/roomCard/RoomCard";
 
 function Room() {
   // To fetch data 
@@ -53,38 +55,32 @@ function Room() {
   const id = location.pathname.split("/")[2]
   const paymentinfo  = location.state.item;
   const reservationDetails = location.state.data;
-  console.log(reservationDetails)
-
   const { data, loading } = useFetch(`/room/find/${id}`)
-  // To navigate to all rooms 
+  const hotelId = data.hotel_id
+  console.log(hotelId); 
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
   const payment = () => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-
     if (currentUser == null) {
       const from = "/room"
       navigate("/logInOut", {state:{from , reservationDetails}} )
     } else {
       navigate("/payment" , {state:{reservationDetails}})
-
     }
   }
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-
   const [imgNumber, setNumber] = useState(6);
-
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
     setNumber(data.images.length)
   };
-
   const handleMove = (direction) => {
     let newSlideNumber;
-
     if (direction === "l") {
       newSlideNumber = slideNumber === 0 ? imgNumber : slideNumber - 1;
     } else {
@@ -97,13 +93,28 @@ function Room() {
   const togglePopUp = () => {
     setShowPopUp(true);
   };
-
   const closePopUp = (event) => {
     if (event.target === event.currentTarget) {
       setShowPopUp(false);
     }
   };
 
+  const [sliderLoaded, setSliderLoaded] = useState(false);
+  useEffect(() => {
+    if (hotel.rooms) {
+      setSliderLoaded(true);
+    }
+  }, [hotel]);
+  const settings = {
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    duration: 500,
+    swipe: true,
+  };
+
+  const roomsBtn = () => { navigate(`/rooms/${hotelId}`, { state: { reservationData } }) }
   return (
     <div>
       <Navbar />
@@ -407,6 +418,23 @@ function Room() {
                   <button className="bookBtn" onClick={payment}>BOOK NOW</button>
                 </div>
               </div>
+            </div>
+            <div className="hotelBottom">
+              {(
+                <>
+                  <h2>Available Rooms</h2>
+                  <button className="roomsBtn" onClick={roomsBtn}>All Rooms</button>
+                  {sliderLoaded ? (
+                    <BoykaSlider {...settings}>
+                      {hotel.rooms.map((item) => (
+                        <RoomCard item={item} key={item._id} />
+                      ))}
+                    </BoykaSlider>
+                  ) : (
+                    <p>Slider loading...</p>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>)}
