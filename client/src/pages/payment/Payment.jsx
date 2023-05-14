@@ -94,117 +94,126 @@ const Payment = () => {
       <Navbar />
       <div className="roomContainer">
         <div className="roomWrapper">
-          <div className="payment">
-            <div className="userInformation">
-              <div className="heading">
-                <h1>Your Information</h1>
-                <p>Required fields are followed by <span>*</span></p>
-              </div>
-              <div className="userInformationFields">
-                <div className="colShow">
-                  <label htmlFor="first_name">First Name <span>*</span></label>
-                  <input type="text" name="first_name" placeholder={data.first_name} disabled />
+          <div className="pay">
+            <div className="payment">
+              <div className="userInformation">
+                <div className="heading">
+                  <h1>Your Information</h1>
+                  <p>Required fields are followed by <span>*</span></p>
                 </div>
-                <div className="colShow">
-                  <label htmlFor="last_name">Last Name <span>*</span></label>
-                  <input type="text" name="last_name" placeholder={data.last_name} disabled />
-                </div>
-                <div className="colShow">
-                  <label htmlFor="email">Email <span>*</span></label>
-                  <input type="text" name="email" placeholder={data.email} disabled />
-                </div>
-                <div className="colShow">
-                  <label htmlFor="phone_number">Phone</label>
-                  <input type="text" name="phone_number" value={phoneNumber} onChange={handlePhoneNumberChange} placeholder={getCountryPhoneCode()} />
-                </div>
-
-                <div className="colShow">
-                  <label htmlFor="Country">Country</label>
-                  <select name="country" value={selectedCountry} onChange={handleCountryChange}>
-                    <option value="">Select a country</option>
-                    {countries.map((country) => (
-                      <option key={country.cca2} value={country.cca2}>
-                        {country.name.common}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="colShow">
-                  <label htmlFor="zip_code">Zip Code</label>
-                  <input type="text" name="zip_code" />
-                </div>
-              </div>
-              <div className="heading">
-                <h1>How do you want to pay?</h1>
-              </div>
-              <div className="paymentMethodContainer">
-                <div className="paymentMethod">
-                  <div className="left">
-                    <div className="colShow">
-                      <label htmlFor="name">Cardholder's Name <span>*</span></label>
-                      <input type="text" name="name" />
-                    </div>
-                    <div className="colShow">
-                      <label htmlFor="card_number">Card Number <span>*</span></label>
-                      <input
-                        type="text"
-                        name="card_number"
-                        value={cardNumber}
-                        onChange={handleCardNumberChange}
-                      />
-                    </div>
-
-                    <div className="beside">
-                      <div className="colShow2">
-                        <label htmlFor="Expiration_date">
-                          Expiration Date <span>*</span>
-                        </label>
-                        <input type="text" name="Expiration_date" className="smallInput" />
-                      </div>
-                      <div className="colShow2">
-                        <label htmlFor="cvv">cvv <span>*</span></label>
-                        <input type="text" name="cvv" className="smallInput" />
-                      </div>
-                    </div>
+                <div className="userInformationFields">
+                  <div className="colShow">
+                    <label htmlFor="first_name">First Name <span>*</span></label>
+                    <input type="text" name="first_name" placeholder={data.first_name} disabled />
                   </div>
-                  <div className="right">
-                    {getCardType() || <img src={DefaultMaster} alt="Visa" className="paymentImg " />}
+                  <div className="colShow">
+                    <label htmlFor="last_name">Last Name <span>*</span></label>
+                    <input type="text" name="last_name" placeholder={data.last_name} disabled />
+                  </div>
+                  <div className="colShow">
+                    <label htmlFor="email">Email <span>*</span></label>
+                    <input type="text" name="email" placeholder={data.email} disabled />
+                  </div>
+                  <div className="colShow">
+                    <label htmlFor="phone_number">Phone</label>
+                    <input type="text" name="phone_number" value={phoneNumber} onChange={handlePhoneNumberChange} placeholder={getCountryPhoneCode()} />
+                  </div>
+
+                  <div className="colShow">
+                    <label htmlFor="Country">Country</label>
+                    <select name="country" value={selectedCountry} onChange={handleCountryChange}>
+                      <option value="">Select a country</option>
+                      {countries.map((country) => (
+                        <option key={country.cca2} value={country.cca2}>
+                          {country.name.common}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="colShow">
+                    <label htmlFor="zip_code">Zip Code</label>
+                    <input type="text" name="zip_code" />
                   </div>
                 </div>
-                {showPopUp && <div className="popup-background" onClick={closePopUp}>
+
+                <div className="heading">
+                  <h1>How do you want to pay?</h1>
+                </div>
+                <div className="paymentMethodContainer">
+                  <div className="paymentMethod">
+                    <div className="left">
+                      <div className="colShow">
+                        <label htmlFor="name">Cardholder's Name <span>*</span></label>
+                        <input type="text" name="name" className='a7' />
+                      </div>
+                      <div className="colShow">
+                        <label htmlFor="card_number">Card Number <span>*</span></label>
+                        <input
+                          type="text"
+                          name="card_number"
+                          value={cardNumber}
+                          onChange={handleCardNumberChange}
+                          className='a7'
+                        />
+                      </div>
+
+                      <div className="beside">
+                        <div className="colShow2">
+                          <label htmlFor="Expiration_date">
+                            Expiration Date <span>*</span>
+                          </label>
+                          <input type="text" name="Expiration_date" className="smallInput" />
+                        </div>
+                        <div className="colShow2">
+                          <label htmlFor="cvv">cvv <span>*</span></label>
+                          <input type="text" name="cvv" className="smallInput" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="right">
+                      {getCardType() || <img src={DefaultMaster} alt="Visa" className="paymentImg " />}
+                    </div>
+                  </div>
+                </div>
+                {/* {showPopUp && <div className="popup-background" onClick={closePopUp}>
                   <div className="popup-content2" >
-                    <h1>Hotel Name</h1>
-                    {/* <p className='userName'>{userName}</p> */}
-                    <div className="resetRow">
-                      <p>Number of rooms :</p>
-                      <p>1 Room</p>
-                    </div>
-                    <div className="resetRow">
-                      <p>Number of people : </p>
-                      <p>2 adults</p>
-                    </div>
-
-
-                    <div className="resetRow">
-                      <p>check in Data :</p>
-                      <p>5-5-2023</p>
-                    </div>
-                    <div className="resetRow">
-                      <p>check out Data :</p>
-                      <p>10-5-2023</p>
-                    </div>
-                    <div className="resetRow">
-                      <p>Total price :</p>
-                      <p>2120 EGP</p>
-                    </div>
                     <button className='paymentBtn2' onClick={reservation}>Go To Reservations</button>
                   </div>
-                </div>}
+                </div>} */}
+              </div>
+              <button className='btn' onClick={togglePopUp}>Confirm</button>
+            </div>
+            <div className="paymentDetails">
+              <div className="arrivalInfo">
+                <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='HotelImg' />
+                <div className="arrivalInfoBottom">
+                  <p> 4.8/5 Very good </p>
+                  <p>1 Room 1 king bed</p>
+                  <p className='refundable'>Non-refundable</p>
+                  <p>Check-in: Sun, May 28</p>
+                  <p>Check-out: Mon, May 29</p>
+                  <p>1-night stay</p>
+                </div>
+              </div>
+              <div className="payPrice">
+                <h1>Price details</h1>
+                <hr />
+                <div className="payRow">
+                  <p>1 room x 1 night</p>
+                  <p>283.01 EGP</p>
+                </div>
+                <div className="payRow">
+                  <p>Taxes and fees</p>
+                  <p>81.96 EGP</p>
+                </div>
+                <hr />
+                <div className="payRow">
+                  <p>Total</p>
+                  <p>364.97.96 EGP</p>
+                </div>
               </div>
             </div>
-            {/* <button className='paymentBtn' onClick={!isActive?handleActive:reservation}>{isActive?"Go To Reservations":"Confirm"}</button> */}
-            <button className='paymentBtn' onClick={togglePopUp}>Confirm</button>
           </div>
         </div>
       </div>

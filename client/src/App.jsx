@@ -20,6 +20,7 @@ import LogInOut from "./components/Login-out/LogInOut";
 import PlannerOneChoiceBtn from "./components/PlannerOneChoiceBtn/PlannerOneChoiceBtn";
 import Loading from "./components/Loading/Loading";
 import Payment from "./pages/payment/Payment"
+import SMTPMessage from './pages/SMTPMessage/SMTPMessage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="btn" element={<PlannerOneChoiceBtn />} />
         <Route path="loading" element={<Loading />} />
         <Route path="payment" element={<Payment />} />
+        <Route path="message" element={<SMTPMessage />} />
       </Routes>
     </BrowserRouter>
   );

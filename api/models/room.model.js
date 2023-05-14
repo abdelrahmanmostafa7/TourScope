@@ -13,6 +13,15 @@ const RoomSchema = new Schema({
   maxpeople: {
     type: Number,
   },
+  numberOfRoom:{
+    type:Number,
+  },
+  type:{
+    type:String,
+  },
+  status:{
+    type:String,
+  },
   facilities: {
     type: [String],
     default: []
