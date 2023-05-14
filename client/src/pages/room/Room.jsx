@@ -53,11 +53,11 @@ function Room() {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-  const paymentinfo  = location.state.item;
+  const paymentinfo = location.state.item;
   const reservationDetails = location.state.data;
   const { data, loading } = useFetch(`/room/find/${id}`)
   const hotelId = data.hotel_id
-  console.log(hotelId); 
+  console.log(hotelId);
   const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
@@ -65,9 +65,9 @@ function Room() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"))
     if (currentUser == null) {
       const from = "/room"
-      navigate("/logInOut", {state:{from , reservationDetails}} )
+      navigate("/logInOut", { state: { from, reservationDetails } })
     } else {
-      navigate("/payment" , {state:{reservationDetails}})
+      navigate("/payment", { state: { reservationDetails } })
     }
   }
   // Slider states & functions 
@@ -378,8 +378,9 @@ function Room() {
                       )}
                     </div>
                   ))}
-                  <div className="seeMoreContainer">
-                    <img src={Down} alt="" className="seeMore" onClick={togglePopUp} />
+                  <div className="seeMoreContainer" onClick={togglePopUp}>
+                    <h3 className="seeMore" >See More</h3>
+                    <img src={Down} alt="" className="seeMoreImg" />
                   </div>
                 </span>
 

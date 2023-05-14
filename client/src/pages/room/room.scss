@@ -86,9 +86,10 @@ body {
         align-items: center;
         flex-direction: column;
 
-        p{
+        p {
             margin: 5px;
         }
+
         span {
             color: #49D62F;
             font-size: 18px;
@@ -258,21 +259,32 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
+
+
+    &:hover {
+        animation: 1.5s ease forwards;
+    }
 }
 
 .seeMore {
-    width: 20px;
-    height: 20px;
     position: absolute;
-    top: 101%;
-    right: 370px;
+    top: 92%;
+    right: 25px;
     cursor: pointer;
 }
 
-.seeMore:hover {
-    top: 102%;
-    animation: 1.5s ease forwards;
+.seeMoreImg {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 100%;
+    right: 5px;
+    cursor: pointer;
+    transform: rotate(270deg);
 }
+
+
 
 .RoomFeatures {
     display: flex;
@@ -289,7 +301,8 @@ body {
     border-radius: 10px;
     overflow-y: scroll;
     opacity: 0;
-        animation: fade-in 1s ease forwards;
+    animation: fade-in 1s ease forwards;
+
     h2 {
         color: #142662;
         text-align: center;
@@ -300,7 +313,8 @@ body {
         flex-wrap: wrap;
         margin: 0;
         padding: 10px;
-        gap:35px;
+        gap: 35px;
+
         li {
             width: 45%;
             list-style: none;
@@ -312,6 +326,7 @@ body {
         }
     }
 }
+
 @keyframes popup-content3 {
     from {
         opacity: 0;
@@ -323,6 +338,7 @@ body {
         transform: translateY(0);
     }
 }
+
 .Point {
     width: 25px;
     height: 25px;
