@@ -13,13 +13,10 @@ import ForgetPassword from "./components/forgetPassword/ForgetPassword";
 import NewPassword from "./components/newPassword/NewPassword";
 import RoomCard from "./components/roomCard/RoomCard";
 import Planner from "./pages/Planner/Planner";
-import Hote_managment from "./pages/Admin/Hotel_managment/Hotel_managment";
-import Revervations from "./pages/Admin/reservations/Reservations";
-import Dashboard from "./pages/Admin/dashboard/Dashboard";
 import LogInOut from "./components/Login-out/LogInOut";
-import PlannerOneChoiceBtn from "./components/PlannerOneChoiceBtn/PlannerOneChoiceBtn";
 import Loading from "./components/Loading/Loading";
 import Payment from "./pages/payment/Payment"
+import SMTPMessage from './pages/SMTPMessage/SMTPMessage';
 
 function App() {
   return (
@@ -39,13 +36,10 @@ function App() {
         <Route path="/reset-password/:token" element={<NewPassword />} />
         <Route path="/RoomCard" element={<RoomCard />} />
         <Route path="/planner" element={<Planner />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/hotel_managment" element={<Hote_managment />} />
-        <Route path="/admin_reservations" element={<Revervations />} />
         <Route path="/logInOut" element={<LogInOut />} />
-        <Route path="btn" element={<PlannerOneChoiceBtn />} />
         <Route path="loading" element={<Loading />} />
         <Route path="payment" element={<Payment />} />
+        <Route path="message" element={<SMTPMessage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -80,12 +80,12 @@ export const getRooms = async (req, res, next) => {
 export const getRoom = async (req, res, next) => {
   try {
     const room = await Room.findById(req.params.id);
-
     res.status(201).send(room);
   } catch (err) {
     next(err);
   }
 };
+
 
 
 export const addOrRemove = async (req, res, next) => {

@@ -9,7 +9,7 @@ import {
   faCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 import headSet from "../../image/headSet.jpg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "../../hook/useFetch.js"
 import { useLocation } from "react-router-dom"
 import Loading from './../../components/Loading/Loading';
@@ -46,21 +46,23 @@ import AirPurifiers from "../../image/air-purifier.png"
 import Fax from "../../image/fax.png"
 import Point from "../../image/right-arrow (3).png"
 import Down from "../../image/download.png"
+import BoykaSlider from "../../components/Slide/BoykaSlider";
+import RoomCard from "../../components/roomCard/RoomCard";
 
 function Room() {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-  const paymentinfo  = location.state.item;
-  const Useroptions = location.state.data || location.state.passreservation;
-
+  const paymentinfo = location.state.item;
+  const Useroptions = location.state.data;
   const { data, loading } = useFetch(`/room/find/${id}`)
-  // To navigate to all rooms 
+  const hotelId = data.hotel_id
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
-
- 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const userId = currentUser ? currentUser._id : null;
+
   const payment = () => {
    
 
@@ -81,28 +83,22 @@ function Room() {
     ,roomId:data._id,
     date:Useroptions.userDate,
     deal:paymentinfo.deal,
-    user_id:currentUser._id
+    user_id:userId
     
 
   
   }
-
-
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-
   const [imgNumber, setNumber] = useState(6);
-
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
     setNumber(data.images.length)
   };
-
   const handleMove = (direction) => {
     let newSlideNumber;
-
     if (direction === "l") {
       newSlideNumber = slideNumber === 0 ? imgNumber : slideNumber - 1;
     } else {
@@ -115,13 +111,28 @@ function Room() {
   const togglePopUp = () => {
     setShowPopUp(true);
   };
-
   const closePopUp = (event) => {
     if (event.target === event.currentTarget) {
       setShowPopUp(false);
     }
   };
 
+  const [sliderLoaded, setSliderLoaded] = useState(false);
+  useEffect(() => {
+    if (hotel.rooms) {
+      setSliderLoaded(true);
+    }
+  }, [hotel]);
+  const settings = {
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    duration: 500,
+    swipe: true,
+  };
+
+  const roomsBtn = () => { navigate(`/rooms/${hotelId}`, { state: { reservationData } }) }
   return (
     <div>
       <Navbar />
@@ -385,8 +396,9 @@ function Room() {
                       )}
                     </div>
                   ))}
-                  <div className="seeMoreContainer">
-                    <img src={Down} alt="" className="seeMore" onClick={togglePopUp} />
+                  <div className="seeMoreContainer" onClick={togglePopUp}>
+                    <h3 className="seeMore" >See More</h3>
+                    <img src={Down} alt="" className="seeMoreImg" />
                   </div>
                 </span>
 
@@ -415,18 +427,33 @@ function Room() {
                   <span>Size : {data.size}ft</span>
                 </div>
                 <div className="roomPrice">
-                  <span>{data.price} EGP</span>
-                  <p>per night</p>
+                  <p><span>{data.price} EGP</span> Per Night</p>
                 </div>
                 <div className="roomPrice">
-                  <span>{paymentinfo.deal.price} EGP</span>
-                  <p>{paymentinfo.deal.roomscount}XRooms</p>
-                  <p>Total Price</p>
+                  <p>{paymentinfo.deal.roomscount} X Rooms</p>
+                  <p>Total Price <span>{paymentinfo.deal.price} EGP</span></p>
                 </div>
                 <div className="roomReservation">
                   <button className="bookBtn" onClick={payment}>BOOK NOW</button>
                 </div>
               </div>
+            </div>
+            <div className="hotelBottom">
+              {(
+                <>
+                  <h2>Available Rooms</h2>
+                  <button className="roomsBtn" onClick={roomsBtn}>All Rooms</button>
+                  {sliderLoaded ? (
+                    <BoykaSlider {...settings}>
+                      {hotel.rooms.map((item) => (
+                        <RoomCard item={item} key={item._id} />
+                      ))}
+                    </BoykaSlider>
+                  ) : (
+                    <p>Slider loading...</p>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>)}

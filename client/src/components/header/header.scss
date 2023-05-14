@@ -37,17 +37,19 @@
         }
 
         .listContainer {
-            display: flex;
             gap: 50px;
-            align-items: baseline;
             background: fixed;
+            .headerListItem {
+                    font-size: 20px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    &:hover {
+                        border-bottom: 2px solid rgb(255, 255, 255);
+                    }
+                }
         }
 
-        .headerListItem {
-            font-size: 20px;
-            cursor: pointer;
-        }
-
+       
         .navButton {
             margin-left: 5px;
             border: 1px solid white;
@@ -362,7 +364,7 @@
                     width: 200px;
                     display: flex;
                     justify-content: space-between;
-                    margin: 0px  10px 10px 10px;
+                    margin: 0px 10px 10px 10px;
                     text-align: center;
                     align-items: center;
 

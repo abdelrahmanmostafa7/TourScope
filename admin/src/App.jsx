@@ -6,7 +6,8 @@ import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
 import EditRooms from './pages/RoomsEdit/RoomsEdit';
 import LogInOut from './pages/Login-out/LogInOut';
-
+import NewRoom from "./pages/newRoom/NewRoom";
+import Rooms from "./pages/Rooms/Rooms";
 function App() {
 
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />
           <Route path="/editRooms" element={<EditRooms />} />
+          <Route path="/newRoom" element={<NewRoom />} />
+          <Route path="/Rooms" element={<Rooms />} />
           
 
         </Routes>
