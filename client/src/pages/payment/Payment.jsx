@@ -83,7 +83,7 @@ const Payment = () => {
     }
   };
 
-  const reservationDetails = location.state.reservationDetails;
+  //const reservationDetails = location.state.reservationDetails;
   const navigate = useNavigate();
   const reservation = () => {
     navigate("/reservations");
