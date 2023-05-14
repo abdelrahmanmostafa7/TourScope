@@ -209,7 +209,6 @@ const SearchItem = ({ item }) => {
                             }}
                         />
                     </div>
-                    {console.log(item)}
 
                     <div className="hotelRightBottom">
                         {
