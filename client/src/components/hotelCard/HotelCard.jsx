@@ -3,7 +3,7 @@ import './HotelCard.scss'
 import { Checkbox } from '@mui/material';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-// import newRequest from '../../utils/newRequest';
+import newRequest from '../../utils/newRequest';
 
 const HotelCard = ({ item }) => {
   const navigate = useNavigate()
@@ -12,14 +12,16 @@ const HotelCard = ({ item }) => {
     window.scrollTo(0, 0);
   }
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-  // const handleButton = async () => {
-  //   try {
-  //     await newRequest.put(`/user/addOrRemove/${id}`, { hotelId })
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const id = currentUser ? currentUser._id : null;
+  const hotelId = item._id
+  const handleButton = async () => {
+    try {
+      await newRequest.put(`/user/addOrRemove/${id}`, { hotelId })
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className='hotelCard'>
@@ -37,6 +39,7 @@ const HotelCard = ({ item }) => {
               color: "#142662",
             },
           }}
+          onClick={handleButton}
         />
       </div>
 

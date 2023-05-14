@@ -57,8 +57,7 @@ function Room() {
   const reservationDetails = location.state.data;
   const { data, loading } = useFetch(`/room/find/${id}`)
   const hotelId = data.hotel_id
-  console.log(hotelId);
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`)
+  const { data: hotel } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
   const payment = () => {
