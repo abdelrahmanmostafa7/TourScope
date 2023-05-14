@@ -397,13 +397,11 @@ function Room() {
                   <span>Size : {data.size}ft</span>
                 </div>
                 <div className="roomPrice">
-                  <span>{data.price} EGP</span>
-                  <p>per night</p>
+                  <p><span>{data.price} EGP</span> Per Night</p>
                 </div>
                 <div className="roomPrice">
-                  <span>{paymentinfo.deal.price} EGP</span>
-                  <p>{paymentinfo.deal.roomscount}XRooms</p>
-                  <p>Total Price</p>
+                  <p>{paymentinfo.deal.roomscount} X Rooms</p>
+                  <p>Total Price <span>{paymentinfo.deal.price} EGP</span></p>
                 </div>
                 <div className="roomReservation">
                   <button className="bookBtn" onClick={payment}>BOOK NOW</button>

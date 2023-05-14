@@ -84,9 +84,11 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
-        gap: 5px;
+        flex-direction: column;
 
+        p{
+            margin: 5px;
+        }
         span {
             color: #49D62F;
             font-size: 18px;
