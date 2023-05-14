@@ -89,15 +89,11 @@ const Hotel = () => {
     swipe: true,
   };
 
-  // To navigate to all rooms 
   const navigate = useNavigate()
   const reservationData = {
     roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,
-  
-
-
   };
   const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { reservationData } }) }
   // Slider states & functions 

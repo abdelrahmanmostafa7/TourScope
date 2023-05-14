@@ -5,13 +5,14 @@ body {
 .Room {
   display: flex;
     flex-direction: column;
-    width: 310px;
+    width: 300px;
     height: 360px;
     border: 10px solid white;
     text-align: center;
     border-radius: 15px;
     background-color: white;
     position: relative;
+    padding-bottom: 5px;
   
     .roomImg {
       width: 100%;

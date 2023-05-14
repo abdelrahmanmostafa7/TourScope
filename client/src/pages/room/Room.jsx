@@ -54,40 +54,34 @@ function Room() {
   const location = useLocation()
   const id = location.pathname.split("/")[2]
   const paymentinfo = location.state.item;
-  const Useroptions = location.state.data;
+  const Useroptions = location.state.data || location.state.passreservation;
   const { data, loading } = useFetch(`/room/find/${id}`)
   const hotelId = data.hotel_id
   const { data: hotel } = useFetch(`/hotel/find/${hotelId}`)
   const navigate = useNavigate()
 
+  const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { reservationData } }) }
+
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const userId = currentUser ? currentUser._id : null;
 
   const payment = () => {
-   
-
     if (currentUser == null) {
       const from = "/room"
-      navigate("/logInOut", {state:{from , reservationDetails}} )
+      navigate("/logInOut", { state: { from, reservationDetails } })
     } else {
-
-
-       navigate("/payment" , {state:{reservationDetails}})
-
+      navigate("/payment", { state: { reservationDetails } })
     }
   }
 
-
   const reservationDetails = {
-    roomoptions:Useroptions.roomoptions
-    ,roomId:data._id,
-    date:Useroptions.userDate,
-    deal:paymentinfo.deal,
-    user_id:userId
-    
-
-  
+    roomoptions: Useroptions.roomoptions
+    , roomId: data._id,
+    date: Useroptions.userDate,
+    deal: paymentinfo.deal,
+    user_id: userId
   }
+
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
@@ -132,7 +126,6 @@ function Room() {
     swipe: true,
   };
 
-  const roomsBtn = () => { navigate(`/rooms/${hotelId}`, { state: { reservationData } }) }
   return (
     <div>
       <Navbar />
