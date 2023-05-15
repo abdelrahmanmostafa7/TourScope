@@ -165,7 +165,7 @@ export const getHotel = async (req, res, next) => {
                         if (room.maxpeople * n >= sumOfAdults) {
                             if (n <= updatedAvailability.length) {
                                 deal.roomscount = n
-                                deal.price = n * room.price
+                                deal.price = n * room.price *diffDays
                                 break;
 
                             } else {
@@ -334,11 +334,12 @@ export const getHotels = async (req, res, next) => {
                 if (bestDeal) {
                     deals = bestDeal;
                     deals.rooms = 1;
+                    deals.price = deals.price *diffDays
                 } else if (nearestDeal) {
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;
-                    deals.price = numRooms * deals.price
+                    deals.price = numRooms * deals.price  * diffDays
                 }
                 if (deals.roomcounter >= deals.rooms) {
                     return { ...hotel, deals };

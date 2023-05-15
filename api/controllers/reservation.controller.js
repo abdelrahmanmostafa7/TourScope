@@ -7,8 +7,8 @@ import mongoose from 'mongoose';
 
 export const user_reservations = async (req, res, next) => {
     try {
-        const userdata = await Reservation.find({ user_id: req.body.user_id })
-            .populate({ path: 'hotel_id', select: 'name images' });
+        const userdata = await Reservation.find({ user_id: req.params.id})
+            .populate({ path: 'hotel_id', select: 'name images address rating' });
         userdata[0].hotel_id.images = userdata[0].hotel_id.images[0];
         res.status(201).send(userdata)
     } catch (err) {
@@ -18,10 +18,10 @@ export const user_reservations = async (req, res, next) => {
 
 export const make_reservation = async (req, res, next) => {
     try {
-        const { roomoptions, roomId, date,deal,user_id } = req.body.userdata;
+        const { roomoptions, roomId, date,deal,user_id } = req.body;
         const roomIds = new mongoose.Types.ObjectId(roomId);
-        const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } }).populate({ path: 'rooms', match: { _id: roomId } });
-        const room = await Room.findById(roomIds).select('room_availability price maxpeople')
+        const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } });
+        const room = await Room.findById(roomId).select('room_availability price maxpeople')
         const user_startDate = new Date(date[0].startDate)
         const user_endDate = new Date(date[0].endDate)
         room.room_availability.some(ro => {
@@ -68,7 +68,9 @@ export const make_reservation = async (req, res, next) => {
         });
         await newreservation.save();
         await room.save();
+
         res.status(201).send(newreservation)
+        console.log("done")
     } catch (err) {
         next(err)
     }
@@ -88,6 +90,7 @@ export const update_reservation_status = async (req, res, next) => {
             { new: true })
         await resevation.save()
         res.status(201).send(resevation);
+        console.log("done")
 
         //update room validatin
 

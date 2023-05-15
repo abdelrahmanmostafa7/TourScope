@@ -8,24 +8,30 @@ import {
     faArrowLeft,
     faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-const ReservationCard = () => {
+const ReservationCard = ({item}) => {
+  const startDate = new Date(item.check_in_out.in);
+  const endDate = new Date(item.check_in_out.out);
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+
+  const formattedstartDate = startDate.toLocaleDateString(undefined, options);
+  const formattedendDate = endDate.toLocaleDateString(undefined, options);
+  const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
   return (
     <div>
       <div className="reservation">
         <div className="reservationLeft">
-          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGhvdGVsc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" className='reservationImg' />
+          <img src={item.hotel_id.images} alt="" className='reservationImg' />
         </div>
         <div className="reservationRight">
           <div className="reservationSec">
-            <h2>Name Of The Hotel</h2>
+            <h2>{item.hotel_id.name}</h2>
             <div className="reservationDetails">
               <div className="stars">
-                <FontAwesomeIcon icon={faStar} className="iconStar" />
-                <FontAwesomeIcon icon={faStar} className="iconStar" />
-                <FontAwesomeIcon icon={faStar} className="iconStar" />
-                <FontAwesomeIcon icon={faStar} className="iconStar" />
+              <span className='favCardRating'> {item.hotel_id.rating}⭐</span>
+
               </div>
-              <p>The Address Of The Hotel</p>
+              <p style={{ fontSize: "13px", display: "flex", flexDirection: "column", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "100%" }}>{item.hotel_id.address}</p>
             </div>
           </div>
           <hr />
@@ -34,11 +40,11 @@ const ReservationCard = () => {
             <div className="reservationDetails">
               <div className="reservationCol">
                 <h3>Check In</h3>
-                <p>June 3,2023</p>
+                <p>{formattedstartDate}</p>
               </div>
               <div className="reservationCol">
                 <h3>Check Out</h3>
-                <p>June 9,2023</p>
+                <p>{formattedendDate}</p>
               </div>
               <div className="reservationCol">
                 <h3>Status</h3>
@@ -52,30 +58,30 @@ const ReservationCard = () => {
             <div className="reservationDetails">
               <div className="reservationCol">
                 <h3>Date</h3>
-                <p>June 3,2023</p>
+                <p>{formattedstartDate}</p>
               </div>
               <div className="reservationCol">
                 <h3>Payment Method</h3>
-                <p>Pay On Arrival</p>
+                <p>Visa</p>
               </div>
               <div className="reservationCol">
                 <h3>price</h3>
-                <p>35$</p>
+                <p>{item.total_price}</p>
               </div>
               <div className="reservationCol">
                 <h3>Status</h3>
-                <p>Pending</p>
+                <p>{item.status}</p>
               </div>
             </div>
           </div> 
-            <hr />
+            {/* <hr />
           <div className="reservationSec">
             <h2>Pending</h2>
             <div className="reservationDetails">
               <p>3:25:33</p>
               <button className='reservationBtn'>Cancel</button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

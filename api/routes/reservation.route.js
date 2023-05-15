@@ -4,8 +4,8 @@ const route = express.Router();
 
 //reservations routes
 
-route.get("/my_reservation",user_reservations)
-route.put("/my_reservation/:reservation_id",update_reservation_status)
+route.get("/my_reservation/:id",user_reservations)
+route.put("/my_reservation/:id",update_reservation_status)
 route.post("/make_reservation",make_reservation)
 
 export default route

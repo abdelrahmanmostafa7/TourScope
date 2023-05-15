@@ -92,6 +92,8 @@ const Hotel = () => {
   // To navigate to all rooms 
   const navigate = useNavigate()
   const reservationData = {
+    hotelname:hotel.name,
+    hotelimg:hotel.images ? hotel.images[0] : null,
     roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,

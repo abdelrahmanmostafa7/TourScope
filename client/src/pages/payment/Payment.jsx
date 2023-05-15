@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import "./Payment.scss"
+import newRequest from '../../utils/newRequest';
 import useFetch from './../../hook/useFetch';
 import Navbar from './../../components/navBar/Navbar';
 import Visa from "../../image/visa.png"
@@ -7,10 +8,19 @@ import MasterCard from "../../image/master-card.png"
 import DefaultMaster from "../../image/credit-card (2).png"
 import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
-import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
+import Aleart from '../../components/Aleart/Aleart';
 const Payment = () => {
   const location = useLocation()
+  const useroptions = location.state.reservationDetails;
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  const startDate = new Date(useroptions.date[0].startDate);
+  const endDate = new Date(useroptions.date[0].endDate);
+
+  const formattedstartDate = startDate.toLocaleDateString(undefined, options);
+  const formattedendDate = endDate.toLocaleDateString(undefined, options);
+  const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
 
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -52,6 +62,13 @@ const Payment = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
+  const reservationDetails = {
+    roomoptions:useroptions.roomoptions
+    ,roomId:useroptions.roomId,
+    date:useroptions.date,
+    deal:useroptions.deal,
+    user_id:data._id
+  }
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
   const handleCardNumberChange = (event) => {
@@ -62,13 +79,28 @@ const Payment = () => {
   }
 
   const [showPopUp, setShowPopUp] = useState(false);
-  const togglePopUp = () => {
-    setShowPopUp(true);
-  };
+  const togglePopUp = async() => {
+  
+    try {
+     const data = await newRequest.post("/reservation/make_reservation", reservationDetails )
+    
+    if (data.data){
+      setShowPopUp(true);
+      setTimeout(() => {
+        navigate(`/reservations/${reservationDetails.user_id}`)
+
+      }, 3000);
+    }
+     //navigate("/reservations");
+    }
+    catch (err) {
+      //setError(err.response.data)
+    }
+    };
 
   const closePopUp = (event) => {
     if (event.target === event.currentTarget) {
-      setShowPopUp(false);
+     
     }
   };
 
@@ -90,12 +122,14 @@ const Payment = () => {
   }
   const userName = data.first_name + " " + data.last_name
   return (
+    
     <div>
       <Navbar />
       <div className="roomContainer">
         <div className="roomWrapper">
           <div className="pay">
             <div className="payment">
+            {showPopUp && <Aleart type={"success"} message={"sucessfull booking"} />}
               <div className="userInformation">
                 <div className="heading">
                   <h1>Your Information</h1>
@@ -186,31 +220,32 @@ const Payment = () => {
             </div>
             <div className="paymentDetails">
               <div className="arrivalInfo">
-                <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='HotelImg' />
+                <img src={useroptions.hotelimg} alt="" className='HotelImg' />
                 <div className="arrivalInfoBottom">
-                  <p> 4.8/5 Very good </p>
-                  <p>1 Room 1 king bed</p>
-                  <p className='refundable'>Non-refundable</p>
-                  <p>Check-in: Sun, May 28</p>
-                  <p>Check-out: Mon, May 29</p>
-                  <p>1-night stay</p>
+                  <p> {useroptions.hotelName} </p>
+                  <p>{useroptions.roomName}</p>
+                  {/* <p className='refundable'>Non-refundable</p> */}
+                  {console.log()}
+                  <p>Check-in:{formattedstartDate}</p>
+                  <p>Check-out: {formattedendDate}</p>
+                  <p>{diffDays}-night stay</p>
                 </div>
               </div>
               <div className="payPrice">
                 <h1>Price details</h1>
                 <hr />
                 <div className="payRow">
-                  <p>1 room x 1 night</p>
-                  <p>283.01 EGP</p>
+                  <p>{useroptions.deal.roomscount} room x {diffDays} night</p>
+                  <p>{useroptions.deal.price} EGP</p>
                 </div>
                 <div className="payRow">
                   <p>Taxes and fees</p>
-                  <p>81.96 EGP</p>
+                  <p>Free</p>
                 </div>
                 <hr />
                 <div className="payRow">
                   <p>Total</p>
-                  <p>364.97.96 EGP</p>
+                  <p>{useroptions.deal.price} EGP</p>
                 </div>
               </div>
             </div>
