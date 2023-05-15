@@ -19,6 +19,7 @@ export const user_reservations = async (req, res, next) => {
 export const make_reservation = async (req, res, next) => {
     try {
         const { roomoptions, roomId, date,deal,user_id } = req.body;
+        console.log(req.body)
         const roomIds = new mongoose.Types.ObjectId(roomId);
         const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } });
         const room = await Room.findById(roomId).select('room_availability price maxpeople')
