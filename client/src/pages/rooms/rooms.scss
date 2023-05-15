@@ -5,9 +5,9 @@ body{
 }
 .roomsContainer{
     display: flex;
-    justify-content: center;
     margin-top: 20px;
     background-color:$backgroundColor ;
+    justify-content: center;
 }
 .roomsWrapper{
     width: 100%;

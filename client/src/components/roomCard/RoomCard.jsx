@@ -6,19 +6,16 @@ import { useNavigate } from "react-router-dom";
 import "./RoomCard.scss"
 
 
-const RoomCard = ({ item, data , passreservation }) => {
+const RoomCard = ({ item, data, passreservation }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
-    if (passreservation){
+    if (passreservation) {
       navigate(`/room/${item._id}`, { state: { item, passreservation } })
-
     }
-    if(data){
+    if (data) {
       navigate(`/room/${item._id}`, { state: { item, data } })
-
     }
     window.scrollTo(0, 0);;
-
   }
   return (
     <div>
@@ -27,7 +24,7 @@ const RoomCard = ({ item, data , passreservation }) => {
         <div className="roomBottom">
           <div className="roomInfo">
             <div className="numberOfPeople">
-              <img src={item.images[0]} alt="" className='roomIcon' />
+              <img src={Bed} alt="" className='roomIcon' />
               <p>Adults : {item.maxpeople}</p>
             </div>
             <div className="roomSize">
@@ -35,25 +32,19 @@ const RoomCard = ({ item, data , passreservation }) => {
               <p>Size : {item.size}</p>
             </div>
           </div>
-          <h4 className='roomName'>{item.name.slice(0,25)}</h4>
-          <p className='roomPricePerNight'><span>{item.price} EGP</span>/Night</p> 
-          <div className="roomPrice">
-            <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span> </p>
-            <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
-          </div>
-          {/* {item.deal.price != null  ? (
+          <h4 className='roomName'>{item.name.slice(0, 25)}</h4>
+          <p className='roomPricePerNight'><span>{item.price} EGP</span>/Night</p>
+          {item.deal.price != null ? (
             <div className="roomPrice">
-              <p><span>${item.price}</span> / Night</p>
-              <p>{item.deal.roomscount}X Rooms</p>
-              <p>Total Price: {item.deal.price}</p>
-              <button onClick={RoomBtn}><img src={Book} alt="" className='BookIcon' /> Book</button>
+              <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span></p>
+              <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>
             </div>
           ) : (
             <>
               <span className='hotelPrice'>NO AVAILABLE ROOMS <br /> For this number of guests
               </span>
             </>
-          )} */}
+          )}
         </div>
       </div>
     </div>

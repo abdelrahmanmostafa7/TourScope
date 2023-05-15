@@ -4,9 +4,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 310px;
-  height: 350px;
-  border: 10px solid white;
+  width: 330px;
+  height: 370px;
+  // border: 10px solid white;
   text-align: center;
   margin: 0px 0px 10px 10px;
   border-radius: 15px;
@@ -17,7 +17,7 @@
 .hotelCardImg {
   width: 100%;
   height: 200px;
-  border-radius: 15px;
+  border-radius: 10px 10px 3px 3px;
 }
 
 .ratingAndCheckboxContainer {

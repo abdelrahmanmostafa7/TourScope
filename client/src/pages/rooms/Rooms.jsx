@@ -12,14 +12,7 @@ const Rooms = () => {
     const location = useLocation()
     const id = location.pathname.split("/")[2]
     const [reservationData, setdata] = useState(location.state.reservationData)
-
-
-
-
-
-
     const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
-
     return (
         <div>
             <Navbar />
