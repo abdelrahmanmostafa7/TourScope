@@ -24,7 +24,7 @@ const RoomCard = ({ item, data, passreservation }) => {
         <div className="roomBottom">
           <div className="roomInfo">
             <div className="numberOfPeople">
-              <img src={item.images[0]} alt="" className='roomIcon' />
+              <img src={Bed} alt="" className='roomIcon' />
               <p>Adults : {item.maxpeople}</p>
             </div>
             <div className="roomSize">
