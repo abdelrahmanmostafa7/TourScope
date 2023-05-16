@@ -2,6 +2,7 @@ from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
+from config import MONGO_CONNECTION_STRING
 
 import pandas as pd
 import math
@@ -9,7 +10,7 @@ import warnings
 
 
 def connect_to_db():
-    uri = "mongodb+srv://Zayed:9kZiT9SMz0GE7c47@cluster0.jaxfell.mongodb.net/?retryWrites=true&w=majority"
+    uri = MONGO_CONNECTION_STRING
     client = MongoClient(uri)
                           
     # Send a ping to confirm a successful connection
