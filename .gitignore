@@ -1,0 +1,5 @@
+.pytest*
+__pycache__/
+config*
+env
+test.txt
