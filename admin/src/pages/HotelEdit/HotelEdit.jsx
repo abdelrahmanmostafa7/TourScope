@@ -30,29 +30,58 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import axios from 'axios';
 import newRequest from '../../utils/newRequest'
 const HotelEdit = () => {
-
-  const hotelId = "643bb10810a61c109435fe44";
-  // To fetch data 
+  const hotelId = "643bb10810a61c1094360089";
   const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
-  const [file, setFile] = useState("");
 
-  const upload = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "upload");
+  // To add new photo 
+  const [file, setFile] = useState(null);
+  const upload = async (file) => {
+    const data = new FormData()
+    data.append("file", file)
+    data.append("upload_present", "TourScope")
     try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dipyn1unm/image/upload",
-        formData
-      );
-      const { url } = uploadRes.data;
-      const updatedImages = [...hotel.images, url];
-      await newRequest.put(`/hotel/update/${hotel._id}`, { images: updatedImages });
-    } catch (err) {
+      const res = await newRequest.post("https://api/cloudinary.com/v1_1/abdelrahmanzaki747@gmail.com/image/upload", data);
+
+      const { url } = res.data
+      return url
+    }
+    catch (err) {
       console.log(err);
     }
   };
+
+  const handleImageSubmit = async () => {
+    e.preventDefault()
+    const url = await upload(file)
+    try {
+      await newRequest.put(`/hotel/update/${hotelId}`, { images: url });
+      // window.location.reload();
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  // To edit hotel desc 
+  const [text, setText] = useState(hotel.description);
+  const [isEdit, setIsEdit] = useState(false);
+  const handleEdit = () => {
+    setText(hotel.description);
+    setIsEdit(true);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await newRequest.put(`/hotel/update/${hotelId}`, {
+        description: text,
+      });
+      setIsEdit(false);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className='hotelEdit'>
       <Sidebar />
@@ -60,7 +89,7 @@ const HotelEdit = () => {
         (<div className="hotelContainer">
           <div className="hotelWrapper">
             <h1 className="hotelTitle">{hotel.name}</h1>
-            <div className="hotelImages">
+            <form className="hotelImages" onSubmit={handleImageSubmit}>
               {hotel.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
@@ -73,22 +102,15 @@ const HotelEdit = () => {
                 </div>
               ))}
               {file && <img src={URL.createObjectURL(file)} alt="" className='NewHotelImg' />}
-              <form className="addHotelImg" onSubmit={upload} encType="multipart/form-data">
+              <div className="addHotelImg">
                 <label htmlFor="file" className="addHotelImgLabel">
                   <DriveFolderUploadOutlinedIcon htmlFor="file" className="addImgIcon" /> <br />
                   Click To Add New Photo
                 </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  className="addHotelImgInput"
-                />
-                <button className="DoneBtn" type="submit">
-                  Done
-                </button>
-              </form>
-            </div>
+                <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+              </div>
+                <button className="DoneBtn" type="submit">Done</button>
+            </form>
 
             <h2 className="aboutHotel">Hotel Features</h2>
             <span className="HotelFeatures">
@@ -249,11 +271,31 @@ const HotelEdit = () => {
               ))}
               <button className='addHotelFeature'>+</button>
             </span>
-            <div className="hotelDetailsTexts">
-              <h2 className="aboutHotel">Details about Hotel  </h2>
-              <EditIcon className='hotelDetailsEdit' />
-            </div>
-            <p className="hotelDesc"> {hotel.description}</p>
+
+            <form onSubmit={handleSubmit} className="hotelDetailsTexts">
+              <div className="hotelDetailsTop">
+                <h2 className="aboutHotel">Details about Hotel</h2>
+                {isEdit ? (
+                  <button type="submit" className="hotelDetailsSubmit">
+                    Submit
+                  </button>
+                ) : (
+                  <EditIcon className="hotelDetailsEdit" onClick={handleEdit} />
+                )}
+              </div>
+              <div className="hotelDetailsBottom">
+                {isEdit ? (
+                  <textarea
+                    type="text"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    className="hotelDescInput"
+                  />
+                ) : (
+                  <p className="hotelDesc">{hotel.description}</p>
+                )}
+              </div>
+            </form>
           </div>
         </div>)}
     </div>
