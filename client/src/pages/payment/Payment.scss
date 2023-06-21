@@ -69,8 +69,10 @@
     gap: 10px;
     // background-color: #fff;
     .HotelImg{
-      width: 324px;
-      border-radius: 10px 10px 3px 3px ;
+      width: 100%;
+      border-radius: 20px ;
+      border:10px solid white;
+      box-sizing:border-box;
     }
   }
 

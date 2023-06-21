@@ -21,8 +21,6 @@ function App() {
           <Route path="/HotelEdit" element={<HotelEdit />} />
           <Route path="/editRooms" element={<EditRooms />} />
           <Route path="/newRoom" element={<NewRoom />} />
-          
-
         </Routes>
       </BrowserRouter>
     </div>

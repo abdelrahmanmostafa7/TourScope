@@ -15,9 +15,11 @@ const List = () => {
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
   const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
+  let currentDay = new Date()
+  currentDay = currentDay.getDate() + 1
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
-    endDate: new Date().setDate(new Date().getDate() + 1),
+    endDate: currentDay,
     key: "selection",
   }])
 
@@ -42,7 +44,13 @@ const List = () => {
   const handelSearch = () => {
     reFetch()
   }
+  const reservationDetails = {
+    date,
+    options,
+    destination,
 
+  }
+  console.log(reservationDetails)
   return (
     <div>
       <Navbar />
@@ -58,7 +66,7 @@ const List = () => {
                   Try  to search another city</h1>
               )}
               {data.map(item =>
-                <SearchItem item={item} key={item._id} />
+                <SearchItem item={item} key={item._id} reservationDetails={reservationDetails} />
               )}
             </div>
 

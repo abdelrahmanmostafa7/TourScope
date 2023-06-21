@@ -9,8 +9,7 @@ import math
 import warnings
 
 
-def connect_to_db():
-    uri = MONGO_CONNECTION_STRING
+def connect_to_db(uri):
     client = MongoClient(uri)
                           
     # Send a ping to confirm a successful connection
@@ -18,7 +17,7 @@ def connect_to_db():
         client.admin.command('ping')
         print("successfully connected to MongoDB!")
     except Exception as e:
-        print(e)
+        return(e)
         
     return client
 
@@ -31,27 +30,31 @@ def get_data(user_id,client):
     hotels_collection = db["hotels"]
     reservations_collection = db["reservations"]
     
-    # get users reservations
-    user_id = ObjectId(user_id)
-    user_reservations = list(reservations_collection.find({"user_id": user_id}))
-    user_hotels = []
-    
-    for res in user_reservations:
-        hotel = hotels_collection.find_one({"_id": res['hotel_id']},{"name":1, "rating":1, "price":1, "amenities":1})
-    
-        user_hotels.append(hotel)
-        
-    user_hotels_df = pd.DataFrame(user_hotels)
-    
-    # load hotels from saved df if it exists
     try:
-        hotels_df = pd.read_pickle('hotels.pkl')
-    except FileNotFoundError: 
-        hotels_df = pd.DataFrame(list(hotels_collection.find({},{'country':1, 'city':1, 'distanceFromCityCenter':1, 'images':1, "_id":1,"name":1, "rating":1, "price":1, "amenities":1})))
-        hotels_df.to_pickle('hotels.pkl')
+        # get users reservations
+        user_id = ObjectId(user_id)
+        user_reservations = list(reservations_collection.find({"user_id": user_id}))
+        user_hotels = []
         
-    return hotels_df, user_hotels_df
+        for res in user_reservations:
+            hotel = hotels_collection.find_one({"_id": res['hotel_id']},{"name":1, "rating":1, "price":1, "amenities":1})
+        
+            user_hotels.append(hotel)
+            
+        user_hotels_df = pd.DataFrame(user_hotels)
+        
+        # load hotels from saved df if it exists
+        try:
+            hotels_df = pd.read_pickle('./ai/hotels.pkl')
+        except FileNotFoundError: 
+            hotels_df = pd.DataFrame(list(hotels_collection.find({},{'country':1, 'city':1, 'distanceFromCityCenter':1, 'images':1, "_id":1,"name":1, "rating":1, "price":1, "amenities":1})))
+            hotels_df.to_pickle('hotels.pkl')
+            
+        return hotels_df, user_hotels_df
     
+    except Exception as e:
+        error_message = f"Error retrieving data for user ID {user_id}"
+        raise Exception(error_message) from e
         
 def clean_data(hotels_df, user_hotels_df):
     # remove all columns except: price, rating, amenities,Name
@@ -92,9 +95,11 @@ def get_recommendations(user_id, client):
     warnings.filterwarnings("ignore", category=FutureWarning)
     
     # prepare data
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.max_columns', None)
-    hotels_df, user_history_df = get_data(user_id, client)
+    try:
+        hotels_df, user_history_df = get_data(user_id, client)
+    except Exception as e:
+        raise e
+    
     hotels_df, user_history_df = clean_data(hotels_df, user_history_df)
   
     # remove duplicate hotels
@@ -113,7 +118,7 @@ def get_recommendations(user_id, client):
     similarity_scores = cosine_similarity(user_history_df.drop(['name'], axis=1), hotels_df.drop(['name'], axis=1))
     
     # read original hotels
-    hotels = pd.read_pickle('hotels.pkl')
+    hotels = pd.read_pickle('./ai/hotels.pkl')
     hotels['_id'] = hotels['_id'].astype(str)
     
     # get recommendations
@@ -123,3 +128,5 @@ def get_recommendations(user_id, client):
     
     # return recommendations as json
     return recommendations.to_json(orient='records')
+
+
