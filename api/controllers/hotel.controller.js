@@ -329,3 +329,15 @@ export const getHotels = async (req, res, next) => {
     }
 
 };
+
+
+// Get all rooms 
+export const getHotelRooms = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        const hotels = await Hotel.findById(id).populate({ path: 'rooms', select: ' name beds type maxpeople price status'  }).select("rooms")
+        res.status(200).json(hotels);
+    } catch (err) {
+        next(err);
+    }
+};

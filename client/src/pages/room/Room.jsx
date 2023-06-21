@@ -53,46 +53,35 @@ function Room() {
   // To fetch data 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
-  const paymentinfo = location.state.item;
-  const Useroptions = location.state.data || location.state.passreservation;
-  console.log(Useroptions)
   const { data, loading } = useFetch(`/room/find/${id}`)
   const hotelId = data.hotel_id
   const { data: hotel } = useFetch(`/hotel/find/${hotelId}`)
+  
+  const paymentinfo = location.state.item;
+  const Useroptions = location.state.data || location.state.passreservation;
   const navigate = useNavigate()
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const userId = currentUser ? currentUser._id : null;
   const reservationDetails = {
-    roomoptions:Useroptions.roomoptions
-    ,roomId:data._id,
-    date:Useroptions.userDate,
-    deal:paymentinfo.deal,
-    user_id:userId,
-    hotelimg:Useroptions.hotelimg,
-    hotelName:Useroptions.hotelname,
-    roomName:data.name
-
-    
-
-  
+    roomoptions: Useroptions.roomoptions
+    , roomId: data._id,
+    date: Useroptions.userDate,
+    deal: paymentinfo.deal,
+    user_id: userId,
+    hotelimg: Useroptions.hotelimg,
+    hotelName: Useroptions.hotelname,
+    roomName: data.name
   }
   const payment = () => {
-   
- 
     if (currentUser == null) {
       const from = "/room"
-      navigate("/logInOut", {state:{from , reservationDetails}} )
+      navigate("/logInOut", { state: { from, reservationDetails } })
     } else {
-
-
-       navigate("/payment" , {state:{reservationDetails}})
-
+      navigate("/payment", { state: { reservationDetails } })
     }
   }
 
-
- 
   // Slider states & functions 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);

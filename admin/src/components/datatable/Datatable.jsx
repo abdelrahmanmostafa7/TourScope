@@ -1,15 +1,35 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource";
+import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import useFetch from "../../hook/useFetch"
 const Datatable = () => {
-  const [data, setData] = useState(userRows);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  const id = "643bb10810a61c1094360089"
+  const { data, loading } = useFetch(`/hotel/hotelRooms/${id}`)
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    if (data && data.rooms) {
+      const rowsWithId = data.rooms.map((row) => ({ ...row, id: row._id }));
+      setRows(rowsWithId);
+    }
+  }, [data]);
+
+
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
   };
+  
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
+  
+  
 
   const actionColumn = [
     {
@@ -19,31 +39,24 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link to="/editRoom" style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
           </div>
         );
       },
     },
   ];
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
-        <Link to="/New" className="link">
-          Add New
-        </Link>
+        All Rooms In Hotel
+        <button className="link" onClick={togglePopUp}>Add Room</button>
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={rows}
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
