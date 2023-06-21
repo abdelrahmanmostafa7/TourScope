@@ -45,9 +45,11 @@ const Hotel = () => {
   const id = location.pathname.split("/")[2]
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
+  let currentDay = new Date()
+  currentDay=currentDay.getDate()+1
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
-    endDate: new Date().setDate(new Date().getDate() + 1),
+    endDate: currentDay,
     key: "selection",
   }])
   

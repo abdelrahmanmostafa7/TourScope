@@ -29,21 +29,17 @@ import Spa from "../../image/massage.png"
 import newRequest from "../../utils/newRequest";
 import useFetch from "../../hook/useFetch";
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({ item, reservationDetails }) => {
     const location = useLocation()
     const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
-    const [date, setDate] = useState(location.state?.date ? location.state.date : [{
-        startDate: new Date(),
-        endDate: new Date(),
-        key: "selection",
-    }])
+    const [date, setDate] = useState(location.state?.date ? location.state.date : reservationDetails.date)
 
     const [options, setOptions] = useState(location.state?.options ? location.state.options : {
         adult: 1,
         children: 0,
         room: 1,
     })
-
+    
     const navigate = useNavigate()
     const hotelDetails = () => {
         navigate(`/hotels/${item._id}`, { state: { destination, date, options } })

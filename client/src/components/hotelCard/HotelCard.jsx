@@ -25,7 +25,9 @@ const HotelCard = ({ item }) => {
 
   return (
     <div className='hotelCard'>
+      <div className="hotelCardImgContainer">
       <img src={item.images} alt="" className='hotelCardImg' />
+      </div>
 
       <div className="ratingAndCheckboxContainer">
         <span className='favCardRating'> {item.rating}⭐</span>
