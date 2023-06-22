@@ -39,14 +39,14 @@ export const updateHotel = async (req, res, next) => {
 // };
 
 //DELETE
-export const deleteHotel = async (req, res, next) => {
-    try {
-        await Hotel.findByIdAndDelete(req.params.id);
-        res.status(200).json("Hotel has been deleted");
-    } catch (err) {
-        next(err);
-    }
-};
+// export const deleteHotel = async (req, res, next) => {
+//     try {
+//         await Hotel.findByIdAndDelete(req.params.id);
+//         res.status(200).json("Hotel has been deleted");
+//     } catch (err) {
+//         next(err);
+//     }
+// };
 
 //GET
 export const getHotel = async (req, res, next) => {
@@ -334,9 +334,49 @@ export const getHotels = async (req, res, next) => {
 // Get all rooms 
 export const getHotelRooms = async (req, res, next) => {
     try {
-        const {id} = req.params
-        const hotels = await Hotel.findById(id).populate({ path: 'rooms', select: ' name beds type maxpeople price status'  }).select("rooms")
+        const { id } = req.params
+        const hotels = await Hotel.findById(id).populate({ path: 'rooms', select: ' name beds type maxpeople price status' }).select("rooms")
         res.status(200).json(hotels);
+    } catch (err) {
+        next(err);
+    }
+};
+
+// // Delete photos 
+// export const deleteHotel = async (req, res, next) => {
+//     try {
+//         await Hotel.findByIdAndDelete(req.params.id);
+//         res.status(200).json("Hotel has been deleted");
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+// export const deleteHotelItem = async (req, res, next) => {
+//     const input = req.body
+//     try {
+//         if (input.photo) {
+//             await Hotel.findByIdAndUpdate(req.params.id, { " $pull ": { images: input.photo } })
+//         }
+//         console.log(input);
+//         res.status(200).json({ message: "Hotel and its photo have been deleted" });
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+
+
+export const deleteHotelItem = async (req, res, next) => {
+    const input = req.body
+    try {
+        if (input.photo ) {
+            await Hotel.findByIdAndUpdate(req.params.id, { $pull: { images: input.photo } })
+        }
+        if (input.amenity) {
+            await Hotel.findByIdAndUpdate(req.params.id, { $pull: { amenities: input.amenity } })
+        }
+        res.status(200).json({ message: "Hotel item has been deleted" });
     } catch (err) {
         next(err);
     }

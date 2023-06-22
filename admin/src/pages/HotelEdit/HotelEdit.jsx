@@ -82,6 +82,21 @@ const HotelEdit = () => {
     }
   };
 
+
+  const handleDelete = async (photo, amenity) => {
+    try {
+      const res = await newRequest.put(`/hotel/deleteHotelItem/${hotelId}`, { photo, amenity} );
+      // console.log(res.data);
+      console.log(amenity);
+      window.location.reload();
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+
   return (
     <div className='hotelEdit'>
       <Sidebar />
@@ -93,12 +108,11 @@ const HotelEdit = () => {
               {hotel.images?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
-                    onClick={() => handleOpen(i)}
                     src={photo}
                     alt=""
                     className="hotelImg"
                   />
-                  <RemoveCircleOutlineIcon className="ImageDeleteIcon" />
+                  <RemoveCircleOutlineIcon className="ImageDeleteIcon"  onClick={() => handleDelete(photo)}/>
                 </div>
               ))}
               {file && <img src={URL.createObjectURL(file)} alt="" className='NewHotelImg' />}
@@ -118,25 +132,25 @@ const HotelEdit = () => {
                 <div className="FeaturesWrapper" key={i}>
                   {amenity === "Free WiFi" ? (
                     <div className="inHotel">
-                      <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" />
+                      <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" onClick={() => handleDelete(amenity)} />
                       <h3 className="featureTitle">{amenity}</h3>
                       <img src={Wifi} alt="" className="featureImages" />
                     </div>
                   ) : amenity === "Bar" ? (
                     <div className="inHotel">
-                      <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" />
+                        <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" onClick={() => handleDelete(amenity)} />
                       <h3 className="featureTitle">{amenity}</h3>
                       <img src={Bar} alt="" className="featureImages" />
                     </div>
                   ) : amenity === "Non-smoking rooms" ? (
                     <div className="inHotel">
-                      <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" />
+                          <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" onClick={() => handleDelete(amenity)} />
                       <h3 className="featureTitle">{amenity}</h3>
                       <img src={NoSmoking} alt="" className="featureImages" />
                     </div>
                   ) : amenity === "Room service" ? (
                     <div className="inHotel">
-                      <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" />
+                            <RemoveCircleOutlineIcon className="amenitiesDeleteIcon" onClick={() => handleDelete(amenity)} />
                       <h3 className="featureTitle">{amenity}</h3>
                       <img src={RoomService} alt="" className="featureImages" />
                     </div>
