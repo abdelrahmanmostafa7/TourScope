@@ -4,10 +4,8 @@ import New from "./pages/NewUser/NewUser";
 import ReservationStatus from "./pages/ReservationStatus/ReservationStatus";
 import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
-import EditRooms from './pages/RoomsEdit/RoomsEdit';
-import LogInOut from './pages/Login-out/LogInOut';
-import NewRoom from "./pages/newRoom/NewRoom";
-import UpdateRoom from "./components/UpdateRoom/UpdateRoom";
+import EditRoom from './pages/RoomEdit/RoomEdit';
+import EditRooms from './pages/EditRooms/EditRooms';
 function App() {
 
   return (
@@ -20,9 +18,13 @@ function App() {
           <Route path="/New" element={<New />} />
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />
+          <Route path="/editRoom/:id" element={<EditRoom />} />
           <Route path="/editRooms" element={<EditRooms />} />
+<<<<<<< HEAD
           <Route path="/newRoom" element={<NewRoom />} />
           <Route path="/updateRoom" element={<UpdateRoom />} />
+=======
+>>>>>>> 5fc24c90f18dd35094afe025f7fb0c341743d91a
         </Routes>
       </BrowserRouter>
     </div>

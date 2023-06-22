@@ -13,11 +13,23 @@ export const createHotel = async (req, res, next) => {
 };
 
 //UPDATE
+export const updateHotel = async (req, res, next) => {
+    try {
+        const updatedHotel = await Hotel.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+        res.status(200).json(updatedHotel);
+    } catch (err) {
+        next(err);
+    }
+};
 // export const updateHotel = async (req, res, next) => {
 //     try {
 //         const updatedHotel = await Hotel.findByIdAndUpdate(
 //             req.params.id,
-//             { $set: req.body },
+//             { $push: { images: req.body.image } },
 //             { new: true }
 //         );
 //         res.status(200).json(updatedHotel);
@@ -26,52 +38,11 @@ export const createHotel = async (req, res, next) => {
 //     }
 // };
 
-// export const updateHotel = async (req, res, next) => {
-//     try {
-//         const { collection, id } = req.params;
-//         const updatedData = await mongoose.model(collection).findByIdAndUpdate(
-//             id,
-//             { $set: req.body },
-//             { new: true }
-//         );
-//         res.status(200).json(updatedData);
-//     } catch (err) {
-//         next(err);
-//     }
-// };
-
-export const updateHotel = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const { images } = req.body;
-        const updatedHotel = await Hotel.findByIdAndUpdate(
-            id,
-            { $set: { images } },
-            { new: true }
-        );
-        res.status(200).json(updatedHotel);
-    } catch (err) {
-        next(err);
-    }
-};
 //DELETE
-export const deleteHotel = async (req, res, next) => {
-    try {
-        await Hotel.findByIdAndDelete(req.params.id);
-        res.status(200).json("Hotel has been deleted");
-    } catch (err) {
-        next(err);
-    }
-};
-
-//GET
-// export const getHotel = async (req, res, next) => {
-//     const { min, max, city, startdate, enddate, roomsoption, } = req.query;
+// export const deleteHotel = async (req, res, next) => {
 //     try {
-//         const hotel = await Hotel.findById(req.params.id).populate('rooms').select('_id name address distanceFromCityCenter amenities rating price images description rooms');
-
-//         res.status(201).send(hotel)
-
+//         await Hotel.findByIdAndDelete(req.params.id);
+//         res.status(200).json("Hotel has been deleted");
 //     } catch (err) {
 //         next(err);
 //     }
@@ -165,7 +136,7 @@ export const getHotel = async (req, res, next) => {
                         if (room.maxpeople * n >= sumOfAdults) {
                             if (n <= updatedAvailability.length) {
                                 deal.roomscount = n
-                                deal.price = n * room.price *diffDays
+                                deal.price = n * room.price * diffDays
                                 break;
 
                             } else {
@@ -334,17 +305,17 @@ export const getHotels = async (req, res, next) => {
                 if (bestDeal) {
                     deals = bestDeal;
                     deals.rooms = 1;
-                    deals.price = deals.price *diffDays
+                    deals.price = deals.price * diffDays
                 } else if (nearestDeal) {
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;
-                    deals.price = numRooms * deals.price  * diffDays
+                    deals.price = numRooms * deals.price * diffDays
                 }
                 if (deals.roomcounter >= deals.rooms) {
                     return { ...hotel, deals };
 
-                }else{
+                } else {
                     return { ...hotel };
 
                 }
@@ -357,4 +328,56 @@ export const getHotels = async (req, res, next) => {
         next(err);
     }
 
+};
+
+
+// Get all rooms 
+export const getHotelRooms = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const hotels = await Hotel.findById(id).populate({ path: 'rooms', select: ' name beds type maxpeople price status' }).select("rooms")
+        res.status(200).json(hotels);
+    } catch (err) {
+        next(err);
+    }
+};
+
+// // Delete photos 
+// export const deleteHotel = async (req, res, next) => {
+//     try {
+//         await Hotel.findByIdAndDelete(req.params.id);
+//         res.status(200).json("Hotel has been deleted");
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+// export const deleteHotelItem = async (req, res, next) => {
+//     const input = req.body
+//     try {
+//         if (input.photo) {
+//             await Hotel.findByIdAndUpdate(req.params.id, { " $pull ": { images: input.photo } })
+//         }
+//         console.log(input);
+//         res.status(200).json({ message: "Hotel and its photo have been deleted" });
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+
+
+export const deleteHotelItem = async (req, res, next) => {
+    const input = req.body
+    try {
+        if (input.photo ) {
+            await Hotel.findByIdAndUpdate(req.params.id, { $pull: { images: input.photo } })
+        }
+        if (input.amenity) {
+            await Hotel.findByIdAndUpdate(req.params.id, { $pull: { amenities: input.amenity } })
+        }
+        res.status(200).json({ message: "Hotel item has been deleted" });
+    } catch (err) {
+        next(err);
+    }
 };
