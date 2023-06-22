@@ -20,11 +20,6 @@ function App() {
           <Route path="/HotelEdit" element={<HotelEdit />} />
           <Route path="/editRoom/:id" element={<EditRoom />} />
           <Route path="/editRooms" element={<EditRooms />} />
-<<<<<<< HEAD
-          <Route path="/newRoom" element={<NewRoom />} />
-          <Route path="/updateRoom" element={<UpdateRoom />} />
-=======
->>>>>>> 5fc24c90f18dd35094afe025f7fb0c341743d91a
         </Routes>
       </BrowserRouter>
     </div>
