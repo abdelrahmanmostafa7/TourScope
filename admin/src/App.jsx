@@ -7,6 +7,7 @@ import HotelEdit from "./pages/HotelEdit/HotelEdit";
 import EditRooms from './pages/RoomsEdit/RoomsEdit';
 import LogInOut from './pages/Login-out/LogInOut';
 import NewRoom from "./pages/newRoom/NewRoom";
+import UpdateRoom from "./components/UpdateRoom/UpdateRoom";
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/HotelEdit" element={<HotelEdit />} />
           <Route path="/editRooms" element={<EditRooms />} />
           <Route path="/newRoom" element={<NewRoom />} />
+          <Route path="/updateRoom" element={<UpdateRoom />} />
         </Routes>
       </BrowserRouter>
     </div>

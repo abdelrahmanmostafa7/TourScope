@@ -14,7 +14,7 @@ import { verifyAdmin } from "../middleware/jwt.js";
 //createRoom
 router.post("/:hotelid",  createRoom);
 //updateRoom
-router.put("/:id", updateRoom);
+router.put("/update/:id", updateRoom);
 //deleteRoom
 router.delete("/:id/:hotelid", verifyAdmin, deleteRoom);
 //getALLRoom
