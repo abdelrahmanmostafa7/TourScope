@@ -18,7 +18,7 @@ function App() {
           <Route path="/New" element={<New />} />
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />
-          <Route path="/editRoom" element={<EditRoom />} />
+          <Route path="/editRoom/:id" element={<EditRoom />} />
           <Route path="/editRooms" element={<EditRooms />} />
         </Routes>
       </BrowserRouter>

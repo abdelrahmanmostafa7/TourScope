@@ -1,4 +1,4 @@
-import "./RoomEdit"
+import "./RoomEdit.scss"
 import { useState } from "react";
 import useFetch from "../../hook/useFetch.js"
 import Loading from '../../components/Loading/Loading';
@@ -51,11 +51,15 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Remove from "../../image/remove.png"
 // import { Checkbox } from '@mui/material/Checkbox';
 import newRequest from '../../utils/newRequest'
-// import Loading from "./../../components/Loading/Loading";
 import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
+
 function RoomEdit() {
-    const [path, setPath] = useState(`/room/find/643af6e310a61c109435e5dc`)
-    const { data, loading } = useFetch(path)
+    const location = useLocation()
+    const id = location.pathname.split("/")[2]
+    const { data, loading } = useFetch(`/room/find/${id}`)
+    // const [path, setPath] = useState(`/room/find/643af6e310a61c109435e5dc`)
+    // const { data, loading } = useFetch(path)
     const [open, setOpen] = useState(false);
     const features = [
         "Free toiletries",

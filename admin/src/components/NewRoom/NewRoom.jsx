@@ -121,8 +121,7 @@ const NewRoom = () => {
     return (
         <div>
             <div className="newRoomContainer">
-                {/* <button className="btn" onClick={togglePopUp}>Add Room</button> */}
-                {showPopUp && <div className="popup-background" onClick={closePopUp}>
+                <div className="popup-background" onClick={closePopUp}>
                     <form className="popup-content5" onSubmit={handleSubmit}>
                         <h2 className='newRoomHeading'>Add New Room</h2>
                         <div className="newRoomDetails">
@@ -186,7 +185,6 @@ const NewRoom = () => {
 
                     </form>
                 </div>
-                }
             </div>
         </div>
     )

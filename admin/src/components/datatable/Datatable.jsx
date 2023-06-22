@@ -4,6 +4,9 @@ import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFetch from "../../hook/useFetch"
+import NewRoom from "../../components/NewRoom/NewRoom"
+import { useNavigate } from "react-router-dom";
+
 const Datatable = () => {
 
   const id = "643bb10810a61c1094360089"
@@ -17,31 +20,32 @@ const Datatable = () => {
     }
   }, [data]);
 
+  const navigate = useNavigate()
+  const roomDetails = (roomId) => {
+    navigate(`/editRoom/${roomId}`)
+    window.scrollTo(0, 0);
+  }
 
   const [showPopUp, setShowPopUp] = useState(false);
   const togglePopUp = () => {
     setShowPopUp(true);
   };
-  
+
   const closePopUp = (event) => {
     if (event.target === event.currentTarget) {
       setShowPopUp(false);
     }
   };
-  
-  
-
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
+        const { id } = params.row; // Get the id of the current row
         return (
           <div className="cellAction">
-            <Link to="/editRoom" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
+            <button className="viewButton" onClick={() => roomDetails(id)}>View</button>
           </div>
         );
       },
@@ -50,9 +54,11 @@ const Datatable = () => {
 
   return (
     <div className="datatable">
-      <div className="datatableTitle">
+      <div className="datatableTitle" >
         All Rooms In Hotel
         <button className="link" onClick={togglePopUp}>Add Room</button>
+        {showPopUp && <NewRoom />}
+
       </div>
       <DataGrid
         className="datagrid"
