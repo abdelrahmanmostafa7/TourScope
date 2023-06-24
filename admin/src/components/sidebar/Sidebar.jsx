@@ -50,7 +50,7 @@ const Sidebar = () => {
               <span className="pageName">User</span>
             </li>
           </Link>
-          <Link to="RoomStatus" style={{ textDecoration: "none" }}>
+          {/* <Link to="RoomStatus" style={{ textDecoration: "none" }}>
             <li>
               <InsertChartIcon className="icon" />
               <span className="pageName">ٌRooms</span>
@@ -61,7 +61,7 @@ const Sidebar = () => {
               <SettingsSystemDaydreamOutlinedIcon className="icon" />
               <span className="pageName">Reservations</span>
             </li>
-          </Link>
+          </Link> */}
 
           <p className="title">Admin</p>
           <li>

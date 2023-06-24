@@ -67,6 +67,7 @@ body {
         background-color: #f5f5f5;
         border: none;
         border-radius: 15px;
+    cursor: pointer;
 
         .imgUpload {
             text-align: center;
@@ -76,6 +77,7 @@ body {
             position: absolute;
             left: 10;
             bottom: 10;
+    cursor: pointer;
         }
 
         .addHotelImgLabel {
@@ -221,7 +223,7 @@ body {
 
 .hotelDetailsEdit {
     background-color: #ffffff;
-    padding: 5px;
+    padding: 3px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 30px;

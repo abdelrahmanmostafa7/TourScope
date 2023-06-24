@@ -1,10 +1,10 @@
-import "./datatable.scss";
+import "./RoomsDataTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useFetch from "../../hook/useFetch"
-import NewRoom from "../../components/NewRoom/NewRoom"
+import NewRoom from "../NewRoom/NewRoom"
 import { useNavigate } from "react-router-dom";
 
 const Datatable = () => {
