@@ -126,19 +126,19 @@ const NewRoom = () => {
                         <h2 className='newRoomHeading'>Add New Room</h2>
                         <div className="newRoomDetails">
                             <div className="newRoomCol">
-                                <label htmlFor="name">Room Name</label>
+                                <label htmlFor="name">Room Name <span>*</span></label>
                                 <input type="text" name='name' onChange={handleChange} />
                             </div>
                             <div className="newRoomCol">
-                                <label htmlFor="roomNumber">Room Number</label>
+                                <label htmlFor="roomNumber">Room Number <span>*</span></label>
                                 <input type="text" name='roomNumber' onChange={handleChange} />
                             </div>
                             <div className="newRoomCol">
-                                <label htmlFor="price">Price</label>
+                                <label htmlFor="price">Price <span>*</span></label>
                                 <input type="text" name='price' onChange={handleChange} />
                             </div>
                             <div className="newRoomCol">
-                                <label htmlFor="maxpeople">max People</label>
+                                <label htmlFor="maxpeople">max People <span>*</span></label>
                                 <input type="text" name='maxpeople' onChange={handleChange} />
                             </div>
                             <div className="newRoomCol">
@@ -161,7 +161,8 @@ const NewRoom = () => {
                                 <label htmlFor="description">Description</label>
                                 <textarea name="description" onChange={handleChange}></textarea>
                             </div>
-                            <div className="row">
+                                <label className='facNewRoom'>Facilities</label>
+                            <div className="rowNewRoom">
                                 {features.map((facility, i) => (
                                     <div className="fac" key={i}>
                                         <label htmlFor="facility">

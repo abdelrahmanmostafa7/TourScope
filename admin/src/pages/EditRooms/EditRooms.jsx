@@ -12,5 +12,7 @@ const EditRooms = () => {
     </div>
   )
 }
-
+const fac = "free-wifi,tv,radio"
+let facA = fac.split(',');
+console.log(facA)
 export default EditRooms
