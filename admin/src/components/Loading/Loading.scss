@@ -2,11 +2,13 @@
 // Loaders
 .loadingContainer {
   display: flex;
-  justify-content: center;
+  // justify-content: center
   align-items: center;
   background-color: $backgroundColor ;
-  height: 600px;
+  height: 100vh;
   z-index: 20000;
+  width: 1850px;
+  margin-left:45%;
 }
 .loader-11 {
   width: $size;

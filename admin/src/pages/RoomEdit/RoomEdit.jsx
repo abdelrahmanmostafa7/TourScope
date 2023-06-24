@@ -52,7 +52,7 @@ import Remove from "../../image/remove.png"
 // import { Checkbox } from '@mui/material/Checkbox';
 import newRequest from '../../utils/newRequest'
 import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 function RoomEdit() {
     const location = useLocation()
@@ -143,12 +143,49 @@ function RoomEdit() {
         if (data.facilities)
             setDataLoaded(true);
     }, [data])
-
-    const handelSelection = (evt) => {
-        const inputClassName = evt.currentTarget.querySelector('input');
-        evt.currentTarget.querySelector('input').checked = !evt.currentTarget.querySelector('input').checked
-        console.log(inputClassName)
+    const handleDelete = async (facility) => {
+        try {
+            await newRequest.put(`/room/deleteRoomItem/${id}`, { facility });
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
     };
+    const handleDeletePhoto = async (photo) => {
+        try {
+            await newRequest.put(`/room/deleteRoomItem/${id}`, { photo });
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    const navigate = useNavigate()
+    const [facilities,setFacilities] = useState([])
+
+    const handleFacilitiesChange = (event) => {
+        const facilitiesArray = event.target.value.split(',');
+        setFacilities(facilitiesArray);
+    };
+    const handleSubmitFacilities = async (e) => {
+        e.preventDefault();
+        try {
+            const currentFacilities = data.facilities;
+            const combinedFacilities = [...currentFacilities, ...facilities];
+            await newRequest.put(`/Room/update/${id}`, { facilities: combinedFacilities });
+        } catch (error) {
+            console.log(error);
+        }
+        navigate(`/editRoom/${id}`)
+        console.log("Facilities Added Successfully ...");
+    };
+    const goBack = () => {
+        navigate("/editRoom")
+    }
+    const click = () => {
+        window.location.reload()
+    }
+
+
     return (
         <div>
             <div className="RoomEdit">
@@ -168,7 +205,7 @@ function RoomEdit() {
                                                     alt=""
                                                     className="RoomEditImg"
                                                 />
-                                                <img src={Remove} alt="" className="remove" />
+                                                <img src={Remove} alt="" className="remove" onClick={() => handleDeletePhoto(photo)} />
                                             </div>
                                         ))}
                                     </div>
@@ -180,349 +217,350 @@ function RoomEdit() {
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={FreeToiletries} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
                                                     </div>
                                                 ) : facilities === "Toilet" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Wc} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Kitchen" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Kitchen} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Kitchenette" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Kitchen} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Wake-up service" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={WakeUp} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Microwave" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Microwave} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Sofa bed" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={SofaBed} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Toaster" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Toaster} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Kitchenware" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Kitchenware} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Hypoallergenic" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Hypoallergenic} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Cleaning products" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={CleaningProducts} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Private entrance" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Import} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Bathtub or shower" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={shower} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Shower" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={shower} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Radio" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Radio} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Refrigerator" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Refrigerator} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Towels" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Towels} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Towels/Sheets (extra fee)" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Towels} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Linens" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Linens} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Desk" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Desk} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Telephone" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Telephone} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Ironing facilities" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Ironing} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Iron" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Ironing} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Socket near the bed" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Socket} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Heating" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Heat} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "TV" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Tv} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Tile/Marble floor" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Tiles} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Tea/Coffee maker" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={CoffeeMaker} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Hairdryer" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Hairdryer} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Carpeted" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Carpeted} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Fax" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Fax} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Hardwood or parquet floors" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Carpeted} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Electric kettle" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Kettle} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Outdoor furniture" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Outdoor} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Cable channels" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={CableChannels} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Wardrobe or closet" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Closet} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Clothes rack" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Closet} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Dining area" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={DiningArea} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Safe" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Safe} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Bathrobe" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Bathrobe} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Dining table" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={DiningTable} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Sofa" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Sofa} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Sitting area" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Sofa} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Sitting area" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Sofa} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Toilet paper" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={ToiletPaper} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Fan" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Fan} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Alarm clock" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Alarm} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : facilities === "Hand sanitizer" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={HandSanitizer} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
-
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
                                                     </div>
                                                 ) : facilities === "Air purifiers" ? (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={AirPurifiers} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
 
                                                     </div>
                                                 ) : (
                                                     <div className="inHotel">
                                                         <h3 className="featureTitle">{facilities}</h3>
                                                         <img src={Check} alt="" className="featureImages" />
-                                                        <img src={Remove} alt="" className="remove2" />
+                                                        <img src={Remove} alt="" className="remove2" onClick={() => handleDelete(facilities)} />
                                                     </div>
                                                 )}
                                             </div>
@@ -537,27 +575,22 @@ function RoomEdit() {
                                             {/* <img src={Down} alt="" className="seeMore" onClick={togglePopUp} /> */}
                                         </div>
                                     </span>
-                                    {showPopUp && <div className="popup-background" onClick={closePopUp}>
-                                        <div className="popup-content" >
-                                        </div>
-                                    </div>
-                                    }
-                                    <div className="popup">
-                                        <form className="options" onClick={(evt) => handelSelection(evt)} >
-                                            {dataLoaded && features.map((facility, i) => (
-                                                <div key={i} className="row">
-                                                    <input
-                                                        type="checkbox"
-                                                        value={facility}
-                                                        onChange={handleCheckboxChange}
-                                                        checked={isChecked}
-                                                    />
-                                                    <label>{facility}</label>
+                                    {showPopUp && <div className="popup-background" onClick={closePopUp} >
+                                        <form className="popup-content-1" onSubmit={handleSubmitFacilities}>
+                                            <h2 className='newRoomHeading'>Add Facilities</h2>
+                                            <div className="col">
+                                                <label htmlFor="">Write facility then " , " after each one</label>
+                                                <textarea className='ta' name="amenities" onChange={handleFacilitiesChange} required></textarea>
+                                                <div className="bottom">
+                                                    <button className='btn' >ADD</button>
+                                                    <button className='btn' onClick={closePopUp}>Cancel</button>
                                                 </div>
-                                            ))}
-                                            <button className="btn" onClick={handleSubmit}>Submit</button>
+                                            </div>
                                         </form>
-                                    </div>
+                                    </div>}
+
+
+
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ import {
   getRooms,
   updateRoom,
   addOrRemove,
+  deleteRoomItem,
 } from "../controllers/room.controller.js";
 import roomModel from "../models/room.model.js";
 import hotelModel from "../models/hotel.model.js";
@@ -23,6 +24,8 @@ router.get("/finds/:id", getRooms);
 router.get("/find/:id" , getRoom)
 
 router.put("/update/:id", addOrRemove);
+router.put("/deleteRoomItem/:id", deleteRoomItem);
+
 
 export default router;
 

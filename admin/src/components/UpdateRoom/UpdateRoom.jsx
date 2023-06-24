@@ -102,9 +102,7 @@ const UpdateRoom = () => {
     description: "",
     facilities: [],
   });
-  const fac = "free-wifi,tv,radio"
-  let facA =fac.split(',');
-  console.log(facA)
+
   useEffect(() => {
     if (data) {
       setRoom({
@@ -140,18 +138,10 @@ const UpdateRoom = () => {
       console.log(error);
     }
     // navigate("/editRooms")
+    window.location.reload();
+
   };
-  // const handleCheckboxChange = (e) => {
-  //   let newArray = [...room.facilities, e.target.value];
-  //   if (room.facilities.includes(e.target.value)) {
-  //     newArray = newArray.filter(facility => facility !== e.target.value);
-  //   }
-  //   setRoom({
-  //     ...room,
-  //     facilities: newArray
-  //   });
-  //   toggleChecked();
-  // };
+
   const [checkedFacilities, setCheckedFacilities] = useState([]);
   // console.log(checkedFacilities)
   const handleCheckboxChange = (e) => {

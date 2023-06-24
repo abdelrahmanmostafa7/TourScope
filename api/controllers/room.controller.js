@@ -116,6 +116,55 @@ export const addOrRemove = async (req, res, next) => {
     next(err);
   }
 };
-
+// export const deleteRoomItem = async (req, res, next) => {
+//   const input = req.body;
+//   try {
+//     if (input.photo) {
+//       await Room.findByIdAndUpdate(req.params.id, {
+//         $pull: { images: input.photo },
+//       });
+//     }
+//     if (input.facility) {
+//       await Room.findByIdAndUpdate(req.params.id, {
+//         $pull: { facilities: input.facility },
+//       });
+//     }
+//     res.status(200).json({ message: "Hotel item has been deleted" });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+export const deleteRoomItem = async (req, res, next) => {
+  try {
+    const { photo, facility } = req.body;
+    if (photo) {
+      const room = await Room.findById(req.params.id);
+      if (!room) {
+        return res.status(404).json({ message: "Room not found" });
+      }
+      if (!room.images.includes(photo)) {
+        return res.status(400).json({ message: "Photo not found in room" });
+      }
+      await Room.findByIdAndUpdate(req.params.id, {
+        $pull: { images: photo },
+      });
+    }
+    if (facility) {
+      const room = await Room.findById(req.params.id);
+      if (!room) {
+        return res.status(404).json({ message: "Room not found" });
+      }
+      if (!room.facilities.includes(facility)) {
+        return res.status(400).json({ message: "Facility not found in room" });
+      }
+      await Room.findByIdAndUpdate(req.params.id, {
+        $pull: { facilities: facility },
+      });
+    }
+    res.status(200).json({ message: "Hotel item has been deleted" });
+  } catch (err) {
+    next(err);
+  }
+};
 
 
