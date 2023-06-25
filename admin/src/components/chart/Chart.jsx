@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./chart.scss";
 import {
   AreaChart,
@@ -8,25 +9,55 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+  // switch (type) {
+  //   case "AverageNight":
+  //     data = {
+  //       title: "Average night",
+  //       isMoney: false,
+  //       // link: "See all users",
+  //       icon: (
+  //         <EditCalendarIcon
+  //           className="icon"
+  //           style={{
+  //             color: "rgb(0, 128, 255,0.2)",
+  //             backgroundColor: "	rgb(0, 191, 255,0.2)	",
+  //           }}
+  //         />
+  //       ),
+  //     };
+  //     break;
+  //   }
 
-const Chart = ({ aspect, title }) => {
+
+const Chart = ({ aspect, title , input }) => {
+
+  const [data,setdata] = useState(input.find(item => item.Year === "2023"))
+useEffect(() =>{
+
+  if(input){
+    console.log(input)
+  }
+
+  // input.map((data) =>{
+  //   console.log(data)
+  // })
+
+ 
+
+
+})
+
+
+console.log(data)
   return (
     <div className="chart">
       <div className="title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
         <AreaChart
-          width={730}
+          width={830}
           height={250}
-          data={data}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          data={data.months}
+          margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
         >
           <defs>
             <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">

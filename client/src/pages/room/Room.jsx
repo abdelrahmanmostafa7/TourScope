@@ -126,7 +126,9 @@ function Room() {
     swipe: true,
   };
 
-  const roomsBtn = () => { navigate(`/rooms/${hotelId}`, { state: { reservationData } }) }
+  const roomsBtn = () => { navigate(`/rooms/${hotelId}`, { state: { reservationData } }),
+    window.scrollTo(0, 0);
+ }
   return (
     <div>
       <Navbar />

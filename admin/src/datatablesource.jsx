@@ -1,41 +1,38 @@
-export const userColumns = [,
-  {
-    field: "name",
-    headerName: "Name",
-    width: 230,
-  },
+export const userColumns = [
+
+  { field: "id", headerName: "ID", width: 150 },
 
   {
-    field: "type",
-    headerName: "Type",
-    width: 150,
-  },
-  {
-    field: "beds",
-    headerName: "Beds",
-    width: 150,
-  },
-  {
-    field: "maxpeople",
-    headerName: "Max Peple",
-    width: 150,
-  },
-  {
-    field: "price",
-    headerName: "Price",
-    width: 150,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    width: 150,
+    field: "first_name",
+    headerName: "Employee",
+    width: 250,
     renderCell: (params) => {
+      const fullName = `${params.row.first_name} ${params.row.last_name}`;
       return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
+        <div className="cellAction">
+          <div>{fullName}</div>
         </div>
       );
     },
   },
-];
 
+  {
+    field: "email",
+    headerName: "Email",
+    width: 280,
+  },
+
+  {
+    field: "role",
+    headerName: "Role",
+    width: 250,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.role}`}>
+          {params.row.role}
+        </div>
+      );
+    },
+  },
+
+];
