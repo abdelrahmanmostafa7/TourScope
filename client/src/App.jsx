@@ -31,7 +31,7 @@ function App() {
         <Route path="/personalDetails" element={<PersonalDetails />} />
         <Route path="/editAccount" element={<EditAccount />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/reservations/:id" element={<ReservationDetails />} />
+        <Route path="/reservations" element={<ReservationDetails />} />
         <Route path="/forget" element={<ForgetPassword />} />
         <Route path="/reset-password/:token" element={<NewPassword />} />
         <Route path="/RoomCard" element={<RoomCard />} />

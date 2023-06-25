@@ -50,7 +50,6 @@ const List = () => {
     destination,
 
   }
-  console.log(reservationDetails)
   return (
     <div>
       <Navbar />

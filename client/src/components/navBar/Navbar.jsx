@@ -50,6 +50,7 @@ function Navbar() {
     }
 
     const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+    const userId = currentUser ? currentUser._id : null;
     const handleSignout = async () => {
         try {
             await newRequest.post("/auth/signout")
@@ -93,12 +94,12 @@ function Navbar() {
                                     </div>
                                 </Link>
                                 <hr />
-                                <Link to='/reservations'>
-                                    <div className="option2">
-                                        <img src={reservation} alt="" className="icon2" />
-                                        <span>My Reservations</span>
-                                    </div>
-                                </Link>
+                            <Link to={`/reservations/${userId}`}>
+                                <div className="option2">
+                                    <img src={reservation} alt="" className="icon2" />
+                                    <span>My Reservations</span>
+                                </div>
+                            </Link>
                                 <hr />
                                 <Link to='/favoriteList'>
                                     <div className="option2">

@@ -52,9 +52,7 @@ const Payment = () => {
 
   const getCountryPhoneCode = () => {
     const selectedCountryData = countries.find((country) => country.cca2 === selectedCountry);
-    console.log(selectedCountryData)
     if (selectedCountryData && selectedCountryData.callingCodes && selectedCountryData.callingCodes.length > 0) {
-      console.log(selectedCountryData.callingCodes[0])
       return selectedCountryData.callingCodes[0];
     }
     return '';
