@@ -14,7 +14,6 @@ export const createHotel = async (req, res, next) => {
     next(err);
   }
 };
-
 //UPDATE
 export const updateHotel = async (req, res, next) => {
   try {
@@ -115,11 +114,6 @@ export const modifiyrole = async (req, res, next) => {
     }
 
 }
-
-
-
-
-
 
 //DELETE
 export const deleteHotel = async (req, res, next) => {
