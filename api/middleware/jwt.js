@@ -25,15 +25,10 @@ export const verifyAdmin = async (req, res, next) => {
             return next(createError(401, "You are not authenticated!"));
         }
 
-        if (payload.hotel !== req.body.hotel_id ) {
+        if (payload.hotel !== req.params.hotel_id ) {
             res.status(200).send("You are not authenticated for this hotel")
         } 
-
         next()
-        
-
-       
-
     });
 }
 

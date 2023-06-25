@@ -1,6 +1,9 @@
 import Hotel from "../models/hotel.model.js";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import Reservation from "../models/reservation.model.js";
+
 //CREATE
 export const createHotel = async (req, res, next) => {
     const newHotel = new Hotel(req.body);
@@ -40,13 +43,81 @@ export const createHotel = async (req, res, next) => {
 //     }
 // };
 
-export const updateHotel = async (req, res, next) => {
+// export const updateHotel = async (req, res, next) => {
+//     try {
+//         const { id } = req.params;
+//         const  images  = req.body;
+//         const updatedHotel = await Hotel.findByIdAndUpdate(
+//             id,
+//             { $set: { images } },
+//             { new: true }
+//         );
+//         res.status(200).json(updatedHotel);
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+export const addnewuser = async (req, res, next) => {
+
+    try {
+        const hash = bcrypt.hashSync(req.body.password, 5)
+        const newUser = new User({
+            ...req.body,
+            password: hash,
+        })
+        await newUser.save()
+        const { password, role, ...info } = newUser._doc
+        res.status(201).send(info)
+
+    } catch (err) {
+        next(err)
+    }
+
+
+}
+
+
+
+export const deleteuser = async (req, res, next) => {
+
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.status(200).json("User has been deleted");
+    } catch (err) {
+        next(err);
+    }
+
+
+}
+export const modifiyrole = async (req, res, next) => {
+
     try {
         const { id } = req.params;
-        const { images } = req.body;
+        const { newrole } = req.body
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { role: newrole },
+            { new: true }
+        );
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        next(err);
+    }
+
+}
+
+
+
+
+
+export const updateHotel = async (req, res, next) => {
+    try {
+
+        const { id } = req.params;
+        const { admin } = req.body;
         const updatedHotel = await Hotel.findByIdAndUpdate(
             id,
-            { $set: { images } },
+            { $push: { admin: admin } },
             { new: true }
         );
         res.status(200).json(updatedHotel);
@@ -64,6 +135,190 @@ export const deleteHotel = async (req, res, next) => {
     }
 };
 
+
+export const dashboard = async (req, res, next) => {
+
+    const objectId = new mongoose.Types.ObjectId(req.params.id);
+    const currentMonthStartDate = new Date(Date.now());
+    currentMonthStartDate.setDate(1); // Set the date to the first day of the month
+    const currentMonthEndDate = new Date(currentMonthStartDate);
+    currentMonthEndDate.setMonth(currentMonthEndDate.getMonth() + 1); // Set the date to the first day of the next month
+    const lastMonthStartDate = new Date(currentMonthStartDate);
+    lastMonthStartDate.setMonth(lastMonthStartDate.getMonth() - 1); // Set the date to the first day of the previous month
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    try {
+        const pipeline1 = [
+            {
+                $match: { hotel_id: objectId }
+            },
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%Y-%m", date: "$check_in_out.in" }
+                    },
+                    total_profit: {
+                        $sum: {
+                            $cond: {
+                                if: { $eq: ["$status", "confirmed"] },
+                                then: "$total_price",
+                                else: 0
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            }
+        ];
+
+        const pipeline2 = [
+            {
+                $match: { hotel_id: objectId }
+            },
+            {
+                $group: {
+                    _id: null,
+                    earnings: {
+                        $sum: {
+                            $cond: {
+                                if: { $eq: ["$status", "confirmed"] },
+                                then: "$total_price",
+                                else: 0
+                            }
+                        }
+                    },
+                    Guests: {
+                        $sum: {
+                            $cond: {
+                                if: { $eq: ["$status", "confirmed"] },
+                                then: "$guests.adults",
+                                else: 0
+                            }
+                        }
+                    },
+                    Reservations: {
+                        $sum: {
+                            $cond: {
+                                if: { $eq: ["$status", "confirmed"] },
+                                then: 1,
+                                else: 0
+                            }
+                        }
+                    },
+                    average_night: {
+                        $sum: {
+                            $cond: {
+                                if: {
+                                    $and: [
+                                        { $eq: ["$status", "confirmed"] },
+
+                                    ]
+                                },
+                                then: {
+                                    $ceil: {
+                                        $divide: [
+                                            {
+                                                $subtract: ["$check_in_out.out", "$check_in_out.in"]
+                                            },
+                                            1000 * 60 * 60 * 24
+                                        ]
+                                    }
+                                },
+                                else: 0
+                            }
+                        }
+                    },
+                    total_rev_this_month: {
+                        $sum: {
+                            $cond: {
+                                if: {
+                                    $and: [
+                                        { $eq: ["$status", "confirmed"] },
+                                        { $gt: ["$check_in_out.in", currentMonthStartDate] },
+                                        { $lte: ["$check_in_out.in", currentMonthEndDate] }
+                                    ]
+                                },
+                                then: "$total_price",
+                                else: 0
+                            }
+                        }
+                    },
+                    total_rev_last_month: {
+                        $sum: {
+                            $cond: {
+                                if: {
+                                    $and: [
+                                        { $eq: ["$status", "confirmed"] },
+                                        { $gt: ["$check_in_out.in", lastMonthStartDate] },
+                                        { $lte: ["$check_in_out.in", currentMonthStartDate] }
+                                    ]
+                                },
+                                then: "$total_price",
+                                else: 0
+                            }
+                        }
+                    }
+                }
+            }
+        ];
+
+        const mergedPipeline = [
+            {
+                $facet: {
+                    aggregation1: pipeline1,
+                    aggregation2: pipeline2,
+                },
+            },
+            {
+                $project: {
+                    dashboard_data: { $concatArrays: ["$aggregation1", "$aggregation2"] },
+                },
+            },
+        ];
+
+
+        const results = await Reservation.aggregate(mergedPipeline);
+        const dashboardData = results[0].dashboard_data;
+        const years = {};
+
+        dashboardData.forEach(data => {
+            if (data._id !== null) {
+                const yearMonth = data._id.split("-");
+                const year = yearMonth[0];
+                const monthIndex = parseInt(yearMonth[1]) - 1;
+                const month = monthNames[monthIndex];
+
+                if (!years[year]) {
+                    years[year] = {
+                        Year: year,
+                        months: []
+                    };
+                }
+
+                years[year].months.push({
+                    name: month,
+                    Total: data.total_profit || 0
+                });
+            } else {
+                data.total_profit = data.total_profit || 0; 
+            }
+        });
+
+        const output = {
+            dashboard_data: Object.values(years)
+        };
+        output.dashboard_data.push(dashboardData.find(data => data._id === null));
+
+        res.status(200).send(output);
+    } catch (err) {
+        next(err);
+    }
+
+};
 //GET
 // export const getHotel = async (req, res, next) => {
 //     const { min, max, city, startdate, enddate, roomsoption, } = req.query;
@@ -165,7 +420,7 @@ export const getHotel = async (req, res, next) => {
                         if (room.maxpeople * n >= sumOfAdults) {
                             if (n <= updatedAvailability.length) {
                                 deal.roomscount = n
-                                deal.price = n * room.price *diffDays
+                                deal.price = n * room.price * diffDays
                                 break;
 
                             } else {
@@ -214,6 +469,16 @@ export const getTopHotels = async (req, res, next) => {
     }
 };
 
+//Dashboard
+export const userstatus = async (req, res, next) => {
+    try {
+
+        const hotel = await Hotel.findOne({ admin: "6490327d0b468e93e5fb7e4c" }).populate("admin").select("admin");
+        res.status(200).json(hotel);
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET ALL
 export const getHotels = async (req, res, next) => {
@@ -334,17 +599,17 @@ export const getHotels = async (req, res, next) => {
                 if (bestDeal) {
                     deals = bestDeal;
                     deals.rooms = 1;
-                    deals.price = deals.price *diffDays
+                    deals.price = deals.price * diffDays
                 } else if (nearestDeal) {
                     const numRooms = Math.ceil(sumOfAdults / nearestDeal.maxpeople);
                     deals = nearestDeal;
                     deals.rooms = numRooms;
-                    deals.price = numRooms * deals.price  * diffDays
+                    deals.price = numRooms * deals.price * diffDays
                 }
                 if (deals.roomcounter >= deals.rooms) {
                     return { ...hotel, deals };
 
-                }else{
+                } else {
                     return { ...hotel };
 
                 }

@@ -56,10 +56,10 @@ const HotelSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Room",
     },
-  ], admin: {
-    type: [String]
+  ], admin: 
+    [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }]
 
-  },
+  ,
   checkInout: {
     timeIn: {
       type: Date,
