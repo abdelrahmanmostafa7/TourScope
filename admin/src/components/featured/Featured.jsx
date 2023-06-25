@@ -55,7 +55,7 @@ const Featured = ({ rev }) => {
           <div className="item">
             <div className="itemTitle">Target</div>
             <div className="itemResult ">
-              <div className="resultAmount"><input type="number" style={{width:"100px" , height:"35px" ,fontSize:"20px", border:"none"}} placeholder={assign_target} onChange={(e) => handel_target(e.target.value)} /></div>
+              <div className="resultAmount"><input type="text" style={{width:"100px" , height:"35px" ,fontSize:"20px", border:"none" ,borderRadius:"25px" ,textAlign:"center"}} placeholder={assign_target} onChange={(e) => handel_target(e.target.value)}  /></div>
             </div>
           </div>
           <div className="item">
