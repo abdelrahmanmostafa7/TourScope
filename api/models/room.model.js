@@ -13,7 +13,7 @@ const RoomSchema = new Schema({
   maxpeople: {
     type: Number,
   },
-  numberOfRoom:{
+  roomNumber:{
     type:Number,
   },
   type:{

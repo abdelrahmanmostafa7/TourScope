@@ -149,7 +149,7 @@ const Payment = () => {
                     <input type="text" name="email" placeholder={data.email} disabled />
                   </div>
                   <div className="colShow">
-                    <label htmlFor="phone_number">Phone</label>
+                    <label htmlFor="phone_number">Phone <span>*</span></label>
                     <input type="text" name="phone_number" value={phoneNumber} onChange={handlePhoneNumberChange} placeholder={getCountryPhoneCode()} />
                   </div>
 

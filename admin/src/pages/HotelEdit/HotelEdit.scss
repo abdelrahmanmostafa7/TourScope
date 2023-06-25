@@ -1,8 +1,8 @@
 @import "../../global.scss";
 
 body {
-    font-family: 'Lato', sans-serif;
-    font-family: 'Outfit', sans-serif;
+    font-family: "Lato", sans-serif;
+    font-family: "Outfit", sans-serif;
     background-color: #f5f5f5;
 }
 
@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    background-color: $backgroundColor ;
+    background-color: $backgroundColor;
 }
 
 .hotelWrapper {
@@ -40,6 +40,7 @@ body {
     border-radius: 15px;
     background-color: white;
     padding: 10px;
+
     // gap: 10px calc(40px/3);
     .hotelImgWrapper {
         width: 25%;
@@ -63,35 +64,51 @@ body {
         gap: 30px;
         width: 310px;
         height: 250px;
-        background-color: rgb(225, 225, 225);
+        background-color: #f5f5f5;
         border: none;
         border-radius: 15px;
+    cursor: pointer;
 
-        .addHotelImgLabel{
+        .imgUpload {
+            text-align: center;
+            width: 310px;
+            height: 250px;
+            opacity: 0;
+            position: absolute;
+            left: 10;
+            bottom: 10;
+    cursor: pointer;
+        }
+
+        .addHotelImgLabel {
             font-size: 25px;
             font-weight: 500;
             cursor: pointer;
             text-align: center;
-            .addImgIcon{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+
+            .addImgIcon {
                 font-size: 50px;
             }
         }
 
-        .addHotelImgInput{
+        .addHotelImgInput {
             display: none;
         }
 
-       
-
-        .DoneBtn{
+        .DoneBtn {
             width: 120px;
-                    height: 35px;
-                    border: none;
-                    border-radius: 50px;
-                    color: white;
-                    text-align: center;
-                    background-color: $buttonColor;
-                    cursor: pointer;
+            height: 35px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            text-align: center;
+            background-color: $buttonColor;
+            cursor: pointer;
         }
     }
 
@@ -105,16 +122,14 @@ body {
     }
 }
 
- .NewHotelImg {
-     width: 310px;
-     height: 250px;
-     border-radius: 10px;
-     object-fit: cover;
-     cursor: pointer;
-     margin-bottom: 5px;
- }
-
-
+.NewHotelImg {
+    width: 310px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
 
 .HotelFeatures {
     display: flex;
@@ -169,7 +184,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 152px;
+    width: 195px;
     height: 135px;
     font-weight: 300;
     font-size: 100px;
@@ -181,25 +196,98 @@ body {
 }
 
 .aboutHotel {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     text-align: left;
+    // margin-top: 5px;
 }
-.hotelDetailsTexts{
+
+.hotelDetailsTexts {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 0px;
 }
 
-.hotelDetailsEdit{
+.hotelDetailsTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    button {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.hotelDetailsEdit {
     background-color: #ffffff;
-    padding: 5px;
+    padding: 3px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 30px;
 }
+
 .hotelDesc {
     font-size: 16px;
     margin-bottom: 20px;
+}
+
+.hotelDetailsSubmit {
+    border: none;
+    width: 70px;
+    height: 30px;
+    text-decoration: underline;
+    font-size: 17px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border-radius: 25px;
+    background-color: #142662;
+    color: white;
+    text-decoration: none;
+}
+
+.hotelDescInput {
+    width: 100%;
+    height: 100px;
+}
+
+.popup-content-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 800px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    opacity: 0;
+    animation: fade-in 1s ease forwards;
+
+    .ta {
+        width: 740px;
+        box-sizing: border-box;
+        height: 7em;
+        margin-bottom: 1em;
+        border-radius: 10px;
+        border: 1px solid #efefef;
+        background-color: #f5f5f5;
+        padding: 10px 0 0 10px;
+        font-size: 1.05rem;
+    }
+}
+
+.col {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    button {
+        margin-right: 10px;
+    }
 }

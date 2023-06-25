@@ -11,7 +11,6 @@ const RoomCard = ({ item }) => {
   const RoomBtn = () => {
     navigate(`/room/${item._id}`)
     window.scrollTo(0, 0);;
-
   }
   return (
     <div>
