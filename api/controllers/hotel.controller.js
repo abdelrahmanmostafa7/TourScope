@@ -689,3 +689,4 @@ export const deleteHotelItem = async (req, res, next) => {
     next(err);
   }
 };
+

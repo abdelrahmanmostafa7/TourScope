@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { createHotel, updateHotel, dashboard,deleteHotelItem  ,deleteuser,modifiyrole, getHotel, addnewuser,getHotels, getFavHotels,getTopHotels,userstatus  } from "../controllers/hotel.controller.js";
+import { createHotel, updateHotel, dashboard, deleteHotelItem, deleteuser, modifiyrole, getHotel, addnewuser, getHotels, getFavHotels, getTopHotels, userstatus, getHotelRooms } from "../controllers/hotel.controller.js";
 import {verifyAdmin} from "../middleware/jwt.js"  
 
 router.post("/",verifyAdmin, createHotel);
@@ -11,6 +11,7 @@ router.get("/find/:id", getHotel);
 router.get("/favHotel/:id", getFavHotels);
 router.get("/topHotels", getTopHotels);
 router.get("/", getHotels);
+router.get("/hotelRooms/:id", getHotelRooms);
 
 
 

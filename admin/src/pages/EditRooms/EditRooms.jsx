@@ -1,7 +1,7 @@
 import React from 'react'
 import "./EditRooms.scss"
 import Sidebar from "../../components/sidebar/Sidebar"
-import RoomsDatatable from "../../components/datatable/RoomsDatatable"
+import RoomsDatatable from "../../components/roomsDataTable/RoomsDatatable"
 const EditRooms = () => {
   return (
     <div className="list">
