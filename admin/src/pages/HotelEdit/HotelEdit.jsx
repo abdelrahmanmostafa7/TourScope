@@ -126,7 +126,7 @@ const HotelEdit = () => {
   const handleAmenitiesChange = (event) => {
     const amenitiesArray = event.target.value.split(',');
     setAmenities(amenitiesArray);
-    if (amenitiesArray === [])
+    if (amenitiesArray == [])
       setIsEmpty(true);
   };
   const handleSubmitAmenities = async (e) => {
@@ -143,7 +143,7 @@ const HotelEdit = () => {
     navigate("/HotelEdit")
     console.log("Amenities Added Successfully ...");
   };
-  const goBack= ()=>{
+  const goBack = () => {
     navigate("/HotelEdit")
   }
   return (
