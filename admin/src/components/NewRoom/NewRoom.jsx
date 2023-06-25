@@ -83,7 +83,7 @@ const NewRoom = () => {
         maxpeople: 0,
         type: "",
         size: 0,
-        beds: 0,
+        beds: "",
         status: "",
         description: "",
         facilities: [],
@@ -127,19 +127,19 @@ const NewRoom = () => {
                         <div className="newRoomDetails">
                             <div className="newRoomCol">
                                 <label htmlFor="name">Room Name <span>*</span></label>
-                                <input type="text" name='name' onChange={handleChange} />
+                                <input type="text" name='name' onChange={handleChange} required/>
                             </div>
                             <div className="newRoomCol">
                                 <label htmlFor="roomNumber">Room Number <span>*</span></label>
-                                <input type="text" name='roomNumber' onChange={handleChange} />
+                                <input type="text" name='roomNumber' onChange={handleChange} required />
                             </div>
                             <div className="newRoomCol">
                                 <label htmlFor="price">Price <span>*</span></label>
-                                <input type="text" name='price' onChange={handleChange} />
+                                <input type="text" name='price' onChange={handleChange} required />
                             </div>
                             <div className="newRoomCol">
                                 <label htmlFor="maxpeople">max People <span>*</span></label>
-                                <input type="text" name='maxpeople' onChange={handleChange} />
+                                <input type="text" name='maxpeople' onChange={handleChange} required />
                             </div>
                             <div className="newRoomCol">
                                 <label htmlFor="type">Type</label>
@@ -181,7 +181,7 @@ const NewRoom = () => {
                         </div>
                         <div className="newRoomBottom">
                             <button type="submit" className='btn' onClick={handleSubmit}>Add New Room</button>
-                            <button className='btn'>Cancel</button>
+                            <button className='btn' onClick={closePopUp}>Cancel</button>
                         </div>
 
                     </form>
