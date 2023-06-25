@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import useFetch from "../../hook/useFetch"
 import NewRoom from "../NewRoom/NewRoom"
 import { useNavigate } from "react-router-dom";
-
+import newRequest from "../../utils/newRequest";
 const Datatable = () => {
 
   const id = "643bb10810a61c1094360089"
@@ -36,6 +36,17 @@ const Datatable = () => {
       setShowPopUp(false);
     }
   };
+
+  const deleteRoom = async (roomId) => {
+    try {
+      await newRequest.delete(`/room/${roomId}/${id}`, { hotelid: id });
+      window.location.reload();
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   const actionColumn = [
     {
       field: "action",
@@ -46,6 +57,7 @@ const Datatable = () => {
         return (
           <div className="cellAction">
             <button className="viewButton" onClick={() => roomDetails(id)}>View</button>
+            <button className="deleteButton" onClick={() => deleteRoom(id)}>Delete</button>
           </div>
         );
       },
