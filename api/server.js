@@ -14,19 +14,7 @@ import session from "express-session";
 
 // our app
 const app = express()
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173", "http://localhost:5174");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// });
+
 // connection to DB
 dotenv.config();
 mongoose.set("strictQuery", true);
@@ -38,7 +26,28 @@ const connect = async () => {
     console.log(error);
   }
 };
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   next();
+// });
+// app.use(cors({
+//   origin: ["http://127.0.0.1:5173/", "http://127.0.0.1:5174/"],
+//   origin: ["http://localhost:5173/", "http://localhost:5174/"],
+//   methods: "GET,POST,PUT,DELETE",
+//   credentials: true
+// }));
+
+// app.use(cors());
 // middleware
 app.use(express.json())
 app.use(cookieParser())
@@ -50,14 +59,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(cors({
-//   origin: ["http://127.0.0.1:5173/", "http://127.0.0.1:5174/"],
-//   origin: ["http://localhost:5173/", "http://localhost:5174/"],
-//   methods: "GET,POST,PUT,DELETE",
-//   credentials: true
-// }));
 
-// app.use(cors());
 
 
 // routes 

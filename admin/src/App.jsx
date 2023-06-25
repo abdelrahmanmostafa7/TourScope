@@ -4,7 +4,6 @@ import New from "./pages/NewUser/NewUser";
 import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
 import EditRoom from './pages/RoomEdit/RoomEdit';
-import EditRooms from './pages/EditRooms/EditRooms';
 function App() {
 
   return (
@@ -17,7 +16,6 @@ function App() {
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />
           <Route path="/editRoom/:id" element={<EditRoom />} />
-          <Route path="/editRooms" element={<EditRooms />} />
         </Routes>
       </BrowserRouter>
     </div>
