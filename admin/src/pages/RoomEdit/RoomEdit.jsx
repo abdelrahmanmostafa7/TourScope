@@ -48,6 +48,13 @@ import SofaBed from "../../image/sofa-bed.png"
 import Add from "../../image/add.png"
 import Sidebar from "../../components/sidebar/Sidebar";
 import Remove from "../../image/remove.png"
+import Elevator from "../../image/lift.png"
+import Laundry from "../../image/washe1r.png"
+import Hours from "../../image/24-hours.png"
+import Wifi from "../../image/wif1i.png"
+import RoomService from "../../image/hotel-service.png"
+
+// import { Checkbox } from '@mui/material/Checkbox';
 import newRequest from '../../utils/newRequest'
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
