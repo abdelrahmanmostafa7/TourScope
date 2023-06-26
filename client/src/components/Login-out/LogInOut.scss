@@ -59,14 +59,15 @@ aside {
 .signInBottom{
   color:#142662;
   .signInWayImg{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
 
   }
   .signInWays{
     display: flex;
-    justify-content: space-between;
+    gap:10px;
+    justify-content: center;
   }
 }
 .form-block {
@@ -213,7 +214,7 @@ aside.slide-left .login-block {
   }
 
   .LogBtn {
-    font-size: 1rem;
+    font-size: 1rem
   }
   .logInBtn{
     padding-top: 20px;
@@ -232,6 +233,20 @@ aside.slide-left .login-block {
     top: 0;
     transform: translateY(0);
   }
+}
+span{
+    font-size: 12px;
+    padding: 3px;
+    color: red;
+    display: none;
+}
+
+input:invalid[focused="true"]{
+    border: 1px solid red;
+}
+
+input:invalid[focused="true"] ~ span{
+    display: block;
 }
 }
 .error_position{

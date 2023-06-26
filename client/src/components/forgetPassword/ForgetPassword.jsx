@@ -40,7 +40,7 @@ const ForgetPassword = () => {
   }
   return (
     <div>
-               { showAlert && <Aleart Type={flash} Message={message} state={true}/> }
+        { showAlert && <Aleart Type={flash} Message={message} state={true}/> }
 
       <div className="forgetContainer">
         <h1>Reset Password</h1>
