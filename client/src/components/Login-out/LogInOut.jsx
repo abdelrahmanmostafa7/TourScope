@@ -256,7 +256,7 @@ const LogInOut = () => {
         {
           showPopUp && <div className="popup-background" onClick={closePopUp}>
             <div className="popup-content10">
-              <ForgetPassword />
+              <ForgetPassword closePopUp={closePopUp}/>
             </div>
           </div>
         }
