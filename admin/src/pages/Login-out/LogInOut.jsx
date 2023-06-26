@@ -40,14 +40,10 @@ const LogInOut = () => {
     e.preventDefault()
     try {
       const res = await newRequest.post("/auth/signin", { email, password })
-      const verifyrole = await newRequest.get("/auth/role");
-
       localStorage.setItem("currentUser", JSON.stringify(res.data))
-      if (verifyrole.data === "redirect to Dashboard") {
-        navigate("/dashboard")
-      }
-      else
-        navigate("/")
+      navigate("/")
+
+   
     }
     catch (err) {
       setError(err.response.data)

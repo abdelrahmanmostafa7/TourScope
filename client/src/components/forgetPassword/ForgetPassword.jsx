@@ -5,7 +5,7 @@ import { useState } from 'react'
 import newRequest from '../../utils/newRequest'
 import Aleart from '../Aleart/Aleart'
 
-const ForgetPassword = () => {
+const ForgetPassword = ({ closePopUp }) => {
   const navigate = useNavigate()
   const [email , setEmail] = useState("")
   const [showAlert, setShowAlert] = useState(false);
@@ -33,14 +33,11 @@ const ForgetPassword = () => {
     }, 3000);
   }
 
-   
-
-  
 
   }
   return (
     <div>
-               { showAlert && <Aleart Type={flash} Message={message} state={true}/> }
+        { showAlert && <Aleart Type={flash} Message={message} state={true}/> }
 
       <div className="forgetContainer">
         <h1>Reset Password</h1>
@@ -50,7 +47,7 @@ const ForgetPassword = () => {
         <input type="email" onChange={(e) => setEmail(e.target.value)} />
         </div>
         <button onClick={send}>Send</button>
-        <p>Back To <span onClick={signIn}>Sign In</span></p>
+        <p>Back To <span onClick={closePopUp}>Sign In</span></p>
       </div>
     </div>
   )

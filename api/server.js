@@ -14,13 +14,17 @@ import session from "express-session";
 
 // our app
 const app = express()
+app.use(cors({
+  origin:"*",
+  methods:["GET, POST, PUT, DELETE"]
+}));
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// });
+//  app.use((req, res, next) => {
+//    res.setHeader("Access-Control-Allow-Origin", "*");
+//    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//    next();
+//  });
 // app.use(cors({
 //   origin: ["http://127.0.0.1:5173/", "http://127.0.0.1:5174/"],
 //   origin: ["http://localhost:5173/", "http://localhost:5174/"],
@@ -28,14 +32,14 @@ const app = express()
 //   credentials: true
 // }));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173",);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
-// app.use(cors());
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
+
 
 // connection to DB
 dotenv.config();
