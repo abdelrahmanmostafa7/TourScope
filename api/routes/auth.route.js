@@ -34,6 +34,10 @@ router.get("/auth/facebook/callback", passport.authenticate("facebook"
 router.post('/forgetpassword', send_forget_passowrd_otp)
 router.post('/resetpassword', confirm_otp)
 
+
+
+
+
 // user facebook signin / signup
 
 export default router;

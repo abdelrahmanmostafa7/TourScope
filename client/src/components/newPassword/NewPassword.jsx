@@ -28,7 +28,7 @@ const NewPassword = () => {
         setFlash("success");
         setTimeout(() => {
           setShowAlert(false);
-          navigate("/signIn");
+          navigate("/logInOut");
         }, 3000);
 
 

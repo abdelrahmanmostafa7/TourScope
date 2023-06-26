@@ -21,6 +21,8 @@ import manageAccount from "../../image/manageAccount.png"
 import newRequest from "../../utils/newRequest.js"
 import Aleart from "../../components/Aleart/Aleart"
 
+
+
 const Header = () => {
   const [openDate, setOpenDate] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
@@ -80,6 +82,21 @@ const Header = () => {
     navigate("/logInOut", { state: { signup } })
     window.scrollTo(0, 0);;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
