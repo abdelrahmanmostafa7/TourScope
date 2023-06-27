@@ -100,8 +100,7 @@ const LogInOut = () => {
     }
   };
   //validation
-  const [focused, setFocused] = useState(false);
-  const [focused1, setFocused1] = useState(false);
+
   const inputs = [
     {
       id: 1,
@@ -138,18 +137,12 @@ const LogInOut = () => {
       errorMessage:
         "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
       label: "Password",
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*_-])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+      pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
       required: true,
     },
 
   ];
 
-  const handleFocus = (e) => {
-    setFocused(true);
-  };
-  const handleFocus1 = (e) => {
-    setFocused1(true);
-  };
   return (
     <div className="roomsContainer">
       <div className="roomsWrapper">

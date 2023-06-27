@@ -26,10 +26,6 @@ const Reservations = () => {
           {data.map(item =>
             <ReservationCard item={item} key={item._id} />
           )}
-
-
-
-         
         </div>
       </div>
       <Footer />
