@@ -118,19 +118,6 @@ function RoomEdit() {
 
     const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
 
-    // const handleSubmit = async (e) => {
-    //     console.log("ay 7aga2")
-    //     e.preventDefault();
-    //     try {
-    //         const requestBody = {
-    //             facilities: selectedCheckboxes
-    //         };
-    //         await newRequest.put("/room/update/643af6e310a61c109435e5dc", requestBody)
-
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
 
     const [toggle, setToggle] = useState(false)
     const handleCheckboxChange = (e) => {

@@ -30,21 +30,12 @@ import {
 
 
 const Chart = ({ aspect, title , input }) => {
-
   const [data,setdata] = useState(input.find(item => item.Year === "2023"))
 useEffect(() =>{
 
   if(input){
     console.log(input)
   }
-
-  // input.map((data) =>{
-  //   console.log(data)
-  // })
-
- 
-
-
 })
 
 
