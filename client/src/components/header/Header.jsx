@@ -85,7 +85,20 @@ const Header = () => {
 
 
 
+  
+  useEffect(() => {
+    try {
+      const res =  newRequest.post("/auth/currentuser")
+      console.log(res.data)
+      // localStorage.setItem("currentUser", JSON.stringify(res.data))
+      // navigate("/")
 
+   
+    }
+    catch (err) {
+      // setError(err.response.data)
+    }
+  }, []);
 
 
 

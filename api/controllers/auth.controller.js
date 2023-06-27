@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
                 hotel_id: hotel._id
             }, process.env.JWT_KEY)
             const { password, role, ...info } = user._doc
-            res.cookie("accessToken", token, { httpOnly: true })
+            res.cookie("accessToken", token, { httpOnly: true ,sameSite: 'None' })
             res.status(200).send(info)
 
         } else {
@@ -87,6 +87,13 @@ export const socialtoken = async (req, res) => {
 
 
     res.redirect("http://localhost:5173/");
+}
+
+export const cheack_user = async (req, res) => {
+    const token = req.cookies.accessToken;
+    console.log(token);
+    res.status(200).send(token);
+
 }
 
 export const send_forget_passowrd_otp = async (req, res, next) => {
