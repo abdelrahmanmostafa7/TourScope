@@ -94,8 +94,6 @@ const HotelEdit = () => {
     } catch (err) {
       console.log(err);
     }
-    console.log(amenity);
-
   };
   const handleDeletePhoto = async (photo) => {
     try {

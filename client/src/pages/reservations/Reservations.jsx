@@ -5,17 +5,15 @@ import Footer from "../../components/footer/Footer";
 import useFetch from '../../hook/useFetch';
 import "./Reservations.scss"
 const Reservations = () => {
-  const id = location.pathname.split("/")[2]
-  console.log(id)
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const id = currentUser._id
   const { data, loading } = useFetch(`/reservation/my_reservation/${id}`);
-  console.log(data)
   return (
     <div>
       <Navbar />
+      {loading ? "loading" : 
       <div className="reservationContainer">
         <div className="reservationWrapper">
-
-
           {!loading && data.length === 0 && (
             <h1 className="noHotelResult">No results found,
               <br />
@@ -27,7 +25,7 @@ const Reservations = () => {
             <ReservationCard item={item} key={item._id} />
           )}
         </div>
-      </div>
+      </div>}
       <Footer />
     </div>
   )

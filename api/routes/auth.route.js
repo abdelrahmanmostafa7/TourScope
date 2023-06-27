@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, signin, signout, socialtoken , send_forget_passowrd_otp , confirm_otp } from "../controllers/auth.controller.js"
+import { signup, signin, signout, socialtoken, cheack_user, send_forget_passowrd_otp, confirm_otp } from "../controllers/auth.controller.js"
 import passport from "passport";
 import { verifyrole } from "../middleware/jwt.js";
 const router = express.Router();
@@ -33,6 +33,7 @@ router.get("/auth/facebook/callback", passport.authenticate("facebook"
 
 router.post('/forgetpassword', send_forget_passowrd_otp)
 router.post('/resetpassword', confirm_otp)
+router.post('/currentuser', cheack_user)
 
 
 
