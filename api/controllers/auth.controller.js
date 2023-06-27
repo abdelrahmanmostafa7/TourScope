@@ -78,21 +78,26 @@ export const signout = (req, res) => {
 export const socialtoken = async (req, res) => {
     res.cookie("accessToken", req.user.token,
         { httpOnly: true });
-    const data = req.user.user
-    res.cookie("sessionData", data, {
-        httpOnly: true,
-    });
-
-
-
-
     res.redirect("http://localhost:5173/");
 }
 
-export const cheack_user = async (req, res) => {
+export const cheack_user = async (req, res , next ) => {
+
+    
+
+
     const token = req.cookies.accessToken;
-    console.log(token);
-    res.status(200).send(token);
+    if (!token) return next(createError(401, "user not found"))
+
+    jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
+        if (err) return next(createError(403, "user not found"))
+       const user =  await User.findById(payload.id);
+       const {password ,role,resetpasswordtoken,resetpasswordexpire,createdAt,updatedAt, ...info} = user._doc
+       console.log(info)
+       res.status(200).send(info)
+    });
+
+
 
 }
 

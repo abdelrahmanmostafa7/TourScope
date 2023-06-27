@@ -89,11 +89,11 @@ const Header = () => {
   useEffect(() => {
     try {
       const res =  newRequest.post("/auth/currentuser")
-      console.log(res.data)
-      // localStorage.setItem("currentUser", JSON.stringify(res.data))
-      // navigate("/")
-
-   
+      res.then(res => {
+        if (res.data){
+          localStorage.setItem("currentUser", JSON.stringify(res.data))
+        }
+      })   
     }
     catch (err) {
       // setError(err.response.data)
@@ -104,7 +104,8 @@ const Header = () => {
 
 
 
-
+  // accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWI0NDY3MTQ4OGY0OTg4OTI4ZjMzYiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3ODk3MTk3fQ.FE-LifEzRpMH-u-ftUSPa3FVwhLtOWDVbSmF77qZ9MQ; 
+  // connect.sid=s%3ALZdxZmuW3k5PJ3zdrD4SmF5iR79THO6C.pD1IgyAs%2FSN47MZaHrk%2B8ewxNo3okp1n4AWOs7D%2F0XY
 
 
 
