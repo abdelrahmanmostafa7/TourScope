@@ -14,6 +14,7 @@ const EditAccount = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const id = currentUser._id;
   const { data, loading } = useFetch(`/user/find/${id}`);
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
   const [user, setUser] = useState({});
 
   const handleChange = (e) => {
@@ -50,10 +51,12 @@ const EditAccount = () => {
   };
   
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await newRequest.put(`/user/update/${id}`, { ...user });
+      localStorage.setItem("currentUser", JSON.stringify(user));
       navigate("/personalDetails");
     } catch (error) {
       console.log(error);
