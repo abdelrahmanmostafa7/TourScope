@@ -3,9 +3,9 @@ import HotelLocationBox from "../../components/HotelslocationBox/HotelsLocationB
 import Navbar from "../../components/navBar/Navbar";
 import SearchItem from "../../components/searchItem/SearchItem"
 import Footer from "../../components/footer/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSearch from "../../hook/useSearch.js"
-import { useLocation } from "react-router-dom"
+import { json, useLocation } from "react-router-dom"
 import { format } from "date-fns";
 import { DateRange } from "react-date-range"
 import Loading from "../../components/Loading/Loading";
@@ -15,20 +15,22 @@ const List = () => {
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
   const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
-  let currentDay = new Date()
-  currentDay = currentDay.getDate() + 1
   const [date, setDate] = useState(location.state?.date ? location.state.date : [{
     startDate: new Date(),
-    endDate: currentDay,
+    endDate: new Date().setDate(new Date().getDate() + 1),
     key: "selection",
   }])
-
   const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
     children:0,
     room: 1
   })
 
+  const [reservation_data , setReservation_data] = useState({
+    date,
+    options,
+    destination
+  })
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -42,14 +44,23 @@ const List = () => {
   const [max, setMax] = useState(9999);
   const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&min=${min || 50}&max=${max || 9999}&limit=${20}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
+    setReservation_data({
+      date,
+    options,
+    destination
+    })
     reFetch()
   }
-  const reservationDetails = {
-    date,
-    options,
-    destination,
 
-  }
+
+   useEffect(() => {
+     if(reservation_data){
+       localStorage.setItem("reservation_details" , JSON.stringify(reservation_data) )
+       // console.log(JSON.parse(localStorage.getItem("reservation_details")))
+     }
+   }, [reservation_data]);
+
+
   return (
     <div>
       <Navbar />
@@ -65,7 +76,7 @@ const List = () => {
                   Try  to search another city</h1>
               )}
               {data.map(item =>
-                <SearchItem item={item} key={item._id} reservationDetails={reservationDetails} />
+                <SearchItem item={item} key={item._id}  />
               )}
             </div>
 
@@ -74,7 +85,7 @@ const List = () => {
                 <h1 className="lsTitle">Search</h1>
                 <div className="lsItem">
                   <label className="lsLabel">Destination</label>
-                  <input placeholder={destination} type="text" onChange={e => setDestination(e.target.value)} />
+                  <input placeholder={destination} type="text" onChange={e => {setDestination(e.target.value)} } />
                 </div>
                 <div className="lsItem">
                   <label className="lsLabel">Check-in Date</label>

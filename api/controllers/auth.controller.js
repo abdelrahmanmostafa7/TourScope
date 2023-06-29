@@ -82,18 +82,12 @@ export const socialtoken = async (req, res) => {
 }
 
 export const cheack_user = async (req, res , next ) => {
-
-    
-
-
     const token = req.cookies.accessToken;
     if (!token) return next(createError(401, "user not found"))
-
     jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
         if (err) return next(createError(403, "user not found"))
        const user =  await User.findById(payload.id);
        const {password ,role,resetpasswordtoken,resetpasswordexpire,createdAt,updatedAt, ...info} = user._doc
-       console.log(info)
        res.status(200).send(info)
     });
 

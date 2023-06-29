@@ -19,7 +19,6 @@ import signOut from "../../image/signOut.png"
 import reservation from "../../image/reservation.png"
 import manageAccount from "../../image/manageAccount.png"
 import newRequest from "../../utils/newRequest.js"
-import Aleart from "../../components/Aleart/Aleart"
 
 
 
@@ -58,8 +57,8 @@ const Header = () => {
   const navigate = useNavigate()
 
   const handelSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } })
-    window.scrollTo(0, 0);
+     navigate("/hotels", { state: { destination, date, options } })
+     window.scrollTo(0, 0);
   }
 
   const hotelPage = () => {
@@ -104,9 +103,6 @@ const Header = () => {
 
 
 
-  // accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWI0NDY3MTQ4OGY0OTg4OTI4ZjMzYiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg3ODk3MTk3fQ.FE-LifEzRpMH-u-ftUSPa3FVwhLtOWDVbSmF77qZ9MQ; 
-  // connect.sid=s%3ALZdxZmuW3k5PJ3zdrD4SmF5iR79THO6C.pD1IgyAs%2FSN47MZaHrk%2B8ewxNo3okp1n4AWOs7D%2F0XY
-
 
 
 
@@ -119,7 +115,7 @@ const Header = () => {
       await newRequest.post("/auth/signout")
       localStorage.setItem("currentUser", null)
       navigate("/")
-      window.scrollTo(0, 0);;
+      window.scrollTo(0, 0);
     } catch (err) {
       console.log(err);
     }
@@ -319,7 +315,7 @@ const Header = () => {
                 </div>
               )}
             </div>
-            <div className="headerSearchItem" onMouseOver={() => setShowTagText(true)} onMouseOut={() => setShowTagText(false)} >
+            <div className="headerSearchItem" >
               <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handelSearch} className="searchIcon" />
             </div>
           </div>

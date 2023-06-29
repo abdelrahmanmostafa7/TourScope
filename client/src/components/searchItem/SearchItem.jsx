@@ -29,20 +29,12 @@ import Spa from "../../image/massage.png"
 import newRequest from "../../utils/newRequest";
 import useFetch from "../../hook/useFetch";
 
-const SearchItem = ({ item, reservationDetails }) => {
-    const location = useLocation()
-    const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
-    const [date, setDate] = useState(location.state?.date ? location.state.date : reservationDetails.date)
-
-    const [options, setOptions] = useState(location.state?.options ? location.state.options : {
-        adult: 1,
-        children: 0,
-        room: 1,
-    })
-    
+const SearchItem = ({ item , reservationdata}) => {
+   
     const navigate = useNavigate()
     const hotelDetails = () => {
-        navigate(`/hotels/${item._id}`, { state: { destination, date, options } })
+        navigate(`/hotels/${item._id}`)
+        
     }
 
 
@@ -209,14 +201,14 @@ const SearchItem = ({ item, reservationDetails }) => {
                     <div className="hotelRightBottom">
                         {
                             item.deals ? (<>
-                                <span className='hotelPrice'>{item.price} EGP</span>
+                                <span className='hotelPrice'>  {item.price} EGP</span>
                                 <span className='hotelPrice'>{item.deals.rooms}xRoom</span>
                                 <span className='hotelPrice'>Total price{item.deals.price}</span>
                                 <button className='btn' onClick={hotelDetails}>View Hotel</button>
                             </>) : (
                                 <>
                                     <button className='btn' onClick={hotelDetails}>View Hotel</button>
-                                    <span className='hotelPrice'>NO AVAILABLE ROOMS</span>
+                                    <span className='hotelPrice' style={{marginBottom:"40px"}}>NO AVAILABLE ROOMS</span>
                                 </>
                             )
                         }

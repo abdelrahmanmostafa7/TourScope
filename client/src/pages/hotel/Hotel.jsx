@@ -45,19 +45,26 @@ const Hotel = () => {
   const id = location.pathname.split("/")[2]
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
-  let currentDay = new Date()
-  currentDay=currentDay.getDate()+1
-  const [date, setDate] = useState(location.state?.date ? location.state.date : [{
-    startDate: new Date(),
-    endDate: currentDay,
-    key: "selection",
-  }])
   
-  const [options, setOptions] = useState(location.state?.options ? location.state.options : {
-    adult: 1,
-    children: 0,
-    room: 1
-  })
+  const [reservation_data , setReservation_data] = useState(JSON.parse(localStorage.getItem("reservation_details")))
+
+
+  const [date, setDate] = useState([
+    {
+      startDate: reservation_data? new Date(reservation_data.date[0].startDate) : new Date(),
+      endDate:reservation_data? new Date(reservation_data.date[0].endDate) : new Date().setDate(new Date().getDate() + 1),
+      key: "selection",
+    },
+  ]);
+
+  const [options, setOptions] = useState({
+    adult: reservation_data ? reservation_data.options.adult : 1,
+    children: reservation_data ? reservation_data.options.children : 0,
+    room: reservation_data ? reservation_data.options.room : 1
+
+  });
+
+
 
  
   const handleOption = (name, operation) => {
@@ -72,8 +79,17 @@ const Hotel = () => {
 
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
+ 
+    setReservation_data({
+      date:date,
+      options:options,
+      destination:hotel.city
+    })
     reFetch()
   }
+
+
+
   // Fetch Room Data 
   const [sliderLoaded, setSliderLoaded] = useState(false);
   useEffect(() => {
@@ -99,19 +115,39 @@ const Hotel = () => {
     userDate: date,
     roomoptions: options,
   };
+ 
+ 
   const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { reservationData } }),
     window.scrollTo(0, 0);;
  }
-  // Slider states & functions 
+  
+ 
+ 
+ // Slider states & functions 
+  
+  
+  
   const [slideNumber, setSlideNumber] = useState(0);
+  
+  
+  
   const [open, setOpen] = useState(false);
+  
+  
+  
   const [imgNumber, setNumber] = useState(6);
 
+  
+  
+  
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
     setNumber(hotel.images.length)
   };
+
+
+
 
   const handleMove = (direction) => {
     let newSlideNumber;

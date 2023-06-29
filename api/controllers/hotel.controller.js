@@ -325,7 +325,6 @@ export const dashboard = async (req, res, next) => {
 //GET
 export const getHotel = async (req, res, next) => {
   const { startdate, enddate, roomsoption } = req.query;
-
   try {
     const currentDate = new Date();
     currentDate.setHours(currentDate.getHours() + 1);
@@ -338,6 +337,7 @@ export const getHotel = async (req, res, next) => {
     } else {
       sumOfAdults = roomoptions.adult;
     }
+    console.log(req.query)
 
     const hotelId = new mongoose.Types.ObjectId(req.params.id);
     await Hotel.aggregate([
