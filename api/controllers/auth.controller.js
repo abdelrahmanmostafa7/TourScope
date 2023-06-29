@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
                 hotel_id: hotel._id
             }, process.env.JWT_KEY)
             const { password, role, ...info } = user._doc
-            res.cookie("accessToken", token, { httpOnly: true })
+            res.cookie("accessToken", token, { httpOnly: true ,sameSite: 'None' })
             res.status(200).send(info)
 
         } else {
@@ -78,15 +78,21 @@ export const signout = (req, res) => {
 export const socialtoken = async (req, res) => {
     res.cookie("accessToken", req.user.token,
         { httpOnly: true });
-    const data = req.user.user
-    res.cookie("sessionData", data, {
-        httpOnly: true,
+    res.redirect("http://localhost:5173/");
+}
+
+export const cheack_user = async (req, res , next ) => {
+    const token = req.cookies.accessToken;
+    if (!token) return next(createError(401, "user not found"))
+    jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
+        if (err) return next(createError(403, "user not found"))
+       const user =  await User.findById(payload.id);
+       const {password ,role,resetpasswordtoken,resetpasswordexpire,createdAt,updatedAt, ...info} = user._doc
+       res.status(200).send(info)
     });
 
 
 
-
-    res.redirect("http://localhost:5173/");
 }
 
 export const send_forget_passowrd_otp = async (req, res, next) => {

@@ -14,10 +14,12 @@ import session from "express-session";
 
 // our app
 const app = express()
-app.use(cors({
-  origin:"*",
-  methods:["GET, POST, PUT, DELETE"]
-}));
+app.use(cookieParser())
+
+
+
+ app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5173'})); 
+
 
 //  app.use((req, res, next) => {
 //    res.setHeader("Access-Control-Allow-Origin", "*");
@@ -55,7 +57,6 @@ const connect = async () => {
 
 // middleware
 app.use(express.json())
-app.use(cookieParser())
 app.use(session({
   secret: 'keykeykey',
   resave: false,

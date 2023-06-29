@@ -26,10 +26,8 @@ passport.use(
         role:user.role
     },
     process.env.JWT_KEY)
-    const {password ,role,resetpasswordtoken,resetpasswordexpire, ...info} = user._doc
     const userinfo = {
         token:token,
-        user:info
     }
       return done(null, userinfo);
     

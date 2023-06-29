@@ -19,7 +19,6 @@ import signOut from "../../image/signOut.png"
 import reservation from "../../image/reservation.png"
 import manageAccount from "../../image/manageAccount.png"
 import newRequest from "../../utils/newRequest.js"
-import Aleart from "../../components/Aleart/Aleart"
 
 
 
@@ -58,8 +57,8 @@ const Header = () => {
   const navigate = useNavigate()
 
   const handelSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } })
-    window.scrollTo(0, 0);
+     navigate("/hotels", { state: { destination, date, options } })
+     window.scrollTo(0, 0);
   }
 
   const hotelPage = () => {
@@ -85,9 +84,20 @@ const Header = () => {
 
 
 
-
-
-
+  
+  useEffect(() => {
+    try {
+      const res =  newRequest.post("/auth/currentuser")
+      res.then(res => {
+        if (res.data){
+          localStorage.setItem("currentUser", JSON.stringify(res.data))
+        }
+      })   
+    }
+    catch (err) {
+      // setError(err.response.data)
+    }
+  }, []);
 
 
 
@@ -105,7 +115,7 @@ const Header = () => {
       await newRequest.post("/auth/signout")
       localStorage.setItem("currentUser", null)
       navigate("/")
-      window.scrollTo(0, 0);;
+      window.scrollTo(0, 0);
     } catch (err) {
       console.log(err);
     }
@@ -305,7 +315,7 @@ const Header = () => {
                 </div>
               )}
             </div>
-            <div className="headerSearchItem" onMouseOver={() => setShowTagText(true)} onMouseOut={() => setShowTagText(false)} >
+            <div className="headerSearchItem" >
               <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handelSearch} className="searchIcon" />
             </div>
           </div>

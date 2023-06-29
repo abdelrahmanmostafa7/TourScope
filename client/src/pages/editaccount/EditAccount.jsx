@@ -2,13 +2,16 @@ import React from 'react'
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
 import "./EditAccount.scss"
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import useFetch from './../../hook/useFetch';
 import { Link } from 'react-router-dom';
 import newRequest from '../../utils/newRequest'
 import { useNavigate } from "react-router-dom";
 import Loading from './../../components/Loading/Loading';
 import userImg from "../../image/user.png"
+import Aleart from "../../components/Aleart/Aleart"
+
+
 
 const EditAccount = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -16,6 +19,17 @@ const EditAccount = () => {
   const { data, loading } = useFetch(`/user/find/${id}`);
   localStorage.setItem("currentUser", JSON.stringify(currentUser));
   const [user, setUser] = useState({});
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null)
+      }, 3000);
+    }
+
+  }, [error])
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -25,21 +39,25 @@ const EditAccount = () => {
 
   const handleNameChange = (e) => {
     const value = e.target.value;
-    const regex = /^[a-zA-Z ]+$/; 
+    const regex = /^[a-zA-Z ]+$/;
     if (regex.test(value)) {
       setUser((prev) => {
         return { ...prev, [e.target.name]: value };
       });
+    }else{
+      setError("enter valid fristname")
     }
   };
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (regex.test(value)) {
       setUser((prev) => {
         return { ...prev, [e.target.name]: value };
       });
+    }else{
+      setError("enter vaild email")
     }
   };
 
@@ -49,7 +67,7 @@ const EditAccount = () => {
       return { ...prev, [e.target.name]: value };
     });
   };
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -69,6 +87,9 @@ const EditAccount = () => {
       {loading ? <Loading /> :
         <div className="editAccountContainer">
           <div className="editAccountWrapper" >
+            <div className='error_position'>
+              {error && <Aleart type={"error"} message={error} />}
+            </div>
             <form className='editAccount' id='handleSubmit' onSubmit={handleSubmit}  >
               <div className="editImgSec">
                 <img src={userImg} alt="" className="editAccountImg" />

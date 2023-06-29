@@ -8,7 +8,7 @@ import FaceBook from "../../image/facebook.png"
 import Google from "../../image/search.png"
 import Apple from "../../image/apple-black-logo.png"
 import { useLocation } from "react-router-dom";
-import Alert from "../../components/Aleart/Aleart"
+import Aleart from "../../components/Aleart/Aleart"
 
 
 const LogInOut = () => {
