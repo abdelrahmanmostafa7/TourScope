@@ -10,7 +10,10 @@ const useSearch = (path) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://localhost:8800/api${path}`);
+                const res = await axios.get(`http://localhost:8800/api${path}`, {
+                    credentials: 'include',
+                    withCredentials: true
+                });
                 setData(res.data);
             } catch (err) {
                 setError(err);
@@ -23,7 +26,10 @@ const useSearch = (path) => {
     const reFetch = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`http://localhost:8800/api${path}`);
+            const res = await axios.get(`http://localhost:8800/api${path}`, {
+                credentials: 'include',
+                withCredentials: true
+            });
             setData(res.data);
         } catch (err) {
             setError(err);
