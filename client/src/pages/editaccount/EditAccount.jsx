@@ -17,7 +17,6 @@ const EditAccount = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const id = currentUser._id;
   const { data, loading } = useFetch(`/user/find/${id}`);
-  localStorage.setItem("currentUser", JSON.stringify(currentUser));
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
 
@@ -67,15 +66,57 @@ const EditAccount = () => {
       return { ...prev, [e.target.name]: value };
     });
   };
-
+  
   const navigate = useNavigate();
+  
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await newRequest.put(`/user/update/${id}`, { ...user });
+  //     navigate("/personalDetails");
+  //     const savedData = JSON.parse(localStorage.getItem("currentUser")) || {};
+  //     if (user.first_name) {
+  //       savedData.first_name = user.first_name;
+  //     }
+  //     if (user.last_name) {
+  //       savedData.last_name = user.last_name;
+  //     }
+  //     if (user.email) {
+  //       savedData.email = user.email;
+  //     }
+  //     if (user.date_of_birth) {
+  //       savedData.date_of_birth = user.date_of_birth;
+  //     }
+  //     if (user.phone_number) {
+  //       savedData.phone_number = user.phone_number;
+  //     }
+  //     if (user.gender) {
+  //       savedData.gender = user.gender;
+  //     }
+  //     localStorage.setItem("currentUser", JSON.stringify(savedData));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await newRequest.put(`/user/update/${id}`, { ...user });
-      localStorage.setItem("currentUser", JSON.stringify(user));
       navigate("/personalDetails");
+      let savedData = {};
+      if (typeof localStorage !== "undefined") {
+        savedData = JSON.parse(localStorage.getItem("currentUser")) || {};
+      }
+      for (const prop in user) {
+        if (user.hasOwnProperty(prop)) {
+          savedData[prop] = user[prop];
+        }
+      }
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("currentUser", JSON.stringify(savedData));
+      }
     } catch (error) {
       console.log(error);
     }

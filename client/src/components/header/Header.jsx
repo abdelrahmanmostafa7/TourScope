@@ -82,9 +82,6 @@ const Header = () => {
     window.scrollTo(0, 0);;
   }
 
-
-
-  
   useEffect(() => {
     try {
       const res =  newRequest.post("/auth/currentuser")
@@ -98,15 +95,6 @@ const Header = () => {
       // setError(err.response.data)
     }
   }, []);
-
-
-
-
-
-
-
-
-
 
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
