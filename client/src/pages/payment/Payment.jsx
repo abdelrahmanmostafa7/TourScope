@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
+
 const Payment = () => {
   const location = useLocation()
   const useroptions = location.state.reservationDetails;
@@ -57,6 +58,7 @@ const Payment = () => {
     }
     return '';
   };
+
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
@@ -78,7 +80,6 @@ const Payment = () => {
 
   const [showPopUp, setShowPopUp] = useState(false);
   const togglePopUp = async() => {
-  
     try {
      const data = await newRequest.post("/reservation/make_reservation", reservationDetails )
     
@@ -86,10 +87,8 @@ const Payment = () => {
       setShowPopUp(true);
       setTimeout(() => {
         navigate(`/reservations/${reservationDetails.user_id}`)
-
       }, 3000);
     }
-     //navigate("/reservations");
     }
     catch (err) {
       //setError(err.response.data)

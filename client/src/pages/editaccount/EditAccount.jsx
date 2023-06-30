@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
 import "./EditAccount.scss"
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useFetch from './../../hook/useFetch';
 import { Link } from 'react-router-dom';
 import newRequest from '../../utils/newRequest'
@@ -19,16 +19,16 @@ const EditAccount = () => {
   const { data, loading } = useFetch(`/user/find/${id}`);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
-
+  const [success, setSuccess] = useState(null)
 
   useEffect(() => {
-    if (error) {
+    if (error ) {
       setTimeout(() => {
         setError(null)
       }, 3000);
     }
-
   }, [error])
+
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -43,8 +43,8 @@ const EditAccount = () => {
       setUser((prev) => {
         return { ...prev, [e.target.name]: value };
       });
-    }else{
-      setError("enter valid fristname")
+    } else {
+      setError("Name should be letters")
     }
   };
 
@@ -55,20 +55,25 @@ const EditAccount = () => {
       setUser((prev) => {
         return { ...prev, [e.target.name]: value };
       });
-    }else{
-      setError("enter vaild email")
+    } else {
+      setError("Email should contain @")
     }
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); // remove non-numeric characters
-    setUser((prev) => {
-      return { ...prev, [e.target.name]: value };
-    });
+    const value = e.target.value
+    const regex = /\D g, '' /
+    if (regex.test(value)) {
+      setUser((prev) => {
+        return { ...prev, [e.target.name]: value };
+      });
+    } else {
+      setError("Phone should be Numbers")
+    }
   };
-  
+
   const navigate = useNavigate();
-  
+
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   try {
@@ -104,7 +109,6 @@ const EditAccount = () => {
     e.preventDefault();
     try {
       await newRequest.put(`/user/update/${id}`, { ...user });
-      navigate("/personalDetails");
       let savedData = {};
       if (typeof localStorage !== "undefined") {
         savedData = JSON.parse(localStorage.getItem("currentUser")) || {};
@@ -117,6 +121,10 @@ const EditAccount = () => {
       if (typeof localStorage !== "undefined") {
         localStorage.setItem("currentUser", JSON.stringify(savedData));
       }
+      setTimeout(() => {
+        setSuccess("Done")
+        navigate("/personalDetails");
+      }, 1000)
     } catch (error) {
       console.log(error);
     }
@@ -128,8 +136,9 @@ const EditAccount = () => {
       {loading ? <Loading /> :
         <div className="editAccountContainer">
           <div className="editAccountWrapper" >
-            <div className='error_position'>
+            <div className='errorPosition'>
               {error && <Aleart type={"error"} message={error} />}
+              {success && <Aleart type={"success"} message={"Successful Updates"} />}
             </div>
             <form className='editAccount' id='handleSubmit' onSubmit={handleSubmit}  >
               <div className="editImgSec">
