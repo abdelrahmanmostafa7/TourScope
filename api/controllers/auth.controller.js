@@ -173,9 +173,9 @@ export const adminSignin = async (req, res, next) => {
                 { id: admin._id, role: admin.role,},
                 process.env.JWT_KEY
             );
-            const { first_name, last_name, email, hotel_id } = admin;
+            const {_id, first_name, last_name, email, hotel_id } = admin;
             res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
-            res.status(200).send({ first_name, last_name, email, hotel_id });
+            res.status(200).send({ _id ,first_name, last_name, email, hotel_id });
         }
     } catch (err) {
         next(err);
