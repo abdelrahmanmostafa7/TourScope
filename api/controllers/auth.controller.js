@@ -56,9 +56,6 @@ export const signin = async (req, res, next) => {
             res.cookie("accessToken", token, { httpOnly: true })
             res.status(200).send(info)
         }
-
-
-
     } catch (err) {
         next(err)
     }
@@ -74,6 +71,7 @@ export const signout = (req, res) => {
         .status(200)
         .send("User has been logged out.");
 }
+
 
 export const socialtoken = async (req, res) => {
     res.cookie("accessToken", req.user.token,
@@ -153,3 +151,60 @@ export const confirm_otp = async (req, res, next) => {
 
 
 
+// Admin Login 
+// export const adminSignin = async (req, res, next) => {
+//     try {
+//         // check if admin exists
+//         const admin = await User.findOne({ email: req.body.email });
+//         if (!admin) return next(createError(404, "Email or password is wrong!"));
+
+//         // check if password is correct
+//         const isCorrect = bcrypt.compareSync(req.body.password, admin.password);
+//         if (!isCorrect) return next(createError(404, "Email or password is wrong!"));
+
+//         // check user role
+//         if (admin.role !== "admin") {
+//             return next(createError(403, "Access denied"));
+//         }
+
+//         // check user role
+//         if (admin.role !== "user") {
+//             const token = jwt.sign(
+//                 { id: admin._id, role: admin.role,},
+//                 process.env.JWT_KEY
+//             );
+//             const { first_name, last_name, email, hotel_id } = admin;
+//             res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
+//             res.status(200).send({ first_name, last_name, email, hotel_id });
+//         }
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+
+
+export const adminSignin = async (req, res) => {
+    try {
+        const admin = await User.findOne({ email: req.body.email });
+        if (!admin) {
+            throw createError(404, "Email or password is wrong!");
+        }
+
+        const isCorrect = bcrypt.compareSync(req.body.password, admin.password);
+        if (!isCorrect) {
+            throw createError(404, "Email or password is wrong!");
+        }
+
+        if (admin.role !== "admin") {
+            throw createError(403, "Access denied");
+        }
+
+        const { first_name, last_name, email, hotel_id } = admin;
+        const token = jwt.sign({ id: admin._id }, process.env.JWT_KEY);
+        res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
+        return res.status(200).send({ first_name, last_name, email, hotel_id });
+    } catch (err) {
+        next(err)
+    }
+};

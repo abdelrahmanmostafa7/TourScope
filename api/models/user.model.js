@@ -30,6 +30,10 @@ const userSchema = new Schema({
         type: String,
         unique: true
     }],
+    hotel_id: [{
+        type: String,
+        unique: true,
+    }],
     favoriteList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hotel" }],
 
     google_id: {
