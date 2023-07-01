@@ -39,11 +39,9 @@ const LogInOut = () => {
   const SigninForm = async (e) => {
     e.preventDefault()
     try {
-      const res = await newRequest.post("/auth/signin", { email, password })
+      const res = await newRequest.post("/auth/adminSignin", { email, password })
       localStorage.setItem("currentUser", JSON.stringify(res.data))
       navigate("/")
-
-   
     }
     catch (err) {
       setError(err.response.data)

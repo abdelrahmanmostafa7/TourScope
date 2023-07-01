@@ -8,13 +8,31 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import logo from "../../image/logo.png"
+import newRequest from "../../utils/newRequest.js"
+import { useNavigate } from "react-router-dom";
+
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  const handleSignout = async () => {
+    try {
+      await newRequest.post("/auth/signout")
+      localStorage.setItem("currentUser", null)
+      window.location.reload();
+      navigate("/")
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const logInBtn = () => {
+    navigate("/logInOut")
+  }
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <img src={logo} alt=""  className="logo"/>
+          <img src={logo} alt="" className="logo" />
         </Link>
       </div>
       <hr />
@@ -63,15 +81,19 @@ const Sidebar = () => {
             </li>
           </Link> */}
 
-          <p className="title">Admin</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span className="pageName">Profile</span>
-          </li>
-          <li>
-            <ExitToAppIcon className="icon" />
-            <span className="pageName">Logout</span>
-          </li>
+          {!currentUser && 
+            <li onClick={logInBtn}>
+              <ExitToAppIcon className="icon" />
+              <span className="pageName">Login</span>
+            </li>
+          }
+          {currentUser && 
+            <li onClick={handleSignout}>
+              <ExitToAppIcon className="icon" />
+              <span className="pageName">Logout</span>
+            </li>
+          }
+
         </ul>
       </div>
     </div>

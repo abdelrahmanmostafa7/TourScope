@@ -34,8 +34,12 @@ import { useNavigate } from 'react-router-dom';
 import Upload from "../../image/upload.png"
 
 const HotelEdit = () => {
-  const hotelId = "643bb10810a61c1094360089";
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser ? currentUser._id : null;
+  const { data, loading } = useFetch(`/user/find/${userId}`);
+
+  const hotelId = data.hotel_id;
+  const { data: hotel , loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
   const navigate = useNavigate()
   // To add new photo 
   const [file, setFile] = useState(null);

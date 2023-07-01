@@ -13,8 +13,10 @@ body {
 .editAccountContainer {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
   background-color: $backgroundColor ;
+  margin-bottom: 20px;
+  z-index: 5;
+  // position: relative;
 }
 .editAccountBottom{
   display:flex;
@@ -129,4 +131,9 @@ body {
   height: 30px;
   padding-left: 10px;
   margin-bottom: 10px;
+}
+
+.errorPosition{
+    position: sticky;
+    z-index: 30;
 }

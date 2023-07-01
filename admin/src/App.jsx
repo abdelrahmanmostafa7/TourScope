@@ -5,6 +5,7 @@ import UserStatus from "./pages/UserStatus/UserStatus";
 import HotelEdit from "./pages/HotelEdit/HotelEdit";
 import EditRoom from './pages/RoomEdit/RoomEdit';
 import EditRooms from './pages/EditRooms/EditRooms';
+import LogInOut from "./pages/Login-out/LogInOut";
 function App() {
 
   return (
@@ -12,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/LogInOut" element={<LogInOut />} /> */}
+          <Route path="/LogInOut" element={<LogInOut />} />
           <Route path="/New" element={<New />} />
           <Route path="/UserStatus" element={<UserStatus />} />
           <Route path="/HotelEdit" element={<HotelEdit />} />

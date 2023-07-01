@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
                 hotel_id: hotel._id
             }, process.env.JWT_KEY)
             const { password, role, ...info } = user._doc
-            res.cookie("accessToken", token, { httpOnly: true ,sameSite: 'None' })
+            res.cookie("accessToken", token, { httpOnly: true, sameSite: 'None' })
             res.status(200).send(info)
 
         } else {
@@ -56,9 +56,6 @@ export const signin = async (req, res, next) => {
             res.cookie("accessToken", token, { httpOnly: true })
             res.status(200).send(info)
         }
-
-
-
     } catch (err) {
         next(err)
     }
@@ -75,30 +72,22 @@ export const signout = (req, res) => {
         .send("User has been logged out.");
 }
 
+
 export const socialtoken = async (req, res) => {
     res.cookie("accessToken", req.user.token,
         { httpOnly: true });
     res.redirect("http://localhost:5173/");
 }
 
-export const cheack_user = async (req, res , next ) => {
-
-    
-
-
+export const cheack_user = async (req, res, next) => {
     const token = req.cookies.accessToken;
     if (!token) return next(createError(401, "user not found"))
-
     jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
         if (err) return next(createError(403, "user not found"))
-       const user =  await User.findById(payload.id);
-       const {password ,role,resetpasswordtoken,resetpasswordexpire,createdAt,updatedAt, ...info} = user._doc
-       console.log(info)
-       res.status(200).send(info)
+        const user = await User.findById(payload.id);
+        const { password, role, resetpasswordtoken, resetpasswordexpire, createdAt, updatedAt, ...info } = user._doc
+        res.status(200).send(info)
     });
-
-
-
 }
 
 export const send_forget_passowrd_otp = async (req, res, next) => {
@@ -162,3 +151,60 @@ export const confirm_otp = async (req, res, next) => {
 
 
 
+// Admin Login 
+export const adminSignin = async (req, res, next) => {
+    try {
+        // check if admin exists
+        const admin = await User.findOne({ email: req.body.email });
+        if (!admin) return next(createError(404, "Email or password is wrong!"));
+
+        // check if password is correct
+        const isCorrect = bcrypt.compareSync(req.body.password, admin.password);
+        if (!isCorrect) return next(createError(404, "Email or password is wrong!"));
+
+        // check user role
+        if (admin.role !== "admin") {
+            return next(createError(403, "Access denied"));
+        }
+
+        // check user role
+        if (admin.role == "admin") {
+            const token = jwt.sign(
+                { id: admin._id, role: admin.role,},
+                process.env.JWT_KEY
+            );
+            const {_id, first_name, last_name, email, hotel_id } = admin;
+            res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
+            res.status(200).send({ _id ,first_name, last_name, email, hotel_id });
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+
+// export const adminSignin = async (req, res) => {
+//     try {
+//         const admin = await User.findOne({ email: req.body.email });
+//         if (!admin) {
+//             throw createError(404, "Email or password is wrong!");
+//         }
+
+//         const isCorrect = bcrypt.compareSync(req.body.password, admin.password);
+//         if (!isCorrect) {
+//             throw createError(404, "Email or password is wrong!");
+//         }
+
+//         if (admin.role !== "admin") {
+//             throw createError(403, "Access denied");
+//         }
+
+//         const { first_name, last_name, email, hotel_id } = admin;
+//         const token = jwt.sign({ id: admin._id }, process.env.JWT_KEY);
+//         res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
+//         return res.status(200).send({ first_name, last_name, email, hotel_id });
+//     } catch (err) {
+//         next(err)
+//     }
+// };
