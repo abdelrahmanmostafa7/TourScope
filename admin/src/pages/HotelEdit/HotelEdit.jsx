@@ -34,8 +34,8 @@ import { useNavigate } from 'react-router-dom';
 import Upload from "../../image/upload.png"
 
 const HotelEdit = () => {
-   currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const userId = currentUser ? currentUser._iconstd : null;
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${userId}`);
 
   const hotelId = data.hotel_id;
