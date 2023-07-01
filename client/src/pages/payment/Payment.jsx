@@ -85,7 +85,7 @@ const Payment = () => {
     if (data.data){
       setShowPopUp(true);
       setTimeout(() => {
-        navigate(`/reservations/${reservationDetails.user_id}`)
+        navigate(`/reservations`)
 
       }, 3000);
     }
