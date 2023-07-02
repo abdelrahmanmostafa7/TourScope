@@ -22,11 +22,11 @@ const List = () => {
   }])
   const [options, setOptions] = useState(location.state?.options ? location.state.options : {
     adult: 1,
-    children:0,
+    children: 0,
     room: 1
   })
 
-  const [reservation_data , setReservation_data] = useState({
+  const [reservation_data, setReservation_data] = useState({
     date,
     options,
     destination
@@ -46,19 +46,19 @@ const List = () => {
   const handelSearch = () => {
     setReservation_data({
       date,
-    options,
-    destination
+      options,
+      destination
     })
     reFetch()
   }
 
 
-   useEffect(() => {
-     if(reservation_data){
-       localStorage.setItem("reservation_details" , JSON.stringify(reservation_data) )
-       // console.log(JSON.parse(localStorage.getItem("reservation_details")))
-     }
-   }, [reservation_data]);
+  useEffect(() => {
+    if (reservation_data) {
+      localStorage.setItem("reservation_details", JSON.stringify(reservation_data))
+      // console.log(JSON.parse(localStorage.getItem("reservation_details")))
+    }
+  }, [reservation_data]);
 
 
   return (
@@ -76,7 +76,7 @@ const List = () => {
                   Try  to search another city</h1>
               )}
               {data.map(item =>
-                <SearchItem item={item} key={item._id}  />
+                <SearchItem item={item} key={item._id} />
               )}
             </div>
 
@@ -85,7 +85,17 @@ const List = () => {
                 <h1 className="lsTitle">Search</h1>
                 <div className="lsItem">
                   <label className="lsLabel">Destination</label>
-                  <input placeholder={destination} type="text" onChange={e => {setDestination(e.target.value)} } />
+                  <input
+                    placeholder={destination}
+                    type="text"
+                    onChange={e => { setDestination(e.target.value) }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        navigate("/hotels", { state: { destination, date, options } });
+                        window.scrollTo(0, 0);
+                      }
+                    }}
+                  />
                 </div>
                 <div className="lsItem">
                   <label className="lsLabel">Check-in Date</label>
