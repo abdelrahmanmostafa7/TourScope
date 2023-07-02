@@ -91,8 +91,12 @@ const List = () => {
                     onChange={e => { setDestination(e.target.value) }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        navigate("/hotels", { state: { destination, date, options } });
-                        window.scrollTo(0, 0);
+                        setReservation_data({
+                          date,
+                          options,
+                          destination
+                        })
+                        reFetch()
                       }
                     }}
                   />
