@@ -8,9 +8,12 @@ import NewRoom from "../NewRoom/NewRoom"
 import { useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 const Datatable = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser ? currentUser._id : null;
+  const { data:userData , loading:userLoading } = useFetch(`/user/find/${userId}`);
 
-  const id = "643bb10810a61c1094360089"
-  const { data, loading } = useFetch(`/hotel/hotelRooms/${id}`)
+  const hotelId = userData.hotel_id;
+  const { data, loading } = useFetch(`/hotel/hotelRooms/${hotelId}`)
   const [rows, setRows] = useState([]);
 
   useEffect(() => {

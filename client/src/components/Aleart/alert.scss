@@ -3,6 +3,12 @@
     border: 1px solid transparent;
     border-radius: 4px;
     width: 100%;
+    max-width: 990px;
+    z-index: 30;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: 5px;
   }
   
   .alert-success {
@@ -10,8 +16,6 @@
     background-color: #d4edda;
     border-color: #c3e6cb;
   }
-  
- 
   
   .alert-error {
     color: #721c24;
@@ -21,6 +25,7 @@
   
   .alert-message {
     margin-bottom: 0;
+    text-align: center;
   }
   
  

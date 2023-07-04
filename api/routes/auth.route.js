@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, signin, signout, socialtoken, cheack_user, send_forget_passowrd_otp, confirm_otp } from "../controllers/auth.controller.js"
+import { signup, signin, signout, socialtoken, cheack_user, send_forget_passowrd_otp, confirm_otp, adminSignin } from "../controllers/auth.controller.js"
 import passport from "passport";
 import { verifyrole } from "../middleware/jwt.js";
 const router = express.Router();
@@ -7,12 +7,12 @@ const router = express.Router();
 router.get("/role", verifyrole)
 router.post("/signup", signup)
 router.post("/signin", signin)
+router.post("/adminSignin", adminSignin)
 router.post("/signout", signout)
 
 // user google signin / signup
 router.get("/signin/failed", (req, res) => {
     res.status(401).json({ message: "Login failed" });
-
 });
 
 router.get("/google", passport.authenticate("google"));

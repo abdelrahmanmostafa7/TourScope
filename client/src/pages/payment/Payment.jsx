@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
+
 const Payment = () => {
   const location = useLocation()
   const room = location.state.room;
@@ -84,7 +85,6 @@ const Payment = () => {
     user_id:id
   }
   const togglePopUp = async() => {
-  
     try {
      const data = await newRequest.post("/reservation/make_reservation", reservationDetails );
     

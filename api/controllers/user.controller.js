@@ -33,8 +33,8 @@ export const getUser = async (req, res, next) => {
     // console.log(user);
   }
   catch (err) {
-    next(err);
     res.status(404).send("User Not Found");
+    next(err);
   }
 }
 

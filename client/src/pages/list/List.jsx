@@ -29,7 +29,7 @@ const List = () => {
   }])
   const [options, setOptions] = useState(Saved_reservation?.options? Saved_reservation.options : {
     adult: 1,
-    children:0,
+    children: 0,
     room: 1
   })
 
@@ -89,7 +89,21 @@ const List = () => {
                 <h1 className="lsTitle">Search</h1>
                 <div className="lsItem">
                   <label className="lsLabel">Destination</label>
-                  <input placeholder={destination} type="text" onChange={e => {setDestination(e.target.value)} } />
+                  <input
+                    placeholder={destination}
+                    type="text"
+                    onChange={e => { setDestination(e.target.value) }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        setReservation_data({
+                          date,
+                          options,
+                          destination
+                        })
+                        reFetch()
+                      }
+                    }}
+                  />
                 </div>
                 <div className="lsItem">
                   <label className="lsLabel">Check-in Date</label>
