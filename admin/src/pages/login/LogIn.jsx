@@ -1,5 +1,5 @@
 import React from 'react'
-import "./LogInOut.scss"
+import "./LogIn.scss"
 import { useState, useEffect } from 'react'
 import newRequest from '../../utils/newRequest'
 import { useNavigate } from "react-router-dom";
@@ -88,25 +88,9 @@ const LogInOut = () => {
           {error && <Aleart type={"error"} message={error.message} />}
         </div>
         <section className="container">
+          
           <main className={isSignIn ? "slide-right" : ""}>
-            <section className="form-block" id="signUpForm" onSubmit={SignUpForm} >
-              <h2>Create Account</h2>
-              <form>
-                <label htmlFor="first_name">First Name</label>
-                <input type="text" name="first_name" onChange={handleChange} required />
-
-                <label htmlFor="last_name">Last Name</label>
-                <input type="text" name="last_name" onChange={handleChange} required />
-
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" onChange={handleChange} required />
-
-                <label htmlFor="=password">Password</label>
-                <input type="password" name="password" onChange={handleChange} required />
-
-                <button type="submit" className="LogBtn">Sign Up</button>
-              </form>
-            </section>
+            
             <section className="form-block" id="signInForm">
               <h2>Sign In</h2>
 
@@ -120,32 +104,19 @@ const LogInOut = () => {
                   Sign In
                 </button>
               </form>
-              <div className="signInBottom">
+              {/* <div className="signInBottom">
                 <p>Or Continue With</p>
                 <div className="signInWays">
                   <img src={Google} onClick={google_auth} alt="" className='signInWayImg' />
                   <img src={FaceBook} onClick={facebook_auth} alt="" className='signInWayImg' />
                   <img src={Apple} alt="" className='signInWayImg' />
                 </div>
-              </div>
+              </div> */}
 
             </section>
           </main>
           <aside className={isSignIn ? "slide-left" : ""}>
-            <section className="login-block">
-              <h2>Already a User?</h2>
-              <button type="submit" id="login-btn" className="LogBtn" onClick={handleSignIn}>
-                Sign In
-              </button>
-            </section>
-            <section className="register-block">
-              <h2>New User?</h2>
-              <div className="btnSec">
-                <button type="submit" id="register-btn" className="LogBtn" onClick={handleSignUp}>
-                  Sign Up
-                </button>
-              </div>
-            </section>
+ 
           </aside>
         </section>
       </div>

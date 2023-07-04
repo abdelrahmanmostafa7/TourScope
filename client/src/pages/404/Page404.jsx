@@ -16,8 +16,8 @@ const Page404 = () => {
   return (
     <div>
       <div className='page404Main'>
-        <h1>4<span><i class="fas fa-ghost"></i></span>04</h1>
-        <h2>Error: 404 page not found</h2>
+        <h1>4<span><i class="fas fa-ghost"></i></span>03</h1>
+        <h2>Error: 403 page Forbidden</h2>
         <p>Sorry, the page you're looking for cannot be accessed</p>
         <button className='btn404' onClick={home}>Back To Home</button>
       </div>

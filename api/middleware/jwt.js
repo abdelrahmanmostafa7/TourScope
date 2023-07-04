@@ -15,6 +15,9 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyUser = (req, res, next) => {
+    
+    const user_id = req.params.id || req.body._id
+    console.log(user_id)
     const token = req.cookies.accessToken;
     if (!token) return next(createError(401, "You are not authenticated!"))
 

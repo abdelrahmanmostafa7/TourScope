@@ -20,7 +20,6 @@ const useSearch = (path) => {
                 setData(res.data);
             } catch (err) {
                 setError(err);
-                navigate("/404")
 
             }
             setLoading(false);
@@ -38,7 +37,6 @@ const useSearch = (path) => {
             setData(res.data);
         } catch (err) {
             setError(err);
-            navigate("/404")
 
         }
         setLoading(false);

@@ -14,6 +14,7 @@ const PersonalDetails = () => {
   }
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser._id
+  console.log(id)
   const { data, loading } = useFetch(`/user/find/${id}`);
 
   
