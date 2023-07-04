@@ -20,7 +20,7 @@ const useFetch = (path) => {
                 setData(res.data);
             } catch (err) {
                 setError(err);
-                navigate("/")
+                navigate("/404")
                 window.scrollTo(0, 0);;
 
             }
@@ -39,6 +39,8 @@ const useFetch = (path) => {
             setData(res.data);
         } catch (err) {
             setError(err);
+            navigate("/404")
+
         }
         setLoading(false);
     };

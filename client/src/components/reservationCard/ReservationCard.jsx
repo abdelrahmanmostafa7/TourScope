@@ -32,7 +32,7 @@ const ReservationCard = ({item}) => {
   }
   return (
     <div>
-      {/* <Aleart type={Error.type} message={Error.message}/> */}
+       <Aleart type={Error.type} message={Error.message}/> 
       <div className="reservation">
         <div className="reservationLeft">
           <img src={item.hotel_id.images} alt="" className='reservationImg' />

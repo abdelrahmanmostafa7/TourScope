@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState  } from "react";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 const useSearch = (path) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,6 +20,8 @@ const useSearch = (path) => {
                 setData(res.data);
             } catch (err) {
                 setError(err);
+                navigate("/404")
+
             }
             setLoading(false);
         };
@@ -33,6 +38,8 @@ const useSearch = (path) => {
             setData(res.data);
         } catch (err) {
             setError(err);
+            navigate("/404")
+
         }
         setLoading(false);
     };

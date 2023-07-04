@@ -33,7 +33,6 @@ export const make_reservation = async (req, res, next) => {
         user_startDate.setDate(user_startDate.getDate() + 1);
 
         user_endDate.setDate(user_endDate.getDate() + 1);
-        console.log(user_startDate)
 
         let cheak_flag = true
         let counter = 0;
@@ -69,7 +68,6 @@ export const make_reservation = async (req, res, next) => {
 
         });
 
-        console.log(counter)
 
         if (cheak_flag === true) {
             return next(createError(403, "Something Went Wrong"))
@@ -85,8 +83,6 @@ export const make_reservation = async (req, res, next) => {
         const totalprice = deal.price;
         const timeDiff = Math.abs(user_endDate.getTime() - user_startDate.getTime());
         const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        console.log(totalprice)
-        console.log(room.price * deal.roomscount * diffDays)
 
 
         if (room.price * deal.roomscount * diffDays !== totalprice) {
