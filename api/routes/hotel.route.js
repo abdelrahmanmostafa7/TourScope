@@ -4,7 +4,7 @@ const router = express.Router();
 import { createHotel, updateHotel, dashboard, deleteHotelItem, deleteuser, modifiyrole, getHotel, addnewuser, getHotels, getFavHotels, getTopHotels, userstatus, getHotelRooms } from "../controllers/hotel.controller.js";
 import {verifyAdmin,verifyUser} from "../middleware/jwt.js"  
 
-router.post("/",verifyAdmin, createHotel);
+router.post("/", createHotel);
 router.put("/update/:id", updateHotel);
 router.put("/deleteHotelItem/:id", deleteHotelItem);
 router.get("/find/:id", getHotel);

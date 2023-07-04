@@ -1,5 +1,5 @@
 import "./hotel.scss";
-import { useLocation } from "react-router-dom"
+import { json, useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
@@ -38,9 +38,6 @@ import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import Check from "../../image/check (1).png"
-import Tray from "../../image/tray.png"
-import Nearby from "../../image/nearby.png"
-import Attraction from "../../image/new-hire.png"
 
 const Hotel = () => {
   // To fetch data 
@@ -82,13 +79,9 @@ const Hotel = () => {
 
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
-
-    setReservation_data({
-      date: date,
-      options: options,
-      destination: hotel.city
-    })
+    localStorage.setItem("reservation_details", JSON.stringify(reservation_data));
     reFetch()
+
   }
 
 
@@ -98,6 +91,15 @@ const Hotel = () => {
   useEffect(() => {
     if (hotel.rooms) {
       setSliderLoaded(true);
+      localStorage.setItem("selected_hotel", JSON.stringify({
+        hotelname: hotel.name,
+        hotelimg: hotel.images ? hotel.images[0] : null,
+
+      }))
+      localStorage.setItem("selected_hotel_rooms", JSON.stringify(hotel.rooms))
+      
+
+      
     }
   }, [hotel]);
 
@@ -111,21 +113,34 @@ const Hotel = () => {
   };
 
   const navigate = useNavigate()
+
   const reservationData = {
-    hotelname: hotel.name,
-    hotelimg: hotel.images ? hotel.images[0] : null,
-    roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,
   };
 
 
+
   const roomsBtn = () => {
-    navigate(`/rooms/${id}`, { state: { reservationData } }),
-      window.scrollTo(0, 0);;
+    navigate(`/rooms/${id}`, { state: {reservationData } }),
+    window.scrollTo(0, 0);;
   }
 
+  // localStorage.setItem("reservation_details", JSON.stringify({
+  //   date: date,
+  //   options: options,
+  //   destination: hotel.city
+  // }))
 
+
+  useEffect(() => {
+    setReservation_data({
+      date: date,
+      options: options,
+      destination: hotel.city
+    })
+
+  },[date , options ])
 
   // Slider states & functions 
 
@@ -163,48 +178,57 @@ const Hotel = () => {
     }
     setSlideNumber(newSlideNumber)
   };
-  //popup
-  const [showPopUp, setShowPopUp] = useState(false);
-  const togglePopUp = () => {
-    setShowPopUp(true);
-  };
-  const closePopUp = (event) => {
-    if (event.target === event.currentTarget) {
-      setShowPopUp(false);
-    }
-  };
-  const [showPopUp2, setShowPopUp2] = useState(false);
-  const togglePopUp2 = () => {
-    setShowPopUp2(true);
-  };
-  const closePopUp2 = (event) => {
-    if (event.target === event.currentTarget) {
-      setShowPopUp2(false);
-    }
-  };
-  const [showPopUp3, setShowPopUp3] = useState(false);
-  const togglePopUp3 = () => {
-    setShowPopUp3(true);
-  };
-  const closePopUp3 = (event) => {
-    if (event.target === event.currentTarget) {
-      setShowPopUp3(false);
-    }
-  };
-  const areainfo = hotel.area_info
-  // console.log(areainfo)
-  const [restaurants, setRestaurants] = useState();
-  const [nearbyPlaces, setNearbyPlaces] = useState();
-  const [attractionsPlaces, setAttractionsPlaces] = useState();
 
-  useEffect(() => {
-    if (hotel.area_info) {
-      setRestaurants(hotel.area_info[0].restaurants)
-      setAttractionsPlaces(hotel.area_info[0].attractions)
-      setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
-    }
 
-  }, [hotel]);
+//popup
+const [showPopUp, setShowPopUp] = useState(false);
+const togglePopUp = () => {
+  setShowPopUp(true);
+};
+const closePopUp = (event) => {
+  if (event.target === event.currentTarget) {
+    setShowPopUp(false);
+  }
+};
+const [showPopUp2, setShowPopUp2] = useState(false);
+const togglePopUp2 = () => {
+  setShowPopUp2(true);
+};
+const closePopUp2 = (event) => {
+  if (event.target === event.currentTarget) {
+    setShowPopUp2(false);
+  }
+};
+const [showPopUp3, setShowPopUp3] = useState(false);
+const togglePopUp3 = () => {
+  setShowPopUp3(true);
+};
+const closePopUp3 = (event) => {
+  if (event.target === event.currentTarget) {
+    setShowPopUp3(false);
+  }
+};
+const areainfo = hotel.area_info
+// console.log(areainfo)
+const [restaurants, setRestaurants] = useState();
+const [nearbyPlaces, setNearbyPlaces] = useState();
+const [attractionsPlaces, setAttractionsPlaces] = useState();
+
+useEffect(() => {
+  if (hotel.area_info) {
+    setRestaurants(hotel.area_info[0].restaurants)
+    setAttractionsPlaces(hotel.area_info[0].attractions)
+    setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
+  }
+
+}, [hotel]);
+
+
+
+
+
+
+
   return (
     <div>
       <Navbar />
@@ -424,16 +448,18 @@ const Hotel = () => {
                         "MM/dd/yyyy"
                       )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                     {openDate && (
-                      <DateRange
-                        onChange={(item) => {
-                          const { selection } = item;
-                          if (selection.startDate.getTime() === selection.endDate.getTime()) {
-                            selection.endDate = new Date(selection.endDate.getTime() + 86400000);
-                          }
-                          setDate([selection]);
-                        }} minDate={new Date()}
-                        ranges={date}
-                      />
+                     <DateRange
+                     onChange={(item) => {
+                       const { selection } = item;
+                       if (selection.startDate.getTime() === selection.endDate.getTime()) {
+                         selection.endDate = new Date(selection.endDate.getTime() + 86400000);
+                       }
+                       setDate([selection]);
+                     }}
+                     minDate={new Date()}
+                     ranges={date}
+                   />
+                   
                     )}
                   </div>
                   <div className="lsItem">

@@ -59,7 +59,6 @@ export const signin = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-
 }
 
 export const signout = (req, res) => {

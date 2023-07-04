@@ -11,8 +11,7 @@ import { useState } from "react";
 const Rooms = () => {
     const location = useLocation()
     const id = location.pathname.split("/")[2]
-    const [reservationData, setdata] = useState(location.state.reservationData)
-    const { data: rooms, loading: roomsLoading } = useFetch(`/room/finds/${id}`);
+    const allRooms = JSON.parse(localStorage.getItem("selected_hotel_rooms"));
     return (
         <div>
             <Navbar />
@@ -20,11 +19,11 @@ const Rooms = () => {
                 <div className="roomsWrapper">
                     <h1 className="roomTitle">Choose your Room</h1>
                     <div className="roomCards">
-                        {roomsLoading ? <Loading /> : <>
-                            {reservationData.roomsdata.map((item) => (
-                                <RoomCard item={item} data={reservationData} key={item._id} />
+                        {allRooms ? <>
+                            {allRooms.map((item) => (
+                                <RoomCard item={item}  key={item._id} />
                             ))}
-                        </>}
+                        </> :  <Loading /> }
                     </div>
                 </div>
             </div>

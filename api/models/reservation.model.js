@@ -33,11 +33,16 @@ const ReservationScheme = new mongoose.Schema({
         child: {
             type: Number, required: true
         },
+        number_rooms: {
+          type: Number, required: true
+      },
+
+        
     },
     user_id:{
         type: String, required: true,
 
-    }
-});
+    },
+},{ timestamps: true });
 
 export default mongoose.model("Reservation", ReservationScheme);
