@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
+import ConfirmLoader from '../../components/confirm/ConfirmLoader';
 
 const Payment = () => {
   const location = useLocation()

@@ -86,7 +86,7 @@ const Planner = () => {
   
   const viewhotels = (res) => {
     navigate(`/hotels`, { state: { destination:res.City}  })
-
+    
   }
   const addoption = (e) => {
     if (isFinite(planner[e])) {

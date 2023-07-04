@@ -371,6 +371,7 @@ export const getHotel = async (req, res, next) => {
           distanceFromCityCenter: { $first: "$distanceFromCityCenter" },
           checkInout: { $first: "$checkInout" },
           rooms: { $push: "$rooms" },
+          area_info: { $push: "$area_info" },
         },
       },
     ]).then((hotel_res) => {
@@ -386,35 +387,35 @@ export const getHotel = async (req, res, next) => {
       user_startDate.setHours(24);
       user_endDate.setHours(24);
       const updatedRooms = hotel_res[0].rooms.map((room) => {
-        let cheak_flag = true
+        let cheak_flag = true;
 
         const cheacker = [];
-        const updatedAvailability = room.room_availability.some(ro => {
+        const updatedAvailability = room.room_availability.some((ro) => {
           for (let i = 0; i < ro.unavailableDates.length; i++) {
             const date = ro.unavailableDates[i];
             const isDateValid = !(
-              (user_startDate >= date.startDate && user_startDate < date.endDate) ||
+              (user_startDate >= date.startDate &&
+                user_startDate < date.endDate) ||
               (user_endDate <= date.endDate && user_endDate > date.startDate) ||
               (user_startDate < date.startDate && user_endDate >= date.endDate)
             );
 
             if (!isDateValid && cheak_flag) {
               cheacker.push({
-             state: "invalid"
+                state: "invalid",
               });
               break;
             }
           }
 
           if (cheacker.length === 0 && cheak_flag) {
-            cheak_flag = false
+            cheak_flag = false;
             cheacker.push({
-               state: "valid"
+              state: "valid",
             });
-            return true
+            return true;
           }
-          return false
-
+          return false;
         });
         if (!cheak_flag) {
           let deal = { roomscount: 0 };
@@ -438,7 +439,6 @@ export const getHotel = async (req, res, next) => {
         } else {
           return { ...room, room_availability: [] };
         }
-
       });
       hotel_res[0].rooms = updatedRooms;
       const obj = hotel_res[0];

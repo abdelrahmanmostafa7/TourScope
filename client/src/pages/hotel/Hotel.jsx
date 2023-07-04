@@ -38,7 +38,9 @@ import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import Check from "../../image/check (1).png"
-
+import Tray from "../../image/tray.png"
+import Nearby from "../../image/nearby.png"
+import Attraction from "../../image/new-hire.png"
 const Hotel = () => {
   // To fetch data 
   const location = useLocation()
@@ -97,9 +99,9 @@ const Hotel = () => {
 
       }))
       localStorage.setItem("selected_hotel_rooms", JSON.stringify(hotel.rooms))
-      
 
-      
+
+
     }
   }, [hotel]);
 
@@ -122,8 +124,8 @@ const Hotel = () => {
 
 
   const roomsBtn = () => {
-    navigate(`/rooms/${id}`, { state: {reservationData } }),
-    window.scrollTo(0, 0);;
+    navigate(`/rooms/${id}`, { state: { reservationData } }),
+      window.scrollTo(0, 0);;
   }
 
   // localStorage.setItem("reservation_details", JSON.stringify({
@@ -140,7 +142,7 @@ const Hotel = () => {
       destination: hotel.city
     })
 
-  },[date , options ])
+  }, [date, options])
 
   // Slider states & functions 
 
@@ -180,50 +182,49 @@ const Hotel = () => {
   };
 
 
-//popup
-const [showPopUp, setShowPopUp] = useState(false);
-const togglePopUp = () => {
-  setShowPopUp(true);
-};
-const closePopUp = (event) => {
-  if (event.target === event.currentTarget) {
-    setShowPopUp(false);
-  }
-};
-const [showPopUp2, setShowPopUp2] = useState(false);
-const togglePopUp2 = () => {
-  setShowPopUp2(true);
-};
-const closePopUp2 = (event) => {
-  if (event.target === event.currentTarget) {
-    setShowPopUp2(false);
-  }
-};
-const [showPopUp3, setShowPopUp3] = useState(false);
-const togglePopUp3 = () => {
-  setShowPopUp3(true);
-};
-const closePopUp3 = (event) => {
-  if (event.target === event.currentTarget) {
-    setShowPopUp3(false);
-  }
-};
-const areainfo = hotel.area_info
-// console.log(areainfo)
-const [restaurants, setRestaurants] = useState();
-const [nearbyPlaces, setNearbyPlaces] = useState();
-const [attractionsPlaces, setAttractionsPlaces] = useState();
+  //popup
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+  };
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
+  const [showPopUp2, setShowPopUp2] = useState(false);
+  const togglePopUp2 = () => {
+    setShowPopUp2(true);
+  };
+  const closePopUp2 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp2(false);
+    }
+  };
+  const [showPopUp3, setShowPopUp3] = useState(false);
+  const togglePopUp3 = () => {
+    setShowPopUp3(true);
+  };
+  const closePopUp3 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp3(false);
+    }
+  };
+  const areainfo = hotel.area_info
+  // console.log(areainfo)
+  const [restaurants, setRestaurants] = useState();
+  const [nearbyPlaces, setNearbyPlaces] = useState();
+  const [attractionsPlaces, setAttractionsPlaces] = useState();
 
-useEffect(() => {
-  if (hotel.area_info) {
-    setRestaurants(hotel.area_info[0].restaurants)
-    setAttractionsPlaces(hotel.area_info[0].attractions)
-    setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
-  }
+  useEffect(() => {
+    if (hotel.area_info) {
+      setRestaurants(hotel.area_info[0].restaurants)
+      setAttractionsPlaces(hotel.area_info[0].attractions)
+      setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
+    }
+  }, [hotel]);
 
-}, [hotel]);
-
-
+  console.log(restaurants)
 
 
 
@@ -448,18 +449,18 @@ useEffect(() => {
                         "MM/dd/yyyy"
                       )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                     {openDate && (
-                     <DateRange
-                     onChange={(item) => {
-                       const { selection } = item;
-                       if (selection.startDate.getTime() === selection.endDate.getTime()) {
-                         selection.endDate = new Date(selection.endDate.getTime() + 86400000);
-                       }
-                       setDate([selection]);
-                     }}
-                     minDate={new Date()}
-                     ranges={date}
-                   />
-                   
+                      <DateRange
+                        onChange={(item) => {
+                          const { selection } = item;
+                          if (selection.startDate.getTime() === selection.endDate.getTime()) {
+                            selection.endDate = new Date(selection.endDate.getTime() + 86400000);
+                          }
+                          setDate([selection]);
+                        }}
+                        minDate={new Date()}
+                        ranges={date}
+                      />
+
                     )}
                   </div>
                   <div className="lsItem">
@@ -561,7 +562,7 @@ useEffect(() => {
                     </div>
                   </div>
                 }
-                
+
                 <div className="areaInfoOption" onClick={togglePopUp2}>
                   <h3>Nearby Places</h3>
                   <img src={Nearby} alt="" className="areaInfoImg" />
