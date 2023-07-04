@@ -11,8 +11,9 @@
 
   .mapboxgl-canvas {
     border-radius: 10px;
-      // filter: brightness(95%) ;
+       filter: brightness(90%) blur(1px) ;
           transition: all 0.5s ease;
+          
   }
 
   .mapTitles {
@@ -32,15 +33,15 @@
     }
   }
 
-  // &:hover {
-  //   .mapboxgl-canvas {
-  //     filter: brightness(90%) blur(0px);
-  //   }
+  &:hover {
+    .mapboxgl-canvas {
+      filter: brightness(90%) blur(0px);
+    }
 
-  //   .mapTitles {
-  //     top: -110px;
-  //   }
-  // }
+    .mapTitles {
+      top: -110px;
+    }
+  }
 }
 
 

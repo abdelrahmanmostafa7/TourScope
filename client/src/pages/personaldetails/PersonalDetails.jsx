@@ -6,6 +6,7 @@ import user from "../../image/user.png"
 import { useNavigate } from "react-router-dom";
 import useFetch from './../../hook/useFetch';
 import Loading from './../../components/Loading/Loading';
+
 const PersonalDetails = () => {
   const navigate = useNavigate()
   const editBtn = () => {
@@ -14,6 +15,8 @@ const PersonalDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser._id
   const { data, loading } = useFetch(`/user/find/${id}`);
+
+  
   return (
     <div>
       <Navbar />

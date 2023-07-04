@@ -6,15 +6,11 @@ import { useNavigate } from "react-router-dom";
 import "./RoomCard.scss"
 
 
-const RoomCard = ({ item, data, passreservation }) => {
+const RoomCard = ({ item }) => {
   const navigate = useNavigate()
   const RoomBtn = () => {
-    if (passreservation) {
-      navigate(`/room/${item._id}`, { state: { item, passreservation } })
-    }
-    if (data) {
-      navigate(`/room/${item._id}`, { state: { item, data } })
-    }
+    navigate(`/room/${item._id}`)
+
     window.scrollTo(0, 0);;
   }
   return (
@@ -34,7 +30,7 @@ const RoomCard = ({ item, data, passreservation }) => {
           </div>
           <h4 className='roomName'>{item.name.slice(0, 25)}</h4>
           <p className='roomPricePerNight'><span>{item.price} EGP</span>/Night</p>
-          {item.deal.price != null ? (
+          {item.deal?.price ? (
             <div className="roomPrice">
               <p>{item.deal.roomscount}XRooms <br />  Total Price <span>{item.deal.price}EGP</span></p>
               <button onClick={RoomBtn} ><img src={Book} alt="" className='BookIcon' /> Book</button>

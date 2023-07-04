@@ -1,5 +1,5 @@
 import "./hotel.scss";
-import { useLocation } from "react-router-dom"
+import { json, useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
@@ -82,13 +82,9 @@ const Hotel = () => {
 
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
-
-    setReservation_data({
-      date: date,
-      options: options,
-      destination: hotel.city
-    })
+    localStorage.setItem("reservation_details", JSON.stringify(reservation_data));
     reFetch()
+
   }
 
 
@@ -98,6 +94,15 @@ const Hotel = () => {
   useEffect(() => {
     if (hotel.rooms) {
       setSliderLoaded(true);
+      localStorage.setItem("selected_hotel", JSON.stringify({
+        hotelname: hotel.name,
+        hotelimg: hotel.images ? hotel.images[0] : null,
+
+      }))
+      localStorage.setItem("selected_hotel_rooms", JSON.stringify(hotel.rooms))
+      
+
+      
     }
   }, [hotel]);
 
@@ -111,21 +116,34 @@ const Hotel = () => {
   };
 
   const navigate = useNavigate()
+
   const reservationData = {
-    hotelname: hotel.name,
-    hotelimg: hotel.images ? hotel.images[0] : null,
-    roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,
   };
 
 
+
   const roomsBtn = () => {
-    navigate(`/rooms/${id}`, { state: { reservationData } }),
-      window.scrollTo(0, 0);;
+    navigate(`/rooms/${id}`, { state: {reservationData } }),
+    window.scrollTo(0, 0);;
   }
 
+  // localStorage.setItem("reservation_details", JSON.stringify({
+  //   date: date,
+  //   options: options,
+  //   destination: hotel.city
+  // }))
 
+
+  useEffect(() => {
+    setReservation_data({
+      date: date,
+      options: options,
+      destination: hotel.city
+    })
+
+  },[date , options ])
 
   // Slider states & functions 
 
@@ -424,16 +442,18 @@ const Hotel = () => {
                         "MM/dd/yyyy"
                       )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                     {openDate && (
-                      <DateRange
-                        onChange={(item) => {
-                          const { selection } = item;
-                          if (selection.startDate.getTime() === selection.endDate.getTime()) {
-                            selection.endDate = new Date(selection.endDate.getTime() + 86400000);
-                          }
-                          setDate([selection]);
-                        }} minDate={new Date()}
-                        ranges={date}
-                      />
+                     <DateRange
+                     onChange={(item) => {
+                       const { selection } = item;
+                       if (selection.startDate.getTime() === selection.endDate.getTime()) {
+                         selection.endDate = new Date(selection.endDate.getTime() + 86400000);
+                       }
+                       setDate([selection]);
+                     }}
+                     minDate={new Date()}
+                     ranges={date}
+                   />
+                   
                     )}
                   </div>
                   <div className="lsItem">

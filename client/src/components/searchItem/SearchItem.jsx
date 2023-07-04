@@ -33,6 +33,7 @@ const SearchItem = ({ item , reservationdata}) => {
    
     const navigate = useNavigate()
     const hotelDetails = () => {
+        localStorage.setItem("reservation_details", JSON.stringify(reservationdata));
         navigate(`/hotels/${item._id}`)
         
     }
