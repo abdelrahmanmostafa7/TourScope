@@ -215,7 +215,6 @@ const Planner = () => {
                 </div>
               </div>
             </div>
-
             <div className={`slide ${currentSlide === 1 ? 'slide_active' : ''}`}>
               <div className="experience">
                 <h1>What are you looking to experience?</h1>
