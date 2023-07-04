@@ -38,6 +38,9 @@ import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import Check from "../../image/check (1).png"
+import Tray from "../../image/tray.png"
+import Nearby from "../../image/nearby.png"
+import Attraction from "../../image/new-hire.png"
 
 const Hotel = () => {
   // To fetch data 
@@ -45,14 +48,14 @@ const Hotel = () => {
   const id = location.pathname.split("/")[2]
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
-  
-  const [reservation_data , setReservation_data] = useState(JSON.parse(localStorage.getItem("reservation_details")))
+
+  const [reservation_data, setReservation_data] = useState(JSON.parse(localStorage.getItem("reservation_details")))
 
 
   const [date, setDate] = useState([
     {
-      startDate: reservation_data? new Date(reservation_data.date[0].startDate) : new Date(),
-      endDate:reservation_data? new Date(reservation_data.date[0].endDate) : new Date().setDate(new Date().getDate() + 1),
+      startDate: reservation_data ? new Date(reservation_data.date[0].startDate) : new Date(),
+      endDate: reservation_data ? new Date(reservation_data.date[0].endDate) : new Date().setDate(new Date().getDate() + 1),
       key: "selection",
     },
   ]);
@@ -66,7 +69,7 @@ const Hotel = () => {
 
 
 
- 
+
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -79,11 +82,11 @@ const Hotel = () => {
 
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
- 
+
     setReservation_data({
-      date:date,
-      options:options,
-      destination:hotel.city
+      date: date,
+      options: options,
+      destination: hotel.city
     })
     reFetch()
   }
@@ -109,37 +112,38 @@ const Hotel = () => {
 
   const navigate = useNavigate()
   const reservationData = {
-    hotelname:hotel.name,
-    hotelimg:hotel.images ? hotel.images[0] : null,
+    hotelname: hotel.name,
+    hotelimg: hotel.images ? hotel.images[0] : null,
     roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,
   };
- 
- 
-  const roomsBtn = () => { navigate(`/rooms/${id}`, { state: { reservationData } }),
-    window.scrollTo(0, 0);;
- }
-  
- 
- 
- // Slider states & functions 
-  
-  
-  
+
+
+  const roomsBtn = () => {
+    navigate(`/rooms/${id}`, { state: { reservationData } }),
+      window.scrollTo(0, 0);;
+  }
+
+
+
+  // Slider states & functions 
+
+
+
   const [slideNumber, setSlideNumber] = useState(0);
-  
-  
-  
+
+
+
   const [open, setOpen] = useState(false);
-  
-  
-  
+
+
+
   const [imgNumber, setNumber] = useState(6);
 
-  
-  
-  
+
+
+
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -159,7 +163,48 @@ const Hotel = () => {
     }
     setSlideNumber(newSlideNumber)
   };
+  //popup
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+  };
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
+  const [showPopUp2, setShowPopUp2] = useState(false);
+  const togglePopUp2 = () => {
+    setShowPopUp2(true);
+  };
+  const closePopUp2 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp2(false);
+    }
+  };
+  const [showPopUp3, setShowPopUp3] = useState(false);
+  const togglePopUp3 = () => {
+    setShowPopUp3(true);
+  };
+  const closePopUp3 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp3(false);
+    }
+  };
+  const areainfo = hotel.area_info
+  // console.log(areainfo)
+  const [restaurants, setRestaurants] = useState();
+  const [nearbyPlaces, setNearbyPlaces] = useState();
+  const [attractionsPlaces, setAttractionsPlaces] = useState();
 
+  useEffect(() => {
+    if (hotel.area_info) {
+      setRestaurants(hotel.area_info[0].restaurants)
+      setAttractionsPlaces(hotel.area_info[0].attractions)
+      setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
+    }
+
+  }, [hotel]);
   return (
     <div>
       <Navbar />
@@ -469,6 +514,66 @@ const Hotel = () => {
                 <LocationBox id={hotel._id} />
               </div>
             </div>
+            <div className="areaInfoContainer">
+              <h2>Nearby Places From Hotel</h2>
+              <div className="areaInfoOptions">
+                <div className="areaInfoOption" onClick={togglePopUp}>
+                  <h3>Restaurants</h3>
+                  <img src={Tray} alt="" className="areaInfoImg" />
+                </div>
+                {
+                  showPopUp && <div className="popup-background" onClick={closePopUp}>
+                    <div className="popup-content3">
+                      <h2>Restaurants Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          restaurants.map((restaurant, i) =>
+                            <span key={i} >{restaurant}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                
+                <div className="areaInfoOption" onClick={togglePopUp2}>
+                  <h3>Nearby Places</h3>
+                  <img src={Nearby} alt="" className="areaInfoImg" />
+                </div>
+                {
+                  showPopUp2 && <div className="popup-background" onClick={closePopUp2}>
+                    <div className="popup-content3">
+                      <h2> Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          nearbyPlaces.map((nearbyPlace, i) =>
+                            <span key={i} >{nearbyPlace}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                {
+                  showPopUp3 && <div className="popup-background" onClick={closePopUp3}>
+                    <div className="popup-content3">
+                      <h2> Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          attractionsPlaces.map((place, i) =>
+                            <span key={i} >{place}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                <div className="areaInfoOption" onClick={togglePopUp3}>
+                  <h3>Attractions places</h3>
+                  <img src={Attraction} alt="" className="areaInfoImg" />
+                </div>
+              </div>
+            </div>
             <div className="hotelBottom">
               {(
                 <>
@@ -477,7 +582,7 @@ const Hotel = () => {
                   {sliderLoaded ? (
                     <BoykaSlider {...settings}>
                       {hotel.rooms.map((item) => (
-                        <RoomCard item={item} passreservation={reservationData}  key={item._id} />
+                        <RoomCard item={item} passreservation={reservationData} key={item._id} />
                       ))}
                     </BoykaSlider>
                   ) : (

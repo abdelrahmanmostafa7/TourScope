@@ -18,7 +18,7 @@ import Loading from "./components/Loading/Loading";
 import Payment from "./pages/payment/Payment"
 import SMTPMessage from './pages/SMTPMessage/SMTPMessage';
 import Page404 from "./pages/404/Page404";
-
+import ConfirmLoader from "./components/confirm/ConfirmLoader";
 function App() {
   return (
     <BrowserRouter forceRefresh={true}>
@@ -42,6 +42,7 @@ function App() {
         <Route path="payment" element={<Payment />} />
         <Route path="message" element={<SMTPMessage />} />
         <Route path="404" element={<Page404 />} />
+        <Route path="loader" element={<ConfirmLoader />} />
       </Routes>
     </BrowserRouter>
   );

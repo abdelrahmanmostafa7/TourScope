@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
+import ConfirmLoader from './../../components/confirm/ConfirmLoader';
 
 const Payment = () => {
   const location = useLocation()
@@ -63,11 +64,11 @@ const Payment = () => {
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
   const reservationDetails = {
-    roomoptions:useroptions.roomoptions
-    ,roomId:useroptions.roomId,
-    date:useroptions.date,
-    deal:useroptions.deal,
-    user_id:data._id
+    roomoptions: useroptions.roomoptions
+    , roomId: useroptions.roomId,
+    date: useroptions.date,
+    deal: useroptions.deal,
+    user_id: data._id
   }
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
@@ -78,29 +79,25 @@ const Payment = () => {
     setIsActive(true);
   }
 
-  const [showPopUp, setShowPopUp] = useState(false);
-  const togglePopUp = async() => {
+  const [error, setError] = useState(false);
+  const handelSubmit = async () => {
     try {
-     const data = await newRequest.post("/reservation/make_reservation", reservationDetails )
-    
-    if (data.data){
-      setShowPopUp(true);
-      setTimeout(() => {
-        navigate(`/reservations`)
+      const data = await newRequest.post("/reservation/make_reservation", reservationDetails)
 
-      }, 3000);
-    }
+      if (data.data) {
+        setShowPopUp(true);
+        setTimeout(() => {
+          navigate(`/reservations`)
+
+        }, 3000);
+      }
     }
     catch (err) {
       //setError(err.response.data)
-    }
-    };
-
-  const closePopUp = (event) => {
-    if (event.target === event.currentTarget) {
-     
+      setError(true)
     }
   };
+
 
   const getCardType = () => {
     const firstNumber = parseInt(cardNumber.charAt(0));
@@ -119,15 +116,28 @@ const Payment = () => {
     navigate("/reservations");
   }
   const userName = data.first_name + " " + data.last_name
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+    setTimeout(() => {
+      navigate(`/reservations`)
+
+    }, 3000);
+  };
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
   return (
-    
+
     <div>
       <Navbar />
       <div className="roomContainer">
         <div className="roomWrapper">
           <div className="pay">
             <div className="payment">
-            {showPopUp && <Aleart type={"success"} message={"sucessfull booking"} />}
+              {showPopUp && <Aleart type={"success"} message={"sucessfull booking"} />}
               <div className="userInformation">
                 <div className="heading">
                   <h1>Your Information</h1>
@@ -214,7 +224,14 @@ const Payment = () => {
                   </div>
                 </div>} */}
               </div>
-              <button className='btn' onClick={togglePopUp}>Confirm</button>
+              <button className='btn' onClick={handelSubmit && togglePopUp}>Confirm</button>
+              {
+                showPopUp && <div className="popup-background" onClick={closePopUp}>
+                  <div className="popup-contentLoader">
+                    <ConfirmLoader confirmed={error ? false : true} />
+                  </div>
+                </div>
+              }
             </div>
             <div className="paymentDetails">
               <div className="arrivalInfo">

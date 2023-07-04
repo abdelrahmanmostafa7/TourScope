@@ -373,6 +373,7 @@ export const getHotel = async (req, res, next) => {
           distanceFromCityCenter: { $first: "$distanceFromCityCenter" },
           checkInout: { $first: "$checkInout" },
           rooms: { $push: "$rooms" },
+          area_info: { $push: "$area_info" },
         },
       },
     ]).then((hotel_res) => {
