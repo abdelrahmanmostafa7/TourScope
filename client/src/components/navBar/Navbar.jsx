@@ -94,7 +94,7 @@ function Navbar() {
                                     </div>
                                 </Link>
                                 <hr />
-                            <Link to={`/reservations`}>
+                            <Link to={`/reservations/${userId}`}>
                                 <div className="option2">
                                     <img src={reservation} alt="" className="icon2" />
                                     <span>My Reservations</span>
