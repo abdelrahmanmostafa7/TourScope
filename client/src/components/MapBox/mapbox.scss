@@ -11,8 +11,9 @@
 
   .mapboxgl-canvas {
     border-radius: 10px;
-    filter: brightness(50%) blur(3px) grayscale(0%) hue-rotate(15deg);
-    transition: all 0.5s ease;
+       filter: brightness(90%) blur(1px) ;
+          transition: all 0.5s ease;
+          
   }
 
   .mapTitles {
@@ -38,7 +39,7 @@
     }
 
     .mapTitles {
-     top: -110px;
+      top: -110px;
     }
   }
 }

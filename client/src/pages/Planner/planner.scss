@@ -96,22 +96,24 @@ body {
   border-radius: 20px;
   height: max-content;
   align-items: center;
-  padding: 10px;
+  padding: 5px;  
+  width:950px;
 
   .result_options {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items:center;
     flex-wrap: wrap;
     gap: 10px;
+    width:100%;
 
     .result_option {
-
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       flex-direction: column;
-      padding: 5px;
+      // padding: 5px;
 
       h3 {
         position: absolute;
@@ -122,10 +124,10 @@ body {
       }
 
       .resultimage {
-        width: 250px;
-        height: 220px;
-        border-radius: 20px;
-        margin-bottom: 5px;
+        width: 300px;
+        height: 250px;
+        border-radius: 15px;
+        margin-bottom: 10px;
         position: relative;
 
       }

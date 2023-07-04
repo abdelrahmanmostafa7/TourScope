@@ -18,7 +18,7 @@ cdf = df[['City, Country', 'Budget (daily)', 'Best Season',
 le_city = LabelEncoder()
 le_season = LabelEncoder()
 le_budget = LabelEncoder()
-knn = KNeighborsClassifier(n_neighbors=5, metric='euclidean')
+knn = KNeighborsClassifier(n_neighbors=6, metric='euclidean')
 
 
 def innit_planner():

@@ -48,7 +48,7 @@ const userSchema = new Schema({
     resetpasswordexpire: {
         type: Date,
     },
-    role: { type: String, enum: ['admin', 'user'], default: 'user', required: true }
+    role: { type: String, enum: ['moderator','supervisor','user'], default: 'user', required: true }
 }, { timestamps: true });
 export default mongoose.model("user", userSchema)
 

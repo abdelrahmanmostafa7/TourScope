@@ -44,6 +44,15 @@ const Header = () => {
   });
 
 
+  const [reservation_data , setReservation_data] = useState({
+    date,
+    options,
+    destination
+  })
+
+
+
+
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -56,19 +65,22 @@ const Header = () => {
 
   const navigate = useNavigate()
 
-  const handelSearch = () => {
-     navigate("/hotels", { state: { destination, date, options } })
+  const handelSearch = async () => {
+ 
+  localStorage.setItem("reservation_details", JSON.stringify(reservation_data));
+     navigate("/hotels", { state: { destination, date, options } });
      window.scrollTo(0, 0);
-  }
+  };
+  
 
   const hotelPage = () => {
     navigate("/hotels", { state: { destination, date, options } })
-    window.scrollTo(0, 0);;
+    window.scrollTo(0, 0);
   }
 
   const contactBtn = () => {
     navigate("/contact")
-    window.scrollTo(0, 0);;
+    window.scrollTo(0, 0);
 
   }
   const logInBtn = () => {
@@ -84,17 +96,34 @@ const Header = () => {
 
   useEffect(() => {
     try {
-      const res =  newRequest.post("/auth/currentuser")
+      const res = newRequest.post("/auth/currentuser")
       res.then(res => {
-        if (res.data){
+        if (res.data) {
           localStorage.setItem("currentUser", JSON.stringify(res.data))
         }
-      })   
+      })
     }
     catch (err) {
       // setError(err.response.data)
     }
   }, []);
+
+
+
+  useEffect(() => {
+    setReservation_data({
+      date,
+      options,
+      destination
+  });
+  },[date , options , destination])
+  
+
+
+
+
+
+
 
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
@@ -108,7 +137,13 @@ const Header = () => {
       console.log(err);
     }
   }
-
+  //enter key 
+  // const history = useHistory();/
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      history.push('/hotel');
+    }
+  }
   return (
 
     <div className="header">
@@ -118,9 +153,9 @@ const Header = () => {
           <div className="HeaderNavbarContainer">
             <img src={logo} className="logo" alt="" />
             <div className="listContainer">
-                <span className="headerListItem">Home</span>
-                <span className="headerListItem" onClick={hotelPage}>Hotels</span>
-                <span className="headerListItem" onClick={contactBtn}>Contact</span>
+              <span className="headerListItem">Home</span>
+              <span className="headerListItem" onClick={hotelPage}>Hotels</span>
+              <span className="headerListItem" onClick={contactBtn}>Contact</span>
             </div>
 
             {!currentUser && <div className="navItem">
@@ -210,7 +245,18 @@ const Header = () => {
           {/* Search bar  */}
           <div className="headerSearch">
             <div className="headerSearchItem">
-              <input type="text" placeholder="Where are you going" className="headerSearchInput" onChange={e => setDestination(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Where are you going"
+                className="headerSearchInput"
+                onChange={e => setDestination(e.target.value)}
+                // onKeyDown={(e) => e.key === "Enter" && handelSearch()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    navigate("/hotels", { state: { destination, date, options } });
+                    window.scrollTo(0, 0);
+                  }}}
+              />
             </div>
 
             <div className="headerSearchItem">

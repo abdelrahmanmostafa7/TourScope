@@ -126,7 +126,7 @@ const EditAccount = () => {
         navigate("/personalDetails");
       }, 1000)
     } catch (error) {
-      console.log(error);
+      setError("Email is Already Registerd!")
     }
   };
 

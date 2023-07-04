@@ -17,6 +17,7 @@ import LogInOut from "./components/Login-out/LogInOut";
 import Loading from "./components/Loading/Loading";
 import Payment from "./pages/payment/Payment"
 import SMTPMessage from './pages/SMTPMessage/SMTPMessage';
+import Page404 from "./pages/404/Page404";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="loading" element={<Loading />} />
         <Route path="payment" element={<Payment />} />
         <Route path="message" element={<SMTPMessage />} />
+        <Route path="404" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   );

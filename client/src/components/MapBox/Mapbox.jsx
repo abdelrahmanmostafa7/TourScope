@@ -92,10 +92,10 @@ function Mapbox({ viewmap }) {
           mapStyle="mapbox://styles/anterman/clhiduscq01hg01qy1do77vbs"
           mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
         >
-          <div className="mapTitles">
+          {/* <div className="mapTitles">
             <h1 className='mapTitle1'>You Can Search On Map</h1>
             <h1 className='mapTitle2'>To find hotels by price</h1>
-          </div>
+          </div> */}
 
 
           <GeocoderControl mapboxAccessToken={token} position="top-right" />
@@ -118,9 +118,9 @@ function Mapbox({ viewmap }) {
                   onClick={() => handleMapClick(hotel._id, hotel.location.coordinates[0], hotel.location.coordinates[1], viewport.zoom)}
                 >
                   <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
-                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
+                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 7, color: "#ffffff" }} />
                     <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit", fontWeight: 600 }}>
-                      <span className="price_user">{hotel.price} &#36;</span>
+                    <span  style={{fontSize: "25px"}}className="price_user">{hotel.price} <span style={{fontSize: "10px"}}>EGP</span></span>
                     </div>
                   </div>
 
@@ -140,7 +140,7 @@ function Mapbox({ viewmap }) {
                   >
                     <div className="card">
                       <img src={hotel.image} alt="" className='hotelCardMapImg' />
-                      <p className='hotelMapCardDistance'>Start Price:{hotel.price}<span className='dollar'>$</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
+                      <p className='hotelMapCardDistance'>Start Price: {hotel.price}<span className='dollar'> EGP</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
                       <h1 className='name'>{hotel.name}</h1>
                       <span className='hotelMapCardRating'> {hotel.rating}⭐</span>
                       <div className='btn_controllers'>
