@@ -12,21 +12,28 @@ import Loading from "../../components/Loading/Loading";
 
 const List = () => {
   const location = useLocation()
+  const Saved_reservation =  JSON.parse(localStorage.getItem("reservation_details")) || null
+
   const [openOptions, setOpenOptions] = useState(false);
   const [openDate, setOpenDate] = useState(false)
-  const [destination, setDestination] = useState(location.state?.destination ? location.state.destination : "london")
-  const [date, setDate] = useState(location.state?.date ? location.state.date : [{
+  
+  const [destination, setDestination] = useState(Saved_reservation?.destination ? Saved_reservation.destination : "london")
+  const [date, setDate] = useState(Saved_reservation?.date ?  [{
+    startDate: new Date(Saved_reservation.date[0].startDate),
+    endDate: new Date(Saved_reservation.date[0].endDate),
+    key: "selection",
+  }] : [{
     startDate: new Date(),
     endDate: new Date().setDate(new Date().getDate() + 1),
     key: "selection",
   }])
-  const [options, setOptions] = useState(location.state?.options ? location.state.options : {
+  const [options, setOptions] = useState(Saved_reservation?.options? Saved_reservation.options : {
     adult: 1,
     children:0,
     room: 1
   })
 
-  const [reservation_data , setReservation_data] = useState({
+  const [reservation_data , setReservation_data] = useState(Saved_reservation? Saved_reservation : {
     date,
     options,
     destination
@@ -44,22 +51,19 @@ const List = () => {
   const [max, setMax] = useState(9999);
   const { data, loading, reFetch } = useSearch(`/hotel?city=${destination}&startdate=${date[0].startDate}&enddate=${date[0].endDate}&min=${min || 50}&max=${max || 9999}&limit=${20}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
-    setReservation_data({
-      date,
-    options,
-    destination
-    })
     reFetch()
   }
 
 
-   useEffect(() => {
-     if(reservation_data){
-       localStorage.setItem("reservation_details" , JSON.stringify(reservation_data) )
-       // console.log(JSON.parse(localStorage.getItem("reservation_details")))
-     }
-   }, [reservation_data]);
 
+  useEffect(() => {
+    setReservation_data({
+      date,
+      options,
+      destination
+  });
+  },[date , options , destination])
+  
 
   return (
     <div>
@@ -76,7 +80,7 @@ const List = () => {
                   Try  to search another city</h1>
               )}
               {data.map(item =>
-                <SearchItem item={item} key={item._id}  />
+                <SearchItem item={item} reservationdata={reservation_data} key={item._id}  />
               )}
             </div>
 

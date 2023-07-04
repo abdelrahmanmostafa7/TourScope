@@ -11,6 +11,7 @@ import cors from "cors"
 import passport from "passport";
 import "./middleware/passport.js";
 import session from "express-session";
+import StartScheduler from "./middleware/scheduler.js";
 
 // our app
 const app = express()
@@ -18,18 +19,15 @@ app.use(cookieParser())
 
 
 
- app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5173'})); 
+app.use(cors({ origin: 'http://localhost:5173' , credentials: true})); 
 
 
-//  app.use((req, res, next) => {
-//    res.setHeader("Access-Control-Allow-Origin", "*");
-//    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//    next();
-//  });
+// app.use(cors({
+//   origin: '*',
+//   credentials: true
+//   }));
 // app.use(cors({
 //   origin: ["http://127.0.0.1:5173/", "http://127.0.0.1:5174/"],
-//   origin: ["http://localhost:5173/", "http://localhost:5174/"],
 //   methods: "GET,POST,PUT,DELETE",
 //   credentials: true
 // }));
@@ -65,6 +63,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+StartScheduler()
 
 
 

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const useFetch = (path) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,6 +20,9 @@ const useFetch = (path) => {
                 setData(res.data);
             } catch (err) {
                 setError(err);
+                navigate("/")
+                window.scrollTo(0, 0);;
+
             }
             setLoading(false);
         };
