@@ -13,6 +13,7 @@ body {
 }
 
 .plannerContainer {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -440,6 +441,7 @@ body {
 
 .slider_btn {
   background: #142662;
+
   border-radius: 999px;
   box-shadow: 0 0 1em #e5e5e5;
   box-sizing: border-box;
@@ -457,6 +459,7 @@ body {
 }
 
 .results_btn {
+
   margin-bottom: 0px;
 }
 

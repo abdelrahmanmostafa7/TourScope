@@ -118,9 +118,9 @@ function Mapbox({ viewmap }) {
                   onClick={() => handleMapClick(hotel._id, hotel.location.coordinates[0], hotel.location.coordinates[1], viewport.zoom)}
                 >
                   <div style={{ position: 'relative', textAlign: 'center', cursor: "pointer" }}>
-                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 7, color: "#ffffff" }} />
+                    <FontAwesomeIcon icon={faMessage} style={{ fontSize: viewport.zoom * 4, color: "#ffffff" }} />
                     <div style={{ position: 'absolute', bottom: '20px', color: "black", left: 0, right: 0, fontSize: 15, fontStyle: "inherit", fontWeight: 600 }}>
-                    <span  style={{fontSize: "25px"}}className="price_user">{hotel.price} <span style={{fontSize: "10px"}}>EGP</span></span>
+                      <span className="price_user">{hotel.price} &#36;</span>
                     </div>
                   </div>
 
@@ -140,7 +140,7 @@ function Mapbox({ viewmap }) {
                   >
                     <div className="card">
                       <img src={hotel.image} alt="" className='hotelCardMapImg' />
-                      <p className='hotelMapCardDistance'>Start Price: {hotel.price}<span className='dollar'> EGP</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
+                      <p className='hotelMapCardDistance'>Start Price:{hotel.price}<span className='dollar'>$</span> <br /> {hotel.distanceFromCityCenter}35 Km from center</p>
                       <h1 className='name'>{hotel.name}</h1>
                       <span className='hotelMapCardRating'> {hotel.rating}⭐</span>
                       <div className='btn_controllers'>

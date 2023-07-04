@@ -1,5 +1,5 @@
 import "./hotel.scss";
-import { json, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
@@ -38,6 +38,9 @@ import FitnessCenter from "../../image/gym.png"
 import AirportShuttle from "../../image/bus.png"
 import Pool from "../../image/poolIcon.png"
 import Check from "../../image/check (1).png"
+import Tray from "../../image/tray.png"
+import Nearby from "../../image/nearby.png"
+import Attraction from "../../image/new-hire.png"
 
 const Hotel = () => {
   // To fetch data 
@@ -79,9 +82,13 @@ const Hotel = () => {
 
   const { data: hotel, loading: hotelLoading, reFetch } = useSearch(`/hotel/find/${id}/?startdate=${date[0].startDate}&enddate=${date[0].endDate}&roomsoption=${encodeURIComponent(JSON.stringify([options]))}`)
   const handelSearch = () => {
-    localStorage.setItem("reservation_details", JSON.stringify(reservation_data));
-    reFetch()
 
+    setReservation_data({
+      date: date,
+      options: options,
+      destination: hotel.city
+    })
+    reFetch()
   }
 
 
@@ -91,15 +98,6 @@ const Hotel = () => {
   useEffect(() => {
     if (hotel.rooms) {
       setSliderLoaded(true);
-      localStorage.setItem("selected_hotel", JSON.stringify({
-        hotelname: hotel.name,
-        hotelimg: hotel.images ? hotel.images[0] : null,
-
-      }))
-      localStorage.setItem("selected_hotel_rooms", JSON.stringify(hotel.rooms))
-      
-
-      
     }
   }, [hotel]);
 
@@ -113,34 +111,21 @@ const Hotel = () => {
   };
 
   const navigate = useNavigate()
-
   const reservationData = {
+    hotelname: hotel.name,
+    hotelimg: hotel.images ? hotel.images[0] : null,
+    roomsdata: hotel.rooms,
     userDate: date,
     roomoptions: options,
   };
 
 
-
   const roomsBtn = () => {
-    navigate(`/rooms/${id}`, { state: {reservationData } }),
-    window.scrollTo(0, 0);;
+    navigate(`/rooms/${id}`, { state: { reservationData } }),
+      window.scrollTo(0, 0);;
   }
 
-  // localStorage.setItem("reservation_details", JSON.stringify({
-  //   date: date,
-  //   options: options,
-  //   destination: hotel.city
-  // }))
 
-
-  useEffect(() => {
-    setReservation_data({
-      date: date,
-      options: options,
-      destination: hotel.city
-    })
-
-  },[date , options ])
 
   // Slider states & functions 
 
@@ -178,7 +163,48 @@ const Hotel = () => {
     }
     setSlideNumber(newSlideNumber)
   };
+  //popup
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+  };
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
+  const [showPopUp2, setShowPopUp2] = useState(false);
+  const togglePopUp2 = () => {
+    setShowPopUp2(true);
+  };
+  const closePopUp2 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp2(false);
+    }
+  };
+  const [showPopUp3, setShowPopUp3] = useState(false);
+  const togglePopUp3 = () => {
+    setShowPopUp3(true);
+  };
+  const closePopUp3 = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp3(false);
+    }
+  };
+  const areainfo = hotel.area_info
+  // console.log(areainfo)
+  const [restaurants, setRestaurants] = useState();
+  const [nearbyPlaces, setNearbyPlaces] = useState();
+  const [attractionsPlaces, setAttractionsPlaces] = useState();
 
+  useEffect(() => {
+    if (hotel.area_info) {
+      setRestaurants(hotel.area_info[0].restaurants)
+      setAttractionsPlaces(hotel.area_info[0].attractions)
+      setNearbyPlaces(hotel.area_info[0].nearbyPlaces)
+    }
+
+  }, [hotel]);
   return (
     <div>
       <Navbar />
@@ -398,18 +424,16 @@ const Hotel = () => {
                         "MM/dd/yyyy"
                       )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                     {openDate && (
-                     <DateRange
-                     onChange={(item) => {
-                       const { selection } = item;
-                       if (selection.startDate.getTime() === selection.endDate.getTime()) {
-                         selection.endDate = new Date(selection.endDate.getTime() + 86400000);
-                       }
-                       setDate([selection]);
-                     }}
-                     minDate={new Date()}
-                     ranges={date}
-                   />
-                   
+                      <DateRange
+                        onChange={(item) => {
+                          const { selection } = item;
+                          if (selection.startDate.getTime() === selection.endDate.getTime()) {
+                            selection.endDate = new Date(selection.endDate.getTime() + 86400000);
+                          }
+                          setDate([selection]);
+                        }} minDate={new Date()}
+                        ranges={date}
+                      />
                     )}
                   </div>
                   <div className="lsItem">
@@ -488,6 +512,66 @@ const Hotel = () => {
                   <button onClick={handelSearch}>Search</button>
                 </div>
                 <LocationBox id={hotel._id} />
+              </div>
+            </div>
+            <div className="areaInfoContainer">
+              <h2>Nearby Places From Hotel</h2>
+              <div className="areaInfoOptions">
+                <div className="areaInfoOption" onClick={togglePopUp}>
+                  <h3>Restaurants</h3>
+                  <img src={Tray} alt="" className="areaInfoImg" />
+                </div>
+                {
+                  showPopUp && <div className="popup-background" onClick={closePopUp}>
+                    <div className="popup-content3">
+                      <h2>Restaurants Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          restaurants.map((restaurant, i) =>
+                            <span key={i} >{restaurant}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                
+                <div className="areaInfoOption" onClick={togglePopUp2}>
+                  <h3>Nearby Places</h3>
+                  <img src={Nearby} alt="" className="areaInfoImg" />
+                </div>
+                {
+                  showPopUp2 && <div className="popup-background" onClick={closePopUp2}>
+                    <div className="popup-content3">
+                      <h2> Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          nearbyPlaces.map((nearbyPlace, i) =>
+                            <span key={i} >{nearbyPlace}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                {
+                  showPopUp3 && <div className="popup-background" onClick={closePopUp3}>
+                    <div className="popup-content3">
+                      <h2> Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          attractionsPlaces.map((place, i) =>
+                            <span key={i} >{place}</span>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+                <div className="areaInfoOption" onClick={togglePopUp3}>
+                  <h3>Attractions places</h3>
+                  <img src={Attraction} alt="" className="areaInfoImg" />
+                </div>
               </div>
             </div>
             <div className="hotelBottom">

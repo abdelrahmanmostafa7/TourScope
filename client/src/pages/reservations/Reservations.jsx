@@ -17,9 +17,9 @@ const Reservations = () => {
           {!loading && data.length === 0 && (
             <h1 className="noHotelResult">No results found,
               <br />
-              There is no Reservation 
+              There is no Hotel in your City,
               <br />
-              </h1>
+              Try  to search another city</h1>
           )}
           {data.map(item =>
             <ReservationCard item={item} key={item._id} />

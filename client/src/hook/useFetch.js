@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const useFetch = (path) => {
@@ -7,22 +6,14 @@ const useFetch = (path) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const navigate = useNavigate()
-
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://localhost:8800/api${path}`, {
-                    credentials: 'include',
-                    withCredentials: true
-                });
+                const res = await axios.get(`http://localhost:8800/api${path}`);
                 setData(res.data);
             } catch (err) {
                 setError(err);
-                navigate("/404")
-                window.scrollTo(0, 0);;
-
             }
             setLoading(false);
         };
@@ -32,15 +23,10 @@ const useFetch = (path) => {
     const reFetch = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`http://localhost:8800/api${path}`, {
-                credentials: 'include',
-                withCredentials: true
-            });
+            const res = await axios.get(`http://localhost:8800/api${path}`);
             setData(res.data);
         } catch (err) {
             setError(err);
-            navigate("/404")
-
         }
         setLoading(false);
     };

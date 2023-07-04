@@ -10,9 +10,9 @@ import { addOrRemove } from "../controllers/user.controller.js";
 const router = express.Router();
 
 router.delete('/:id',verifyUser,deleteUser)
-router.put('/update/:id',verifyUser,updateUser)
-router.get('/find/:id',verifyUser, getUser);
-router.put("/addOrRemove/:id",verifyUser, addOrRemove)
+router.put('/update/:id',updateUser)
+router.get('/find/:id', getUser);
+router.put("/addOrRemove/:id", addOrRemove)
 
 
 export default router;

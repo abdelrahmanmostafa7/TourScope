@@ -10,19 +10,21 @@ import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
 import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
+import ConfirmLoader from './../../components/confirm/ConfirmLoader';
 
 const Payment = () => {
   const location = useLocation()
-  const room = location.state.room;
-  const reservation_data = JSON.parse(localStorage.getItem("reservation_details"));
-  const selected_hotel = JSON.parse(localStorage.getItem("selected_hotel"));
+  const useroptions = location.state.reservationDetails;
   const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-  const startDate = new Date(reservation_data.date[0].startDate);
-  const endDate = new Date(reservation_data.date[0].endDate);
+  const startDate = new Date(useroptions.date[0].startDate);
+  const endDate = new Date(useroptions.date[0].endDate);
+
   const formattedstartDate = startDate.toLocaleDateString(undefined, options);
   const formattedendDate = endDate.toLocaleDateString(undefined, options);
   const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
   const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,7 +43,6 @@ const Payment = () => {
     fetchCountries();
   }, []);
 
-
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);
     setPhoneNumber('');
@@ -51,7 +52,6 @@ const Payment = () => {
     setPhoneNumber(event.target.value);
   };
 
-  
   const getCountryPhoneCode = () => {
     const selectedCountryData = countries.find((country) => country.cca2 === selectedCountry);
     if (selectedCountryData && selectedCountryData.callingCodes && selectedCountryData.callingCodes.length > 0) {
@@ -60,13 +60,16 @@ const Payment = () => {
     return '';
   };
 
-  
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
-  const [Error, setError] = useState();
-  const [toggle, set_toggle] = useState();
- 
+  const reservationDetails = {
+    roomoptions: useroptions.roomoptions
+    , roomId: useroptions.roomId,
+    date: useroptions.date,
+    deal: useroptions.deal,
+    user_id: data._id
+  }
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
   const handleCardNumberChange = (event) => {
@@ -76,48 +79,25 @@ const Payment = () => {
     setIsActive(true);
   }
 
-  const [showPopUp, setShowPopUp] = useState(false);
-  const reservationDetails = {
-    roomoptions:reservation_data.options
-    ,roomId:room._id,
-    date:reservation_data.date,
-    deal:room.deal,
-    user_id:id
-  }
-  const togglePopUp = async() => {
+  const [error, setError] = useState(false);
+  const handelSubmit = async () => {
     try {
-     const data = await newRequest.post("/reservation/make_reservation", reservationDetails );
-    
-    if (data){
-      setShowPopUp(true);
-      set_toggle("success");
+      const data = await newRequest.post("/reservation/make_reservation", reservationDetails)
 
+      if (data.data) {
+        setShowPopUp(true);
+        setTimeout(() => {
+          navigate(`/reservations`)
 
-      setTimeout(() => {
-        // localStorage.removeItem("selected_hotel_rooms")
-        // localStorage.removeItem("selected_hotel")
-        // localStorage.removeItem("reservation_details")
-
-        navigate(`/reservations`)
-
-      }, 3000);
-    }
+        }, 3000);
+      }
     }
     catch (err) {
-      setError(err.response.data.message)
-      setShowPopUp(true);
-      set_toggle("error");
-      setTimeout(() => {
-        // localStorage.removeItem("selected_hotel_rooms")
-        // localStorage.removeItem("selected_hotel")
-        // localStorage.removeItem("reservation_details")
-
-        // navigate(`/`)
-
-      }, 3000);
-      
+      //setError(err.response.data)
+      setError(true)
     }
-    };
+  };
+
 
   const getCardType = () => {
     const firstNumber = parseInt(cardNumber.charAt(0));
@@ -136,15 +116,28 @@ const Payment = () => {
     navigate("/reservations");
   }
   const userName = data.first_name + " " + data.last_name
+  const [showPopUp, setShowPopUp] = useState(false);
+  const togglePopUp = () => {
+    setShowPopUp(true);
+    setTimeout(() => {
+      navigate(`/reservations`)
+
+    }, 3000);
+  };
+  const closePopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowPopUp(false);
+    }
+  };
   return (
-    
+
     <div>
       <Navbar />
       <div className="roomContainer">
         <div className="roomWrapper">
           <div className="pay">
             <div className="payment">
-            {showPopUp && <Aleart type={toggle} message={Error} />}
+              {showPopUp && <Aleart type={"success"} message={"sucessfull booking"} />}
               <div className="userInformation">
                 <div className="heading">
                   <h1>Your Information</h1>
@@ -231,15 +224,23 @@ const Payment = () => {
                   </div>
                 </div>} */}
               </div>
-              <button className='btn' onClick={togglePopUp}>Confirm</button>
+              <button className='btn' onClick={handelSubmit && togglePopUp}>Confirm</button>
+              {
+                showPopUp && <div className="popup-background" onClick={closePopUp}>
+                  <div className="popup-contentLoader">
+                    <ConfirmLoader confirmed={error ? false : true} />
+                  </div>
+                </div>
+              }
             </div>
             <div className="paymentDetails">
               <div className="arrivalInfo">
-                <img src={selected_hotel.hotelimg} alt="" className='HotelImg' />
+                <img src={useroptions.hotelimg} alt="" className='HotelImg' />
                 <div className="arrivalInfoBottom">
-                  <p> {selected_hotel.hotelname} </p>
-                  <p>{room.name}</p>
+                  <p> {useroptions.hotelName} </p>
+                  <p>{useroptions.roomName}</p>
                   {/* <p className='refundable'>Non-refundable</p> */}
+                  {console.log()}
                   <p>Check-in:{formattedstartDate}</p>
                   <p>Check-out: {formattedendDate}</p>
                   <p>{diffDays}-night stay</p>
@@ -249,8 +250,8 @@ const Payment = () => {
                 <h1>Price details</h1>
                 <hr />
                 <div className="payRow">
-                  <p>{room.deal.roomscount} room x {diffDays} night</p>
-                  <p>{room.deal.price} EGP</p>
+                  <p>{useroptions.deal.roomscount} room x {diffDays} night</p>
+                  <p>{useroptions.deal.price} EGP</p>
                 </div>
                 <div className="payRow">
                   <p>Taxes and fees</p>
@@ -259,7 +260,7 @@ const Payment = () => {
                 <hr />
                 <div className="payRow">
                   <p>Total</p>
-                  <p>{room.deal.price} EGP</p>
+                  <p>{useroptions.deal.price} EGP</p>
                 </div>
               </div>
             </div>

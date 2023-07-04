@@ -44,15 +44,6 @@ const Header = () => {
   });
 
 
-  const [reservation_data , setReservation_data] = useState({
-    date,
-    options,
-    destination
-  })
-
-
-
-
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -65,22 +56,19 @@ const Header = () => {
 
   const navigate = useNavigate()
 
-  const handelSearch = async () => {
- 
-  localStorage.setItem("reservation_details", JSON.stringify(reservation_data));
-     navigate("/hotels", { state: { destination, date, options } });
-     window.scrollTo(0, 0);
-  };
-  
-
-  const hotelPage = () => {
+  const handelSearch = () => {
     navigate("/hotels", { state: { destination, date, options } })
     window.scrollTo(0, 0);
   }
 
+  const hotelPage = () => {
+    navigate("/hotels", { state: { destination, date, options } })
+    window.scrollTo(0, 0);;
+  }
+
   const contactBtn = () => {
     navigate("/contact")
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0);;
 
   }
   const logInBtn = () => {
@@ -107,23 +95,6 @@ const Header = () => {
       // setError(err.response.data)
     }
   }, []);
-
-
-
-  useEffect(() => {
-    setReservation_data({
-      date,
-      options,
-      destination
-  });
-  },[date , options , destination])
-  
-
-
-
-
-
-
 
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))

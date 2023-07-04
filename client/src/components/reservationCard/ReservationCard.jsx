@@ -1,6 +1,5 @@
-import React , {useState} from 'react'
+import React from 'react'
 import "./ReservationCard.scss"
-import Aleart  from '../Aleart/Aleart';
 import Navbar from "../../components/navBar/Navbar";
 import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -18,21 +17,8 @@ const ReservationCard = ({item}) => {
   const formattedendDate = endDate.toLocaleDateString(undefined, options);
   const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
   const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-  const [Error, setError] = useState({
-    show: false,
-    type: "error",
-    message: "error"
-  });
-  
-
-  const handel_cancel = () => {
-    setError((prv) => {
-     
-    })
-  }
   return (
     <div>
-       <Aleart type={Error.type} message={Error.message}/> 
       <div className="reservation">
         <div className="reservationLeft">
           <img src={item.hotel_id.images} alt="" className='reservationImg' />
@@ -87,8 +73,6 @@ const ReservationCard = ({item}) => {
                 <p>{item.status}</p>
               </div>
             </div>
-            <button className='btn' onClick={handel_cancel}>Cancel</button>
-
           </div> 
             {/* <hr />
           <div className="reservationSec">
