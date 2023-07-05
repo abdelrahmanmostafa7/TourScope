@@ -123,34 +123,35 @@ function Room() {
   return (
     <div>
       <Navbar />
-      {room ? (<div className="roomContainer">
-        <div className="roomWrapper">
-          {open && (
-            <div className="slider">
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className="close"
-                onClick={() => setOpen(false)}
-              />
-              <FontAwesomeIcon
-                icon={faArrowLeft}
-                className="arrow"
-                onClick={() => handleMove("l")}
-              />
-              <div className="sliderWrapper">
-                <img
-                  src={room.images[slideNumber]}
-                  alt=""
-                  className="sliderImg"
-                />
-              </div>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                className="arrow"
-                onClick={() => handleMove("r")}
+      {room ? 
+      (<div className="roomContainer">
+        {open && (
+          <div className="slider">
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className="close"
+              onClick={() => setOpen(false)}
+            />
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              className="arrow"
+              onClick={() => handleMove("l")}
+            />
+            <div className="sliderWrapper">
+              <img
+                src={room.images[slideNumber]}
+                alt=""
+                className="sliderImg"
               />
             </div>
-          )}
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className="arrow"
+              onClick={() => handleMove("r")}
+            />
+          </div>
+        )}
+        <div className="roomWrapper">
           <h1 className="roomTitle">{room.name}</h1>
           <div className="roomTop">
             <div className="roomRight">
@@ -383,7 +384,7 @@ function Room() {
                   </div>
                 ))}
                 <div className="seeMoreContainer" onClick={togglePopUp}>
-                  <h3 className="seeMore" >See More</h3>
+                  <h3 className="seeMore" >See More </h3>
                   <img src={Down} alt="" className="seeMoreImg" />
                 </div>
               </span>

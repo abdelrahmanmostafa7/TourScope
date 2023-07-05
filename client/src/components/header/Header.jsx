@@ -216,27 +216,19 @@ const Header = () => {
           <div className="AnimatedHeader">
             <p className="headerTitle FristWordTitle">
               <TypeWriterEffect
-                textStyle={{
-                  fontWeight: 800,
-                  fontSize: '30px',
-                }}
                 startDelay={1000}
                 cursorColor="#fff"
-                text="Welcome To"
+                text="Welcome To TourScope"
                 typeSpeed={100}
                 hideCursorAfterText={true}
               />
             </p>
             <p className="headerTitle SecoundWordTitle">
               <TypeWriterEffect
-                textStyle={{
-                  fontWeight: 800,
-                  fontSize: '30px'
-                }}
-                startDelay={2300}
+                startDelay={2800}
                 cursorColor="#fff"
-                text="Tourscope"
-                typeSpeed={200}
+                text="Where you can see your room in your room"
+                typeSpeed={50}
                 hideCursorAfterText={true}
               />
             </p>

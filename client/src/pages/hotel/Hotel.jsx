@@ -41,6 +41,7 @@ import Check from "../../image/check (1).png"
 import Tray from "../../image/tray.png"
 import Nearby from "../../image/nearby.png"
 import Attraction from "../../image/new-hire.png"
+import click from "../../image/click.png"
 const Hotel = () => {
   // To fetch data 
   const location = useLocation()
@@ -149,26 +150,13 @@ const Hotel = () => {
 
 
   const [slideNumber, setSlideNumber] = useState(0);
-
-
-
   const [open, setOpen] = useState(false);
-
-
-
   const [imgNumber, setNumber] = useState(6);
-
-
-
-
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
     setNumber(hotel.images.length)
   };
-
-
-
 
   const handleMove = (direction) => {
     let newSlideNumber;
@@ -226,42 +214,38 @@ const Hotel = () => {
 
   console.log(restaurants)
 
-
-
-
-
   return (
     <div>
       <Navbar />
       {hotelLoading ? <Loading /> :
         (<div className="hotelContainer">
-          <div className="hotelWrapper">
-            {open && (
-              <div className="slider">
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="close"
-                  onClick={() => setOpen(false)}
-                />
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  className="arrow"
-                  onClick={() => handleMove("l")}
-                />
-                <div className="sliderWrapper">
-                  <img
-                    src={hotel.images[slideNumber]}
-                    alt=""
-                    className="sliderImg"
-                  />
-                </div>
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  className="arrow"
-                  onClick={() => handleMove("r")}
+          {open && (
+            <div className="slider">
+              <FontAwesomeIcon
+                icon={faCircleXmark}
+                className="close"
+                onClick={() => setOpen(false)}
+              />
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="arrow"
+                onClick={() => handleMove("l")}
+              />
+              <div className="sliderWrapper">
+                <img
+                  src={hotel.images[slideNumber]}
+                  alt=""
+                  className="sliderImg"
                 />
               </div>
-            )}
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className="arrow"
+                onClick={() => handleMove("r")}
+              />
+            </div>
+          )}
+          <div className="hotelWrapper">
             <h1 className="hotelTitle">{hotel.name}</h1>
             <div className="hotelTop">
               <div className="hotelRight">
@@ -297,7 +281,69 @@ const Hotel = () => {
                     }
                   </div>
                 </div>
-                <h2 className="aboutHotel">Hotel Features</h2>
+                <div className="areaInfoContainer">
+                  <h2 className="sectionTitle">Nearby Places From Hotel</h2>
+                  <div className="areaInfoOptions">
+                    <div className="areaInfoOption" onClick={togglePopUp}>
+                      <h3>Restaurants</h3>
+                      <img src={Tray} alt="" className="areaInfoImg" />
+                      <img src={click} alt="" className="clickImg" />
+                    </div>
+                    {
+                      showPopUp && <div className="popup-background" onClick={closePopUp}>
+                        <div className="popup-content3">
+                          <h2>Restaurants Near To Hotel</h2>
+                          <div className="areaOptionContainer">
+                            {
+                              restaurants.map((restaurant, i) =>
+                                <li key={i} >{restaurant}</li>
+                              )
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    <div className="areaInfoOption" onClick={togglePopUp2}>
+                      <h3>Nearby Places</h3>
+                      <img src={Nearby} alt="" className="areaInfoImg" />
+                      <img src={click} alt="" className="clickImg" />
+                    </div>
+                    {
+                      showPopUp2 && <div className="popup-background" onClick={closePopUp2}>
+                        <div className="popup-content3">
+                          <h2> Near To Hotel</h2>
+                          <div className="areaOptionContainer">
+                            {
+                              nearbyPlaces.map((nearbyPlace, i) =>
+                                <li key={i} >{nearbyPlace}</li>
+                              )
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    {
+                      showPopUp3 && <div className="popup-background" onClick={closePopUp3}>
+                        <div className="popup-content3">
+                          <h2> Near To Hotel</h2>
+                          <div className="areaOptionContainer">
+                            {
+                              attractionsPlaces.map((place, i) =>
+                                <li key={i} >{place}</li>
+                              )
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    <div className="areaInfoOption" onClick={togglePopUp3}>
+                      <h3>Attractions places</h3>
+                      <img src={Attraction} alt="" className="areaInfoImg" />
+                      <img src={click} alt="" className="clickImg" />
+                    </div>
+                  </div>
+                </div>
+                <h2 className="sectionTitle">Hotel Features</h2>
                 <div className="HotelFeatures">
                   {hotel.amenities?.slice(0, 8).map((amenity, i) => (
                     <div className="FeaturesWrapper" key={i}>
@@ -430,8 +476,9 @@ const Hotel = () => {
                     </div>
                   ))}
                 </div>
+                
                 <div className="hotelDetailsTexts">
-                  <h2 className="aboutHotel">Details about Hotel</h2>
+                  <h2 className="sectionTitle">Details about Hotel</h2>
                   <p className="hotelDesc">
                     {hotel.description}
                   </p>
@@ -460,7 +507,6 @@ const Hotel = () => {
                         minDate={new Date()}
                         ranges={date}
                       />
-
                     )}
                   </div>
                   <div className="lsItem">
@@ -539,66 +585,6 @@ const Hotel = () => {
                   <button onClick={handelSearch}>Search</button>
                 </div>
                 <LocationBox id={hotel._id} />
-              </div>
-            </div>
-            <div className="areaInfoContainer">
-              <h2>Nearby Places From Hotel</h2>
-              <div className="areaInfoOptions">
-                <div className="areaInfoOption" onClick={togglePopUp}>
-                  <h3>Restaurants</h3>
-                  <img src={Tray} alt="" className="areaInfoImg" />
-                </div>
-                {
-                  showPopUp && <div className="popup-background" onClick={closePopUp}>
-                    <div className="popup-content3">
-                      <h2>Restaurants Near To Hotel</h2>
-                      <div className="areaOptionContainer">
-                        {
-                          restaurants.map((restaurant, i) =>
-                            <span key={i} >{restaurant}</span>
-                          )
-                        }
-                      </div>
-                    </div>
-                  </div>
-                }
-
-                <div className="areaInfoOption" onClick={togglePopUp2}>
-                  <h3>Nearby Places</h3>
-                  <img src={Nearby} alt="" className="areaInfoImg" />
-                </div>
-                {
-                  showPopUp2 && <div className="popup-background" onClick={closePopUp2}>
-                    <div className="popup-content3">
-                      <h2> Near To Hotel</h2>
-                      <div className="areaOptionContainer">
-                        {
-                          nearbyPlaces.map((nearbyPlace, i) =>
-                            <span key={i} >{nearbyPlace}</span>
-                          )
-                        }
-                      </div>
-                    </div>
-                  </div>
-                }
-                {
-                  showPopUp3 && <div className="popup-background" onClick={closePopUp3}>
-                    <div className="popup-content3">
-                      <h2> Near To Hotel</h2>
-                      <div className="areaOptionContainer">
-                        {
-                          attractionsPlaces.map((place, i) =>
-                            <span key={i} >{place}</span>
-                          )
-                        }
-                      </div>
-                    </div>
-                  </div>
-                }
-                <div className="areaInfoOption" onClick={togglePopUp3}>
-                  <h3>Attractions places</h3>
-                  <img src={Attraction} alt="" className="areaInfoImg" />
-                </div>
               </div>
             </div>
             <div className="hotelBottom">

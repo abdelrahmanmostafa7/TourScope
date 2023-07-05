@@ -10,7 +10,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
     background-color: $backgroundColor ;
 }
 
@@ -27,6 +26,13 @@ body {
 
 .hotelTitle {
     text-align: center;
+    margin: 5px;
+}
+
+.sectionTitle {
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .hotelTop {
@@ -45,14 +51,7 @@ body {
     flex: 1;
 }
 
-// .hotelImages {
-//     display: flex;
-//     flex-wrap: wrap;
-//     gap: 12px;
-//     padding: 10px;
-//     border-radius: 15px;
-//     background-color: white;
-// }
+
 .hotelImages {
     display: flex;
     flex-direction: column;
@@ -82,7 +81,7 @@ body {
 
 
 .hotelImg {
-    width: 175px;
+    width: 190px;
     height: 150px;
     border-radius: 10px;
     object-fit: cover;
@@ -91,7 +90,7 @@ body {
 
 .lastImg {
     position: relative;
-    width: 175px;
+    width: 190px;
     height: 150px;
 }
 
@@ -106,8 +105,8 @@ body {
     position: absolute;
     font-size: 20px;
     opacity: 0.8;
-    width: 175px;
-    height: 150px;
+    width: 190px;
+    height: 160px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     border-radius: 10px;
@@ -120,17 +119,15 @@ body {
 }
 
 .slider {
-    display: flex;
     position: sticky;
-    top: 130px;
-    width: 100vw;
-    max-width: 1024px;
-    height: 80vh;
-    background-color: rgb(255, 255, 255);
+    top: 0;
+    width: 98vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.613);
     z-index: 999;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 15px;
+
 }
 
 .sliderWrapper {
@@ -142,26 +139,32 @@ body {
 }
 
 .sliderImg {
-    width: 95%;
+    width: 70%;
     height: 70vh;
     border-radius: 15px;
 }
 
 .close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
+    top: 40px;
+    right: 25px;
     cursor: pointer;
     color: rgb(0, 0, 0);
+    background-color: white;
+    overflow: hidden;
+    border-radius: 50%;
+    border: none;
+    height: 40px;
+    width: 40px;
 }
 
 .arrow {
     background-color: rgb(0, 0, 0);
+    margin: 20px;
     color: rgb(255, 255, 255);
     border-radius: 50%;
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 40px;
     cursor: pointer;
     padding: 5px;
 }
@@ -173,7 +176,8 @@ body {
 }
 
 .hotelDesc {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .HotelFeatures {
@@ -186,22 +190,15 @@ body {
     flex: 3;
 }
 
-
 .inHotel {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 180px;
-    height: 135px;
+    justify-content: center;
+    width: 200px;
+    height: 130px;
     position: relative;
 
-    .amenitiesDeleteIcon {
-        position: absolute;
-        color: red;
-        top: 3px;
-        right: 3px;
-        cursor: pointer;
-    }
 }
 
 .FeaturesWrapper {
@@ -236,22 +233,23 @@ body {
     display: flex;
     flex-direction: column;
     width: 800px;
-    // align-items: center;
-    gap: 20px;
+
+    .Title {
+        font-size: 20px;
+    }
 
     .areaInfoOptions {
         display: flex;
         justify-content: space-between;
-        width: 756px;
-        // margin-right: 140px;
+        width: 800px;
         gap: 20px;
     }
 
     .areaInfoOption {
-        width: 253px;
+        width: 250px;
+        height: 200px;
         background-color: #fff;
         border-radius: 15px;
-        height: 200px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -262,6 +260,23 @@ body {
             font-size: 24px;
             padding: 0;
             margin: 0;
+        }
+    }
+
+    .clickImg {
+        width: 40px;
+        height: 40px;
+        animation: move 1s infinite ease alternate;
+        cursor: pointer;
+    }
+
+    @keyframes move {
+        from {
+            transform: translateZ(-20px);
+        }
+
+        to {
+            transform: translateZ(20px) scale(0.85);
         }
     }
 }
@@ -281,15 +296,18 @@ body {
     opacity: 0;
     animation: fade-in 1s ease forwards;
     padding: 20px;
+
     h2 {
         color: #142662;
         text-align: center;
     }
-    .areaOptionContainer{
-        display:flex;
+
+    .areaOptionContainer {
+        display: flex;
         flex-direction: column;
         gap: 20px;
-        span{
+
+        span {
             font-size: 24px;
             padding: 5px;
         }

@@ -61,7 +61,7 @@ const Home = () => {
         <div className="homeContainer">
           <h2 className="homeTitle">Explore Hotels On Map </h2>
           <Mapbox />
-          <h2 className="homeTitle">Explore Some City</h2>
+          <h2 className="homeTitle">Recommended  Cities</h2>
           <Featured />
           <h2 className="homeTitle">Explore More City By Planner </h2>
           <PlannerAd />

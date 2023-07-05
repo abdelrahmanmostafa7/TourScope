@@ -7,8 +7,8 @@ body {
 
 .roomContainer {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
     background-color: $backgroundColor ;
 }
 
@@ -19,6 +19,7 @@ body {
     gap: 10px;
     background-color: $backgroundColor;
     flex-direction: column;
+    position: relative;
 }
 
 .roomTop {
@@ -152,11 +153,6 @@ body {
     cursor: pointer;
 }
 
-// .HotelFeatures {
-//     display: flex;
-//     border-radius: 10px;
-// }
-
 .roomFeaturesLeft,
 .roomFeaturesRight {
     display: flex;
@@ -222,6 +218,7 @@ body {
     border-radius: 10px;
     cursor: pointer;
     border: none;
+    
 }
 
 .seeMoreBtn:hover {
@@ -261,7 +258,6 @@ body {
     justify-content: center;
     flex-direction: row;
 
-
     &:hover {
         animation: 1.5s ease forwards;
     }
@@ -272,6 +268,18 @@ body {
     top: 92%;
     right: 25px;
     cursor: pointer;
+    animation: move 1s infinite ease alternate;
+    
+        @keyframes move {
+            from {
+                transform: translateX(-5px);
+            }
+    
+            to {
+                transform: translateX(5px);
+            }
+        }
+   
 }
 
 .seeMoreImg {
@@ -281,7 +289,6 @@ body {
     top: 100%;
     right: 5px;
     cursor: pointer;
-    transform: rotate(270deg);
 }
 
 
