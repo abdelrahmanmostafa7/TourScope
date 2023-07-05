@@ -42,6 +42,9 @@ import Tray from "../../image/tray.png"
 import Nearby from "../../image/nearby.png"
 import Attraction from "../../image/new-hire.png"
 import click from "../../image/click.png"
+import Down from "../../image/download.png"
+
+
 const Hotel = () => {
   // To fetch data 
   const location = useLocation()
@@ -214,6 +217,7 @@ const Hotel = () => {
 
   console.log(restaurants)
 
+  
   return (
     <div>
       <Navbar />
@@ -475,8 +479,13 @@ const Hotel = () => {
                       )}
                     </div>
                   ))}
+                  <div className="seeMoreHotelFeatures" onClick={togglePopUp}>
+                    <h3 className="seeMoreFeature" >See More </h3>
+                    <img src={Down} alt="" className="seeMoreHotelImg" />
+                  </div>
                 </div>
-                
+
+               
                 <div className="hotelDetailsTexts">
                   <h2 className="sectionTitle">Details about Hotel</h2>
                   <p className="hotelDesc">

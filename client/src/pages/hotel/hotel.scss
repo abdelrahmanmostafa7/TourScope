@@ -188,6 +188,53 @@ body {
     align-items: center;
     width: 100%;
     flex: 3;
+    position: relative;
+}
+
+.seeMoreHotelFeatures {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    .seeMoreFeature {
+        position: absolute;
+        top: 92%;
+        right: 25px;
+        cursor: pointer;
+        animation: move 1s infinite ease alternate;
+
+        @keyframes move {
+            from {
+                transform: translateX(-5px);
+            }
+
+            to {
+                transform: translateX(5px);
+            }
+        }
+    }
+
+    .seeMoreHotelImg {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 100%;
+        right: 5px;
+        cursor: pointer;
+        animation: moveArrow 1s infinite ease alternate;
+        
+            @keyframes moveArrow {
+                from {
+                    transform: translateX(-5px);
+                }
+        
+                to {
+                    transform: translateX(5px);
+                }
+            }
+    }
+
 }
 
 .inHotel {
@@ -266,11 +313,11 @@ body {
     .clickImg {
         width: 40px;
         height: 40px;
-        animation: move 1s infinite ease alternate;
+        animation: clickMove 1s infinite ease alternate;
         cursor: pointer;
     }
 
-    @keyframes move {
+    @keyframes clickMove {
         from {
             transform: translateZ(-20px);
         }

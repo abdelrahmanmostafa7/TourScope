@@ -48,6 +48,7 @@ body {
         justify-content: center;
         align-items: center;
         gap: 10px;
+    width: 250px;
 
         span {
             font-size: 20px;
@@ -108,7 +109,7 @@ body {
             color: white;
             border: none;
             border-radius: 25px;
-            width: 200px;
+            width: 250px;
             height: 40px;
             font-weight: 700;
             cursor: pointer;
@@ -289,6 +290,17 @@ body {
     top: 100%;
     right: 5px;
     cursor: pointer;
+    animation: moveArrow 1s infinite ease alternate;
+    
+        @keyframes moveArrow {
+            from {
+                transform: translateX(-5px);
+            }
+    
+            to {
+                transform: translateX(5px);
+            }
+        }
 }
 
 
