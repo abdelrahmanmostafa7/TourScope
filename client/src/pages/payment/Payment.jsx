@@ -2,19 +2,22 @@ import React, { useEffect } from 'react'
 import "./Payment.scss"
 import newRequest from '../../utils/newRequest';
 import useFetch from './../../hook/useFetch';
+import useFetchAuth from './../../hook/useFetchUser';
+
+
 import Navbar from './../../components/navBar/Navbar';
 import Visa from "../../image/visa.png"
 import MasterCard from "../../image/master-card.png"
 import DefaultMaster from "../../image/credit-card (2).png"
 import { useState } from 'react';
 import Footer from './../../components/footer/Footer';
-import { useNavigate, useLocation, useOutlet } from 'react-router-dom';
+import { useNavigate, useLocation, useOutlet, json } from 'react-router-dom';
 import Aleart from '../../components/Aleart/Aleart';
 import ConfirmLoader from '../../components/confirm/ConfirmLoader';
 
 const Payment = () => {
   const location = useLocation()
-  const room = location.state.room;
+  const room = location.state?.room ? location.state.room : JSON.parse(localStorage.getItem("selectedRoom"));
   const reservation_data = JSON.parse(localStorage.getItem("reservation_details"));
   const selected_hotel = JSON.parse(localStorage.getItem("selected_hotel"));
   const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
@@ -65,8 +68,12 @@ const Payment = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser ? currentUser._id : null;
   const { data, loading } = useFetch(`/user/find/${id}`);
+
+
+
   const [Error, setError] = useState();
   const [toggle, set_toggle] = useState();
+  const [errMessage, setErrmessage] = useState();
  
   const [cardNumber, setCardNumber] = useState('');
   const [isActive, setIsActive] = useState(false)
@@ -86,20 +93,32 @@ const Payment = () => {
   }
   const handelSubmit = async () => {
     try {
-      const data = await newRequest.post("/reservation/make_reservation", reservationDetails)
+      await newRequest.post("/reservation/make_reservation", reservationDetails)
+      
 
-      if (data.data) {
         setShowPopUp(true);
         setTimeout(() => {
+          localStorage.removeItem("flag")
+          localStorage.removeItem("selectedRoom")
+          localStorage.removeItem("selected_hotel")
+          localStorage.removeItem("selected_hotel_rooms")
+          localStorage.removeItem("reservation_details")
           navigate(`/reservations`)
-
-        }, 3000);
+        }, 2000);
       }
-    }
+    
     catch (err) {
       //setError(err.response.data)
-      setError(true)
-      setReturn(true)
+
+      setShowPopUp(true);
+      setReturn(true);
+      setErrmessage(err.request.statusText)
+      localStorage.setItem("flag",1)
+      setTimeout(() => {
+         navigate(`/logInOut`)
+
+      }, 3000);
+
     }
   };
 
@@ -122,18 +141,18 @@ const Payment = () => {
   // const userName = data.first_name + " " + data.last_name
   const [showPopUp, setShowPopUp] = useState(false);
   const [returnMessage,setReturn] = useState(false);
-  const togglePopUp = () => {
-    setShowPopUp(true);
-    setTimeout(() => {
-      navigate(`/reservations`)
+  // const togglePopUp = () => {
+  //   setShowPopUp(true);
+  //   setTimeout(() => {
+  //     navigate(`/reservations`)
 
-    }, 3000);
-  };
-  const closePopUp = (event) => {
-    if (event.target === event.currentTarget) {
-      setShowPopUp(false);
-    }
-  };
+  //   }, 3000);
+  // };
+  // const closePopUp = (event) => {
+  //   if (event.target === event.currentTarget) {
+  //     setShowPopUp(false);
+  //   }
+  // };
   
   return (
     
@@ -143,7 +162,7 @@ const Payment = () => {
         <div className="roomWrapper">
           <div className="pay">
             <div className="payment">
-            {/* {showPopUp && <Aleart type={toggle} message={Error} />} */}
+            {showPopUp && <Aleart type={toggle} message={Error} />}
               <div className="userInformation">
                 <div className="heading">
                   <h1>Your Information</h1>
@@ -230,11 +249,11 @@ const Payment = () => {
                   </div>
                 </div>} */}
               </div>
-              <button className='btn' onClick={handelSubmit && togglePopUp}>Confirm</button>
+              <button className='btn' onClick={handelSubmit}>Confirm</button>
               {
-                showPopUp && <div className="popup-background" onClick={closePopUp}>
+                showPopUp && <div className="popup-background" >
                   <div className="popup-contentLoader">
-                    <ConfirmLoader confirmed={returnMessage ? false : true} />
+                    <ConfirmLoader confirmed={returnMessage ? false : true} errmessage = {errMessage ? errMessage: null } />
                   </div>
                 </div>
               }

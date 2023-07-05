@@ -23,7 +23,7 @@ const LogInOut = () => {
   const navigate = useNavigate();
 
   //const match = useMatch();
-  const previousRoute = location.state?.from || null
+  const previousRoute = localStorage.getItem("flag")
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -48,7 +48,7 @@ const LogInOut = () => {
       const res = await newRequest.post("/auth/signin", { email, password })
 
       localStorage.setItem("currentUser", JSON.stringify(res.data))
-      if (previousRoute && res.data) {
+      if (previousRoute == 1 && res.data) {
         navigate("/payment")
       } else {
         navigate("/")

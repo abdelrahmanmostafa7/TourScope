@@ -16,8 +16,7 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyUser = (req, res, next) => {
     
-    const user_id = req.params.id || req.body._id
-    console.log(user_id)
+    const user_id = req.params.id || req.body._id || req.body.user_id
     const token = req.cookies.accessToken;
     if (!token) return next(createError(401, "You are not authenticated!"))
 
@@ -25,7 +24,7 @@ export const verifyUser = (req, res, next) => {
 
         if (err) return next(createError(403, "Token is not valid!"))
        
-        if (payload.id != req.params.id) {
+        if (payload.id != user_id) {
             return next(createError(401, "You are not authenticated!"));
         }
         next()

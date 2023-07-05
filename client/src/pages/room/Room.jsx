@@ -68,6 +68,7 @@ function Room() {
 
 
   const payment = () => {
+      localStorage.setItem("selectedRoom", JSON.stringify(room))
       navigate("/payment", { state: { room } })
   }
 

@@ -74,7 +74,6 @@ export const make_reservation = async (req, res, next) => {
 
         }
 
-        console.log(deal.roomscount)
         if (deal.roomscount < 1) {
             return next(createError(403, "Something Went Wrong"))
 
@@ -163,7 +162,7 @@ export const make_reservation = async (req, res, next) => {
 
 
         await transporter.sendMail(mailOptions, (err, info) => {
-          
+
         });
         res.status(200).send("done")
     } catch (err) {
@@ -171,32 +170,58 @@ export const make_reservation = async (req, res, next) => {
     }
 
 }
+
+
 export const cancelled_reservation_status = async (req, res, next) => {
     try {
-
-        const reservation = await Reservation.findById(req.params.id);
+        const reservation = await Reservation.findById(req.params._id);
+        const room = await Room.findById(reservation.room_id).select('room_availability');
 
         if (reservation) {
-            if (reservation.status == "pending") {
-                reservation.status = "cancelled"
+            if (reservation.status === "cancelled") {
+                res.status(201).send("Reservation is already cancelled!");
+            } else if (reservation.status === "confirmed") {
+                res.status(404).send("Reservation cannot be cancelled!");
+            } else {
+                reservation.status = "cancelled";
                 await reservation.save();
 
-                res.status(201).send("Reservation have been cancelled !!");
-            } else if (reservation.status == "cancelled") {
-                res.status(201).send("Reservation is Already cancelled !!");
-            } else if (reservation.status == "confirmed") {
-                res.status(404).send("it cannot be Cancelled !!");
+                const startDate = new Date(reservation.check_in_out.in);
+                const endDate = new Date(reservation.check_in_out.out);
 
+                let counter = 0;
+                let flag = true
+
+                room.room_availability.forEach((availability) => {
+                  availability.unavailableDates.forEach((dateRange, index) => {
+                    const start = new Date(dateRange.startDate);
+                    const end = new Date(dateRange.endDate);
+                
+                    if (start.getTime() === startDate.getTime() && end.getTime() === endDate.getTime() && flag) {
+                      counter++;
+                      availability.unavailableDates.splice(index, 1); 
+                    }
+                    if(counter == reservation.guests.number_rooms ){
+                        flag = false
+                        
+                    }
+                  });
+                });
+                
+
+
+                await room.save();
+
+                res.status(201).send("Reservation has been cancelled!");
             }
         } else {
-            res.status(404).send("not found");
-
+            res.status(404).send("Reservation not found!");
         }
-
     } catch (err) {
-        next(err)
+        next(err);
     }
-}
+};
+
 
 
 

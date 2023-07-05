@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "./ConfirmLoader.scss"
 import Confirmed from "../../image/check12.png"
 import NotConfirmed from "../../image/cross.png"
-const ConfirmLoader = ({ confirmed }) => {
+const ConfirmLoader = ({ confirmed, errmessage }) => {
 
   const [isConfirmed, setIsConfirmed] = useState(confirmed)
   return (
@@ -26,7 +26,7 @@ const ConfirmLoader = ({ confirmed }) => {
               :
               <>
                 <h3>Error!</h3>
-                <p>Please Try Again Later</p>
+                <p>{errmessage? errmessage : "Please Try Again Later"}</p>
               </>
           }
         </div>

@@ -5,9 +5,38 @@ import { useNavigate } from 'react-router-dom';
 const Featured = () => {
     const navigate = useNavigate()
     const navigateToDestination = (destination) => {
-        navigate(`/hotels`, { state: { destination } })
-        window.scrollTo(0, 0);;
-    }
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        let res_data = JSON.parse(localStorage.getItem("reservation_details")) || null;
+      
+        if (res_data) {
+          res_data.destination = destination;
+          localStorage.setItem("reservation_details", JSON.stringify(res_data));
+          navigate(`/hotels`);
+          window.scrollTo(0, 0);
+        } else {
+          res_data = {
+            date: [
+              {
+                startDate: today,
+                endDate: tomorrow,
+                key: "selection",
+              },
+            ],
+            options: {
+              adult: 5,
+              children: 0,
+              room: 1,
+            },
+            destination: destination,
+          };
+          localStorage.setItem("reservation_details", JSON.stringify(res_data));
+          navigate(`/hotels`);
+          window.scrollTo(0, 0);
+        }
+      };
+      
     return (
         <div className="featured">
             <div className="featuredWrapper">
