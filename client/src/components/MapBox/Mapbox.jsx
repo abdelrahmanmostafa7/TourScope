@@ -92,10 +92,10 @@ function Mapbox({ viewmap }) {
           mapStyle="mapbox://styles/anterman/clhiduscq01hg01qy1do77vbs"
           mapboxAccessToken="pk.eyJ1IjoiYW50ZXJtYW4iLCJhIjoiY2xnbjNoZ3c1MGJ3azNmb2V6cHcyZW44dyJ9.3ZVPifDWiDq0SQj2jPs85w"
         >
-          {/* <div className="mapTitles">
+          <div className="mapTitles">
             <h1 className='mapTitle1'>You Can Search On Map</h1>
             <h1 className='mapTitle2'>To find hotels by price</h1>
-          </div> */}
+          </div>
 
 
           <GeocoderControl mapboxAccessToken={token} position="top-right" />

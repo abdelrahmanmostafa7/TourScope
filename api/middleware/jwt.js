@@ -64,7 +64,6 @@ export const verifyrole = async (req, res, next) => {
             res.status(200).send("redirect to Dashboard")
         }
         next()
-
     });
 }
 
