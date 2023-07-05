@@ -10,13 +10,14 @@ import { useNavigate } from "react-router-dom";
 import Loading from './../../components/Loading/Loading';
 import userImg from "../../image/user.png"
 import Aleart from "../../components/Aleart/Aleart"
+import useFetchUser from '../../hook/useFetchUser';
 
 
 
 const EditAccount = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const id = currentUser._id;
-  const { data, loading } = useFetch(`/user/find/${id}`);
+  const id = currentUser._id || null;
+  const { data, loading } = useFetchUser(`/user/find/${id}`);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null)

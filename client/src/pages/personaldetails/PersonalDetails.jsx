@@ -13,8 +13,7 @@ const PersonalDetails = () => {
     navigate("/editaccount")
   }
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-  const id = currentUser._id
-  console.log(id)
+  const id = currentUser._id || null;
   const { data, loading } = useFetch(`/user/find/${id}`);
 
   

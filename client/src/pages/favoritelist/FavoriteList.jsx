@@ -5,11 +5,12 @@ import Navbar from '../../components/navBar/Navbar'
 import useFetch from "../../hook/useFetch.js"
 import Loading from '../../components/Loading/Loading'
 import FavCard from "../../components/favCard/FavCard"
+import useFetchUser from '../../hook/useFetchUser';
 
 const FavoriteList = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"))
   const id = currentUser._id
-  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/favHotel/${id}`);
+  const { data: hotel, loading: hotelLoading } = useFetchUser(`/hotel/favHotel/${id}`);
   
   
   const [dataLoaded, setDataLoaded] = useState(false);
