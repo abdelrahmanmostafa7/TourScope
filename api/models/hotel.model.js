@@ -59,17 +59,7 @@ const HotelSchema = new mongoose.Schema({
   ], admin: 
     [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }]
 
-  ,
-  checkInout: {
-    timeIn: {
-      type: Date,
-      default: Date.parse('1970-01-01T14:00:00.000Z')
-    },
-    timeout: {
-      type: Date,
-      default: Date.parse('1970-01-01T12:00:00.000Z')
-    }
-  }
+
 
 });
 
