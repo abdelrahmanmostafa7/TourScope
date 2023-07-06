@@ -5,7 +5,7 @@ import useFetch from "../../hook/useFetch"
 import newRequest from "../../utils/newRequest";
 import { useState, useEffect } from "react";
 
-const Datatable = () => {
+const UsersDataTable = () => {
   const {data} = useFetch(`/hotel/userstatus/6490327d0b468e93e5fb7e4c`);
   const [rows, setRows] = useState([]);
 
@@ -202,4 +202,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable;
+export default UsersDataTable;
