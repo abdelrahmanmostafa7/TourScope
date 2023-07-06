@@ -26,7 +26,7 @@ const Sidebar = () => {
     }
   }
   const logInBtn = () => {
-    navigate("/logInOut")
+    navigate("/Login")
   }
   return (
     <div className="sidebar">
@@ -68,19 +68,6 @@ const Sidebar = () => {
               <span className="pageName">User</span>
             </li>
           </Link>
-          {/* <Link to="RoomStatus" style={{ textDecoration: "none" }}>
-            <li>
-              <InsertChartIcon className="icon" />
-              <span className="pageName">ٌRooms</span>
-            </li>
-          </Link>
-          <Link to="/ReservationStatus" style={{ textDecoration: "none" }}>
-            <li>
-              <SettingsSystemDaydreamOutlinedIcon className="icon" />
-              <span className="pageName">Reservations</span>
-            </li>
-          </Link> */}
-
           {!currentUser && 
             <li onClick={logInBtn}>
               <ExitToAppIcon className="icon" />

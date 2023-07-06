@@ -39,17 +39,18 @@
         .listContainer {
             gap: 50px;
             background: fixed;
+
             .headerListItem {
-                    font-size: 20px;
-                    cursor: pointer;
-                    font-weight: 500;
-                    // &:hover {
-                    //     border-bottom: 2px solid rgb(255, 255, 255);
-                    // }
-                }
+                font-size: 20px;
+                cursor: pointer;
+                font-weight: 500;
+                // &:hover {
+                //     border-bottom: 2px solid rgb(255, 255, 255);
+                // }
+            }
         }
 
-       
+
         .navButton {
             margin-left: 5px;
             border: 1px solid white;
@@ -191,22 +192,21 @@
 
 
     .AnimatedHeader {
-        margin-top: 65px;
-        font-weight: bold;
-        font-size: 30px;
+        margin-top: 58px;
         font-family: #f0ffff;
         display: block;
         justify-content: center;
 
         .FristWordTitle {
             margin: 0px;
-            padding-right: 140px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .SecoundWordTitle {
-            padding-left: 140px;
-            margin: 0px;
+            margin-top: 10px;
             color: white;
+            font-size: 12px;
         }
 
     }

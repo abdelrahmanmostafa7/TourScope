@@ -13,8 +13,12 @@ const Home = () => {
   const [dashboard_data, set_dashboard_data] = useState();
   const [filteredData,setfilteredData] = useState(); 
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const userId = currentUser ? currentUser._id : null;
+  const { data:userData, loading } = useFetch(`/user/find/${userId}`);
+  const hotelId = userData.hotel_id;
 
-  const { data } = useFetch(`/hotel/dashboard/643bb10810a61c109435fed9/`);
+  const { data } = useFetch(`/hotel/dashboard/${hotelId}/`);
 
 
   useEffect(() => {

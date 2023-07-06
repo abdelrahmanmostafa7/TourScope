@@ -4,26 +4,24 @@ body {
 
 .Room {
   display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: 390px;
-    // border: 10px solid white;
-    // text-align: center;
-    justify-content: center;
-      align-items: center;
-    border-radius: 15px;
-    background-color: white;
-    position: relative;
-    padding-bottom: 5px;
-  
-    .roomImg {
-      width: 100%;
-      height: 210px;
-      border-radius: 20px;
-      border:10px solid white;
-      box-sizing:border-box;
-    }
-  
+  flex-direction: column;
+  width: 320px;
+  height: 390px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: white;
+  position: relative;
+  padding-bottom: 5px;
+
+  .roomImg {
+    width: 100%;
+    height: 210px;
+    border-radius: 20px;
+    border: 10px solid white;
+    box-sizing: border-box;
+  }
+
 
   .roomIcon {
     width: 20px;
@@ -37,8 +35,9 @@ body {
     width: 15px;
     height: 15px;
   }
-  .hotelPrice{
-    margin-bottom:20px;
+
+  .hotelPrice {
+    margin-bottom: 20px;
   }
 }
 
@@ -73,29 +72,34 @@ body {
       font-size: small;
     }
   }
-.roomHeader{
-  display: flex;
-  flex-direction: column;
-}
-.roomName{
-  text-align: center;
-  margin: 10px 0px 0px 0px;
 
-  
-}
-.roomPricePerNight{
-  margin:5px;
+  .roomHeader {
+    display: flex;
+    flex-direction: column;
+  }
 
-  span {
+  .roomName {
+    text-align: center;
+    margin: 10px 0px 0px 0px;
+
+
+  }
+
+  .roomPricePerNight {
+    margin: 5px;
+
+    span {
       font-weight: 300;
       color: #49D62F;
     }
-}
+  }
+
   .roomPrice {
     width: 300px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     button {
       border: none;
       background-color: #142662;
@@ -111,8 +115,8 @@ body {
       font-size: 17px;
     }
 
-   span{
-    color: #49D62F;
-   }
+    span {
+      color: #49D62F;
+    }
   }
 }
