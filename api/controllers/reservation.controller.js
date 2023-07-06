@@ -20,19 +20,19 @@ export const user_reservations = async (req, res, next) => {
 export const make_reservation = async (req, res, next) => {
     try {
         const { roomoptions, roomId, date, deal, user_id } = req.body;
-        const user = await userModel.findById(user_id).select('email')
 
+        const user = await userModel.findById(user_id).select('email')
         const roomIds = new mongoose.Types.ObjectId(roomId);
         const hotel = await Hotel.findOne({ rooms: { $elemMatch: { $in: roomIds } } });
-        const room = await Room.findById(roomId).select('name room_availability price maxpeople')
+        const room = await Room.findById(roomId).select('name room_availability price maxpeople');
+
         const user_startDate = new Date(date[0].startDate)
         const user_endDate = new Date(date[0].endDate)
         user_startDate.setUTCHours(22, 0, 0, 0);
         user_endDate.setUTCHours(22, 0, 0, 0);
-
         user_startDate.setDate(user_startDate.getDate() + 1);
-
         user_endDate.setDate(user_endDate.getDate() + 1);
+
 
         let cheak_flag = true
         let counter = 0;
@@ -46,7 +46,6 @@ export const make_reservation = async (req, res, next) => {
                     (user_endDate <= date.endDate && user_endDate > date.startDate) ||
                     (user_startDate < date.startDate && user_endDate >= date.endDate)
                 );
-
                 if (!isDateValid && cheak_flag) {
                     cheacker.push({
                         number: ro.number
@@ -55,7 +54,6 @@ export const make_reservation = async (req, res, next) => {
                     break;
                 }
             }
-
 
             if (cheacker.length === 0 && cheak_flag) {
                 ro.unavailableDates.push({ startDate: user_startDate, endDate: user_endDate });
@@ -73,7 +71,6 @@ export const make_reservation = async (req, res, next) => {
             return next(createError(403, "Something Went Wrong"))
 
         }
-
         if (deal.roomscount < 1) {
             return next(createError(403, "Something Went Wrong"))
 
@@ -82,7 +79,6 @@ export const make_reservation = async (req, res, next) => {
         const totalprice = deal.price;
         const timeDiff = Math.abs(user_endDate.getTime() - user_startDate.getTime());
         const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
 
         if (room.price * deal.roomscount * diffDays !== totalprice) {
             return next(createError(403, "Something Went Wrong"))
@@ -108,11 +104,9 @@ export const make_reservation = async (req, res, next) => {
 
         await newreservation.save();
         await room.save();
+
         const formatteduser_startDate = user_startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         const formatteduser_endDate = user_endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-
-
         const transporter = nodemailer.createTransport({
             host: 'smtp.office365.com',
             port: 587,
@@ -159,8 +153,6 @@ export const make_reservation = async (req, res, next) => {
             `
         };
 
-
-
         await transporter.sendMail(mailOptions, (err, info) => {
 
         });
@@ -168,11 +160,10 @@ export const make_reservation = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
-
 }
 
 
-export const cancelled_reservation_status = async (req, res, next) => {
+export const cancel_Reservation = async (req, res, next) => {
     try {
         const reservation = await Reservation.findById(req.params._id);
         const room = await Room.findById(reservation.room_id).select('room_availability');
@@ -183,8 +174,7 @@ export const cancelled_reservation_status = async (req, res, next) => {
             } else if (reservation.status === "confirmed") {
                 res.status(404).send("Reservation cannot be cancelled!");
             } else {
-                reservation.status = "cancelled";
-                await reservation.save();
+
 
                 const startDate = new Date(reservation.check_in_out.in);
                 const endDate = new Date(reservation.check_in_out.out);
@@ -193,25 +183,23 @@ export const cancelled_reservation_status = async (req, res, next) => {
                 let flag = true
 
                 room.room_availability.forEach((availability) => {
-                  availability.unavailableDates.forEach((dateRange, index) => {
-                    const start = new Date(dateRange.startDate);
-                    const end = new Date(dateRange.endDate);
-                
-                    if (start.getTime() === startDate.getTime() && end.getTime() === endDate.getTime() && flag) {
-                      counter++;
-                      availability.unavailableDates.splice(index, 1); 
-                    }
-                    if(counter == reservation.guests.number_rooms ){
-                        flag = false
-                        
-                    }
-                  });
-                });
-                
+                    availability.unavailableDates.forEach((dateRange, index) => {
+                        const start = new Date(dateRange.startDate);
+                        const end = new Date(dateRange.endDate);
 
+                        if (start.getTime() === startDate.getTime() && end.getTime() === endDate.getTime() && flag) {
+                            counter++;
+                            availability.unavailableDates.splice(index, 1);
+                        }
+                        if (counter == reservation.guests.number_rooms) {
+                            flag = false
+                        }
+                    });
+                });
 
                 await room.save();
-
+                reservation.status = "cancelled";
+                await reservation.save();
                 res.status(201).send("Reservation has been cancelled!");
             }
         } else {
