@@ -62,7 +62,7 @@ const HotelEdit = () => {
     e.preventDefault()
     const url = await upload(file)
     try {
-      await newRequest.put(`/hotel/update/${hotelId}`, { images: url });
+      await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, { images: url });
       // window.location.reload();
     }
     catch (err) {
@@ -80,7 +80,7 @@ const HotelEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await newRequest.put(`/hotel/update/${hotelId}`, {
+      await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, {
         description: text,
       });
       setIsEdit(false);
@@ -95,7 +95,7 @@ const HotelEdit = () => {
 
   const handleDelete = async (amenity) => {
     try {
-      await newRequest.put(`/hotel/deleteHotelItem/${hotelId}`, { amenity });
+      await newRequest.put(`/hotel/deleteHotelItem/${currentUser.hotel_id}`, { amenity });
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -103,7 +103,7 @@ const HotelEdit = () => {
   };
   const handleDeletePhoto = async (photo) => {
     try {
-      await newRequest.put(`/hotel/deleteHotelItem/${hotelId}`, { photo });
+      await newRequest.put(`/hotel/deleteHotelItem/${currentUser.hotel_id}`, { photo });
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -139,7 +139,7 @@ const HotelEdit = () => {
       const currentAmenities = hotel.amenities;
       const combinedAmenities = [...currentAmenities, ...amenities];
       if (!isEmpty) {
-        await newRequest.put(`/hotel/update/643bb10810a61c1094360089`, { amenities: combinedAmenities });
+        await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, { amenities: combinedAmenities });
       }
     } catch (error) {
       console.log(error);
@@ -148,7 +148,8 @@ const HotelEdit = () => {
     console.log("Amenities Added Successfully ...");
   };
   const goBack = () => {
-    navigate("/HotelEdit")
+    // window.scrollTo(0, 0);
+    window.location.reload()
   }
   return (
     <div className='hotelEdit'>

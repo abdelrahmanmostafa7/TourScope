@@ -7,7 +7,6 @@ import EditRoom from './pages/RoomEdit/RoomEdit';
 import EditRooms from './pages/EditRooms/EditRooms';
 import LogInOut from "./pages/login/LogIn";
 function App() {
-
   return (
     <div className={"app"}>
       <BrowserRouter>
