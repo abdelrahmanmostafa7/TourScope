@@ -36,10 +36,11 @@ import Upload from "../../image/upload.png"
 const HotelEdit = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userId = currentUser ? currentUser._id : null;
-  const { data, loading } = useFetch(`/user/find/${userId}`);
-  const hotelId = data.hotel_id;
-  const { data: hotel , loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
+  // const { data, loading } = useFetch(`/user/find/${userId}`);
+  // const hotelId = data.hotel_id;
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${currentUser.hotel_id}`);
   const navigate = useNavigate()
+  // console.log(hotelId)
   // To add new photo 
   const [file, setFile] = useState(null);
   const upload = async (file) => {

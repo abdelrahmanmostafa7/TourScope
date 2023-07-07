@@ -28,6 +28,9 @@ const Sidebar = () => {
   const logInBtn = () => {
     navigate("/Login")
   }
+  const home = ()=>{
+    navigate("/")
+  }
   return (
     <div className="sidebar">
       <div className="top">
@@ -39,7 +42,7 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <li>
+          <li onClick={home}>
             <Link to="/" className="dashboardTitle" style={{ textDecoration: "none" }}>
               <DashboardIcon className="icon" />
               <span className="pageName">Dashboard</span>
