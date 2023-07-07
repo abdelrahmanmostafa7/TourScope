@@ -148,7 +148,6 @@ const HotelEdit = () => {
     console.log("Amenities Added Successfully ...");
   };
   const goBack = () => {
-    // window.scrollTo(0, 0);
     window.location.reload()
   }
   return (
