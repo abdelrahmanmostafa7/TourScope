@@ -12,15 +12,8 @@ import { useState, useEffect } from "react";
 const Home = () => {
   const [dashboard_data, set_dashboard_data] = useState();
   const [filteredData,setfilteredData] = useState(); 
-
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const userId = currentUser ? currentUser._id : null;
-  const { data:userData, loading } = useFetch(`/user/find/${userId}`);
-  const hotelId = userData.hotel_id;
-
-  const { data } = useFetch(`/hotel/dashboard/${hotelId}/`);
-
-
+  const { data } = useFetch(`/hotel/dashboard/${currentUser.hotel_id}/`);
   useEffect(() => {
     if (data && data.dashboard_data) {
       const total_of_data = data.dashboard_data.filter(item => item._id === null )

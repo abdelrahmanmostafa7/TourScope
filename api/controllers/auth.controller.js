@@ -27,6 +27,7 @@ export const signin = async (req, res, next) => {
     try {
         // check if user exists
         const user = await User.findOne({ email: req.body.email })
+        
 
         if (!user) return next(createError(404, "Email or password is wrong!"))
 
@@ -35,7 +36,7 @@ export const signin = async (req, res, next) => {
         if (!isCorrect) return next(createError(404, "Email or password is wrong!"))
 
         if (user.role !== "user") {
-            const hotel = await Hotel.findOne({ admin: user._id })
+            const hotel = await Hotel.findOne({ admin: { $in: [user._id] } });
             const token = jwt.sign({
                 id: user._id,
                 role: user.role,
@@ -162,19 +163,24 @@ export const adminSignin = async (req, res, next) => {
         if (!isCorrect) return next(createError(404, "Email or password is wrong!"));
 
         // check user role
-        if (admin.role !== "admin") {
-            return next(createError(403, "Access denied"));
-        }
-
+    
         // check user role
-        if (admin.role == "admin") {
-            const token = jwt.sign(
-                { id: admin._id, role: admin.role,},
-                process.env.JWT_KEY
-            );
-            const {_id, first_name, last_name, email, hotel_id } = admin;
-            res.cookie("accessToken", token, { httpOnly: true, sameSite: "None" });
-            res.status(200).send({ _id ,first_name, last_name, email, hotel_id });
+        if (admin.role == "supervisor" || admin.role == "moderator" ) {
+
+             const hotel = await Hotel.findOne({ admin: { $in: [admin._id] } });
+            const token = jwt.sign({
+                id: admin._id,
+                role: admin.role,
+                hotel_id: hotel._id
+            }, process.env.JWT_KEY)
+            const { password, role, ...info } = admin._doc
+            res.cookie("accessToken", token, { httpOnly: true, sameSite: 'None' })
+            info.hotel_id = hotel._id
+            res.status(201).send(info)
+
+
+        }else{
+            return next(createError(401, "Access denied"));
         }
     } catch (err) {
         next(err);
