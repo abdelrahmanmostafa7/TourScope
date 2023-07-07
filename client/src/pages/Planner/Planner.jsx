@@ -9,8 +9,8 @@ import PlannerOneChoiceBtn from './../../components/PlannerOneChoiceBtn/PlannerO
 import ScrollTop from '../../components/scrolltop/ScrollTop';
 
 const Planner = () => {
-  const season =["Summer","Winter","Fall","Spring"];
-  const budget = ["0-49","50-99","100-249","300+"];
+  const season = ["Summer", "Winter", "Fall", "Spring"];
+  const budget = ["0-49", "50-99", "100-249", "300+"];
   const [currentSlide, setCurrentSlide] = useState(0);
   const [submit, setsubmit] = useState(false);
   const [previos, setprivous] = useState(true);
@@ -70,7 +70,7 @@ const Planner = () => {
     }
   }
 
-  
+
   const prevSlide = () => {
     if (currentSlide <= 1) {
       setprivous(true)
@@ -83,10 +83,10 @@ const Planner = () => {
   }
 
   const navigate = useNavigate()
-  
+
   const viewhotels = (res) => {
-    navigate(`/hotels`, { state: { destination:res.City}  })
-    
+    navigate(`/hotels`, { state: { destination: res.City } })
+
   }
   const addoption = (e) => {
     if (isFinite(planner[e])) {
@@ -101,15 +101,30 @@ const Planner = () => {
       }
     }
   }
+  //progress bar
+  // const [isOpen, setIsOpen] = useState(false);
+  // if (currentSlide === 2)
+  //   setIsOpen(false)
+  const totalSteps = 3;
   return (
     <>
       <div className='page'>
-      <ScrollTop />
+        <ScrollTop />
         <div>
           <Navbar />
         </div>
+
         <div className="plannerContainer">
           <div className="plannerWrapper">
+            <div className={`steps ${currentSlide >= totalSteps ? 'hidden' : ''}`}>
+              <div className="numbers">
+                <div className={currentSlide >= 0 ? 'active' : ''}>1</div>
+                <span className={currentSlide >= 1 ? 'active' : ''}></span>
+                <div className={currentSlide >= 1 ? 'active' : ''}>2</div>
+                <span className={currentSlide >= 2 ? 'active' : ''}></span>
+                <div className={currentSlide >= 2 ? 'active' : ''}>3</div>
+              </div>
+            </div>
             <div className={`slide ${currentSlide === 0 ? 'slide_active' : ''}`}>
               <div className="scenery">
                 <h1>What scenery are you seeking?</h1>
@@ -345,7 +360,7 @@ const Planner = () => {
               </div>
             </div>
 
-            <span className='slider_controller' { ...btnsections && {style:{display:'none'}} }>
+            <span className='slider_controller' {...btnsections && { style: { display: 'none' } }}>
               <button className='slider_btn' {...previos && {
                 disabled: true, style: {
                   opacity: 0.5
@@ -355,23 +370,24 @@ const Planner = () => {
                 (<button className='slider_btn' onClick={nextSlide}>Next</button>)}
             </span>
 
-            
-            {typeof results !== 'undefined' && results !== null &&  <>
+
+            {typeof results !== 'undefined' && results !== null && <>
               <div className={`slide ${currentSlide === 3 ? 'slide_active' : ''}`}>
                 <div className="result">
                   <h1>Our results</h1>
                   <div className="result_options">
-                    {results.cities.map( res => (
-                    <div className="result_option" onClick={()=> viewhotels(res)} >
-                      <img src={res.Photo} alt="" className='resultimage' />
-                      <h3>{res.City}</h3>
-                    </div>
+                    {results.cities.map(res => (
+                      <div className="result_option" onClick={() => viewhotels(res)} >
+                        <img src={res.Photo} alt="" className='resultimage' />
+                        <h3>{res.City}</h3>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div></>}
           </div>
         </div>
+
         <div>
           <Footer />
         </div>
