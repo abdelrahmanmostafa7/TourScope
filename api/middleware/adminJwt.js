@@ -15,10 +15,10 @@ export const checkRole = async (req, res, next) => {
     }
 
 
-    const hotel = await Hotel.findById(req.params.id);
-    if(!hotel){
-      return next(createError(403, "You Are Not authenticated!"));
-    }
+    // const hotel = await Hotel.findById(req.params.id);
+    // if(!hotel){
+    //   return next(createError(403, "You Are Not authenticated!"));
+    // }
     next();
   });
 };

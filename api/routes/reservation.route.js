@@ -12,12 +12,12 @@ const route = express.Router();
 
 route.get("/my_reservation/:id",verifyUser,user_reservations)
 route.put("/my_reservation/:_id",verifyUser,cancel_Reservation)
-route.put("/admin_resevation/:_id",checkRole,admin_reservation)
 
 route.post("/make_reservation",verifyUser,limiter,make_reservation)
 
 // admin 
 route.get("/hotelReservations/:id",checkRole,hotelReservations)
+route.put("/admin_resevation/:_id",checkRole,admin_reservation)
 
 
 
