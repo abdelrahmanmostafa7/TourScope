@@ -38,7 +38,7 @@ const useFetch = (path) => {
             });
             setData(res.data);
         } catch (err) {
-            setError(err);
+            navigate("/404")
 
         }
         setLoading(false);

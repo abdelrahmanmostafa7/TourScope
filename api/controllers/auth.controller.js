@@ -43,7 +43,7 @@ export const signin = async (req, res, next) => {
                 hotel_id: hotel._id
             }, process.env.JWT_KEY)
             const { password, role, ...info } = user._doc
-            res.cookie("accessToken", token, { httpOnly: true, sameSite: 'None' })
+            res.cookie("accessToken", token, { httpOnly: true})
             res.status(200).send(info)
 
         } else {
@@ -174,7 +174,7 @@ export const adminSignin = async (req, res, next) => {
                 hotel_id: hotel._id
             }, process.env.JWT_KEY)
             const { password, role, ...info } = admin._doc
-            res.cookie("accessToken", token, { httpOnly: true, sameSite: 'None' })
+            res.cookie("accessToken", token, { httpOnly: true })
             info.hotel_id = hotel._id
             res.status(201).send(info)
 

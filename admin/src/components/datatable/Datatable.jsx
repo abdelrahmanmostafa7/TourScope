@@ -49,8 +49,10 @@ const UsersDataTable = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(user_input)
-      await newRequest.post("/hotel/userstatus/newuser/15151", { ...user_input })
+      await newRequest.post(`/hotel/userstatus/newuser/${currentUser.hotel_id}`, { ...user_input })
+      setShowPopUp(false);
+      window.location.reload()
+
     }
     catch (err) {
       console.log(err)

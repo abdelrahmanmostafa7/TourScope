@@ -3,6 +3,8 @@ import User from "../models/user.model.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import Reservation from "../models/reservation.model.js";
+import createError from "../utils/createError.js";
+
 
 //CREATE
 export const createHotel = async (req, res, next) => {
@@ -71,13 +73,24 @@ export const updateHotel = async (req, res, next) => {
 export const addnewuser = async (req, res, next) => {
 
   try {
+
     const hash = bcrypt.hashSync(req.body.password, 5)
     const newUser = new User({
       ...req.body,
       password: hash,
     })
-    await newUser.save()
     const { password, role, ...info } = newUser._doc
+
+
+    await Hotel.findByIdAndUpdate(
+      req.params.id,
+      { $push: { admin: newUser } },
+      { new: true }
+    );
+
+
+    await newUser.save()
+
     res.status(201).send(info)
 
   } catch (err) {
@@ -102,7 +115,7 @@ export const modifiyrole = async (req, res, next) => {
 
   try {
     const { id } = req.params;
-    const { newRole } = req.body
+    const { newRole } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { role: newRole },
@@ -482,7 +495,7 @@ export const userstatus = async (req, res, next) => {
   try {
     const objectId = new mongoose.Types.ObjectId(req.params.id);
 
-    const adminUsers = await  Hotel.findById("643bb11110a61c1094360215").populate("admin")    
+    const adminUsers = await  Hotel.findById(objectId).populate("admin")    
     res.status(200).json(adminUsers);
     
   } catch (err) {

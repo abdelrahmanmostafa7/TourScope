@@ -19,7 +19,6 @@ const Sidebar = () => {
     try {
       await newRequest.post("/auth/signout")
       localStorage.setItem("currentUser", null)
-      window.location.reload();
       navigate("/")
     } catch (err) {
       console.log(err);
@@ -61,6 +60,12 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span className="pageName">Rooms Management</span>
+            </li>
+          </Link>
+          <Link to="/ReservationStatus" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span className="pageName">Reservations Management</span>
             </li>
           </Link>
 

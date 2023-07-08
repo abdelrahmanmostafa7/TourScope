@@ -219,7 +219,6 @@ const Hotel = () => {
     }
   };
   const areainfo = hotel.area_info
-  // console.log(areainfo)
   const [restaurants, setRestaurants] = useState();
   const [nearbyPlaces, setNearbyPlaces] = useState();
   const [attractionsPlaces, setAttractionsPlaces] = useState();
@@ -232,7 +231,6 @@ const Hotel = () => {
     }
   }, [hotel]);
 
-  console.log(restaurants)
 
   
   return (

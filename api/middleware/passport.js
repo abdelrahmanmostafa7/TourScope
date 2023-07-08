@@ -76,7 +76,6 @@ passport.use(new FacebookStrategy({
   async function (accessToken, refreshToken, profile, done)  {
 
   
-    console.log(profile)
     const user = await User.findOne({ email: profile._json.email });
     if (user) {
       const token = jwt.sign({
