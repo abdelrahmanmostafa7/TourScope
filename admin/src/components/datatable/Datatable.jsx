@@ -6,11 +6,13 @@ import newRequest from "../../utils/newRequest";
 import { useState, useEffect } from "react";
 
 const UsersDataTable = () => {
-  const {data} = useFetch(`/hotel/userstatus/6490327d0b468e93e5fb7e4c`);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const {data} = useFetch(`/hotel/userstatus/${currentUser.hotel_id}`);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (data && data.admin) {
+    if (data.admin) {
       const rowsWithId = data.admin.map((row) => ({ ...row, id: row._id }));
       setRows(rowsWithId);
     }
@@ -82,7 +84,6 @@ const UsersDataTable = () => {
     } else if (modifiedRow.role === "moderator") {
       newRole = "supervisor";
     }
-  
     try {
       await newRequest.post("http://localhost:8800/api/hotel/userstatus/modifiy/" + id, { newRole });      
       if (newRole) {

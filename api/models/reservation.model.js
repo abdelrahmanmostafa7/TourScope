@@ -34,15 +34,18 @@ const ReservationScheme = new mongoose.Schema({
             type: Number, required: true
         },
         number_rooms: {
-          type: Number, required: true
+          type: Number
       },
 
         
     },
-    user_id:{
-        type: String, required: true,
-
-    },
+ 
+    user_id: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
 },{ timestamps: true });
 
 export default mongoose.model("Reservation", ReservationScheme);

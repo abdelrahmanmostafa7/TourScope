@@ -16,6 +16,60 @@ export const user_reservations = async (req, res, next) => {
         next(err)
     }
 }
+export const hotelReservations = async (req, res, next) => {
+    try {
+        const hotelReservations = await Reservation.find({ hotel_id: req.params.id }).populate(
+            {
+                path: "user_id",
+                select: "first_name last_name email"
+            }
+        ).populate({
+            path: "room_id",
+            select: "name"
+        }).select("guests check_in_out status total_price");
+        const modifiedReservations = hotelReservations.map((reservation) => {
+            const { check_in_out, guests, _id, room_id, total_price, status, user_id } = reservation;
+            const roomname = room_id[0].name;
+            const { first_name, last_name, email  } = user_id[0];
+            const user_ID = user_id[0]. _id;
+
+            // Format the check-in and check-out dates
+            const checkInDate = formatDate(check_in_out.in);
+            const checkOutDate = formatDate(check_in_out.out);
+
+            return {
+                check_in_out: {
+                    in: checkInDate,
+                    out: checkOutDate
+                },
+                guests,
+                _id,
+                roomname,
+                total_price,
+                status,
+                first_name,
+                last_name,
+                email,
+                user_ID
+            };
+        });
+
+        res.status(201).send(modifiedReservations);
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Function to format date in "day month year" format
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+};
+
+
 
 export const make_reservation = async (req, res, next) => {
     try {
@@ -209,6 +263,54 @@ export const cancel_Reservation = async (req, res, next) => {
         next(err);
     }
 };
+
+
+export const admin_reservation = async (req, res, next) => {
+    try {
+      const reservation = await Reservation.findById(req.params._id);
+      const room = await Room.findById(reservation.room_id).select('room_availability');
+  
+      if (!reservation ) {
+        return res.status(404).send("Reservation not found!");
+      }
+  
+      switch (reservation.status) {
+        case "cancelled":
+          return res.status(201).send("Reservation cannot be cancelled!");
+        case "confirmed":
+          return res.status(404).send("Reservation is already confirmed");
+        default:
+          const startDate = new Date(reservation.check_in_out.in);
+          const endDate = new Date(reservation.check_in_out.out);
+  
+          let counter = 0;
+          let flag = true;
+  
+          room.room_availability.forEach((availability) => {
+            availability.unavailableDates.forEach((dateRange, index) => {
+              const start = new Date(dateRange.startDate);
+              const end = new Date(dateRange.endDate);
+  
+              if (start.getTime() === startDate.getTime() && end.getTime() === endDate.getTime() && flag) {
+                counter++;
+                availability.unavailableDates.splice(index, 1);
+              }
+              if (counter === reservation.guests.number_rooms) {
+                flag = false;
+              }
+            });
+          });
+  
+          await room.save();
+          reservation.status = req.body.newState;
+          await reservation.save();
+          return res.status(201).send("Reservation has been confirmed!");
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
+  
 
 
 

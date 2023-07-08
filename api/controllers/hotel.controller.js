@@ -102,10 +102,10 @@ export const modifiyrole = async (req, res, next) => {
 
   try {
     const { id } = req.params;
-    const { newrole } = req.body
+    const { newRole } = req.body
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { role: newrole },
+      { role: newRole },
       { new: true }
     );
     res.status(200).json(updatedUser);
@@ -480,13 +480,16 @@ export const getTopHotels = async (req, res, next) => {
 //Dashboard
 export const userstatus = async (req, res, next) => {
   try {
+    const objectId = new mongoose.Types.ObjectId(req.params.id);
 
-    const hotel = await Hotel.findOne({ admin: "6490327d0b468e93e5fb7e4c" }).populate("admin").select("admin");
-    res.status(200).json(hotel);
+    const adminUsers = await  Hotel.findById("643bb11110a61c1094360215").populate("admin")    
+    res.status(200).json(adminUsers);
+    
   } catch (err) {
     next(err);
   }
 };
+
 
 // GET ALL
 export const getHotels = async (req, res, next) => {
