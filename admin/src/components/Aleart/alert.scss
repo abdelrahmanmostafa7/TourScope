@@ -3,6 +3,9 @@
     border: 1px solid transparent;
     border-radius: 4px;
     width: 100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
   
   .alert-success {
@@ -20,7 +23,7 @@
   }
   
   .alert-message {
-    margin-bottom: 0;
+    margin: 0;
   }
   
  
