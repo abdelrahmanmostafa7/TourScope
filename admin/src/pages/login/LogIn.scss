@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding-top: 10px;
+  padding: 30px;
 
   .signinTitle {
     text-align: center;
@@ -35,7 +35,6 @@
   label {
     margin-bottom: 0.5em;
     font-size: 1.05rem;
-
   }
 
   input {
@@ -53,13 +52,13 @@
   }
 
   .LogBtn {
-    text-transform: uppercase;
     font-size: 1.05rem;
-    padding: 5px 10px;
+    padding: .5em 2.5em;
     border-radius: 2em;
     background-color: #142662;
     color: #fff;
     cursor: pointer;
+    border:none;
   }
 }
 
@@ -70,4 +69,12 @@
   width: 50px;
   height: 50px;
   cursor: pointer;
+}
+
+.logInCol {
+  display: flex;
+  flex-direction: column;
+  // align-items:center;
+  margin-bottom:10px;
+
 }

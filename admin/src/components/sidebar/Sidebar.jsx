@@ -29,12 +29,12 @@ const Sidebar = () => {
     navigate("/Login")
   }
   const home = ()=>{
-    navigate("/")
+    navigate("/Home")
   }
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/Home" style={{ textDecoration: "none" }}>
           <img src={logo} alt="" className="logo" />
         </Link>
       </div>

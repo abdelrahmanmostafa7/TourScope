@@ -20,7 +20,7 @@ const LogInOut = () => {
     try {
       const res = await newRequest.post("/auth/adminSignin", { email, password })
       localStorage.setItem("currentUser", JSON.stringify(res.data))
-      navigate("/")
+      navigate("/Home")
     }
     catch (err) {
       setError(err.response.data)
@@ -84,17 +84,21 @@ const LogInOut = () => {
 
   return (
     <div className="loginContainer">
-      <img src={Close} alt="" className='closeBtn' onClick={closeBtn} />
+      {/* <img src={Close} alt="" className='closeBtn' onClick={closeBtn} /> */}
       <div className='error_position'>
         {error && <Aleart type={"error"} message={error.message} />}
       </div>
       <div className="sectionContainer">
         <h2 className='signinTitle'>Sign In</h2>
         <form className='signinFrom' onSubmit={SigninForm}>
+          <div className="logInCol">
           <label htmlFor="emailSignIn">Email</label>
           <input type="email" id="emailSignIn" onChange={e => setEmail(e.target.value)} required />
+          </div>
+          <div className="logInCol">
           <label htmlFor="passwordSignIn">Password</label>
           <input type="password" id="passwordSignIn" onChange={e => setPassword(e.target.value)} required />
+          </div>
           <button type="submit" className="LogBtn logInBtn">Sign In</button>
         </form>
       </div>
