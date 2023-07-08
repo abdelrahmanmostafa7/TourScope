@@ -22,7 +22,7 @@ export const userColumns = [,
   
 {
     field: "check_in_out",
-    headerName: "Cheack in/out",
+    headerName: "Check in/out",
     width: 200,
     renderCell: (params) => {
       const Date = `${params.row.check_in_out.in} - ${params.row.check_in_out.out}`;
