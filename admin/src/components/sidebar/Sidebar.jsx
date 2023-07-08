@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import logo from "../../image/logo.png"
 import newRequest from "../../utils/newRequest.js"
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 const Sidebar = () => {
@@ -24,6 +25,12 @@ const Sidebar = () => {
       console.log(err);
     }
   }
+  const [mod,setMod]=useState()
+  // console.log(currentUser.role``)
+  useEffect(()=>{
+    if(currentUser)
+    setMod(currentUser.role)
+  },[currentUser])
   const logInBtn = () => {
     navigate("/Login")
   }
@@ -69,7 +76,9 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <p className="title">Status</p>
+          {mod ==="supervisor" &&
+          <>
+            <p className="title">Status</p>
           <Link to="/UserStatus" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
@@ -81,6 +90,8 @@ const Sidebar = () => {
               <ExitToAppIcon className="icon" />
               <span className="pageName">Login</span>
             </li>
+          }
+          </>
           }
           {currentUser && 
             <li onClick={handleSignout}>

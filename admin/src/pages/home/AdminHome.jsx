@@ -30,8 +30,7 @@ const Home = () => {
       setfilteredData(data.dashboard_data.filter(item => item._id !== null))
     }
   }, [data]);
-
-
+  
   return (
     <div className="home">
       <Sidebar />

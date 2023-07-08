@@ -9,7 +9,7 @@ const Page404 = () => {
   }
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/");
+      navigate("/Login");
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigate]);

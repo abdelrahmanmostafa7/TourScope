@@ -32,7 +32,8 @@ const UsersDataTable = () => {
     }
   };
 
-
+  const hotelId =currentUser.hotel_id;
+  // console.log(hotelId)
   const handleRole = async (id,role) => {
 
     const modifiedRow = rows.find(row => row.id === id);
@@ -40,7 +41,7 @@ const UsersDataTable = () => {
   
   
     try {
-      await newRequest.put("http://localhost:8800/api/reservation/admin_resevation/" + id, { newState });      
+      await newRequest.put("http://localhost:8800/api/reservation/admin_resevation/" + id, { hotelId,newState });      
       if (newState) {
         const updatedRows = rows.map(row => {
           if (row.id === id) {

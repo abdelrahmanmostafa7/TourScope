@@ -15,9 +15,9 @@ import hotelModel from "../models/hotel.model.js";
 const router = express.Router();
 import { verifyAdmin } from "../middleware/jwt.js";
 //createRoom
-router.post("/:hotelid",  checkSupervisor,createRoom);
+router.post("/:hotelid",createRoom);
 //updateRoom
-router.put("/update/:id",checkSupervisor, updateRoom);
+router.put("/update/:id", updateRoom);
 //deleteRoom
 router.delete("/:id/:hotelid",checkSupervisor, deleteRoom);
 //getALLRoom
@@ -25,7 +25,7 @@ router.get("/finds/:id", getRooms);
 //getRoom
 router.get("/find/:id" , getRoom)
 
-router.put("/update/:id", checkSupervisor,addOrRemove);
+router.put("/update/:id", addOrRemove);
 router.put("/deleteRoomItem/:id",checkSupervisor, deleteRoomItem);
 
 
