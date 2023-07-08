@@ -85,7 +85,11 @@ const Planner = () => {
   const navigate = useNavigate()
 
   const viewhotels = (res) => {
-    navigate(`/hotels`, { state: { destination: res.City } })
+
+    const reservation_data = JSON.parse(localStorage.getItem("reservation_details"))
+    reservation_data.destination = res.City
+    localStorage.setItem("reservation_details",JSON.stringify(reservation_data))
+    navigate(`/hotels`)
 
   }
   const addoption = (e) => {
