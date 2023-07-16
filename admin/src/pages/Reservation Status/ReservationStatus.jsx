@@ -1,9 +1,6 @@
-import "./UserStatus.scss";
+import "./reservationStatus.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import List from "../../components/table/Table";
-import useFetch from "../../hook/useFetch";
-import UsersDataTable from './../../components/datatable/Datatable';
-
+import ReservationDatatable from "../../components/datatable/ReservationDatatable"
 
 const Single = () => {
 
@@ -12,8 +9,8 @@ const Single = () => {
       <Sidebar />
       <div className="singleContainer">
         <div className="bottom">
-        <h1 className="title">Employees</h1>
-          <UsersDataTable/>
+          <h1 className="title">Reservations</h1>
+          <ReservationDatatable />
         </div>
       </div>
     </div>

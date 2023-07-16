@@ -633,7 +633,7 @@ function RoomEdit() {
                                         <label htmlFor="">Write facility then " , " after each one</label>
                                         <textarea className='ta' name="amenities" onChange={handleFacilitiesChange} required></textarea>
                                         <div className="bottom">
-                                            <button className='btn' >ADD</button>
+                                            <button className='btn' onClick={click}>ADD</button>
                                             <button className='btn' onClick={closePopUp}>Cancel</button>
                                         </div>
                                     </div>

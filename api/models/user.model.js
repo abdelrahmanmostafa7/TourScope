@@ -30,10 +30,6 @@ const userSchema = new Schema({
         type: String,
         unique: true
     }],
-    hotel_id: {
-        type: String,
-        unique: true,
-    },
     favoriteList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hotel" }],
 
     google_id: {
@@ -48,7 +44,7 @@ const userSchema = new Schema({
     resetpasswordexpire: {
         type: Date,
     },
-    role: { type: String, enum:['admin' ,'user'], default: 'user', required: true }
+    role: { type: String, enum:['supervisor' ,'moderator'], default: 'user', required: true }
 }, { timestamps: true });
 export default mongoose.model("user", userSchema)
 

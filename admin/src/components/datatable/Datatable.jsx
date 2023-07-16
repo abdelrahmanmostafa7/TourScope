@@ -5,12 +5,14 @@ import useFetch from "../../hook/useFetch"
 import newRequest from "../../utils/newRequest";
 import { useState, useEffect } from "react";
 
-const Datatable = () => {
-  const {data} = useFetch(`/hotel/userstatus/6490327d0b468e93e5fb7e4c`);
+const UsersDataTable = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const {data} = useFetch(`/hotel/userstatus/${currentUser.hotel_id}`);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if (data && data.admin) {
+    if (data.admin) {
       const rowsWithId = data.admin.map((row) => ({ ...row, id: row._id }));
       setRows(rowsWithId);
     }
@@ -47,8 +49,10 @@ const Datatable = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(user_input)
-      await newRequest.post("/hotel/userstatus/newuser/15151", { ...user_input })
+      await newRequest.post(`/hotel/userstatus/newuser/${currentUser.hotel_id}`, { ...user_input })
+      setShowPopUp(false);
+      window.location.reload()
+
     }
     catch (err) {
       console.log(err)
@@ -82,7 +86,6 @@ const Datatable = () => {
     } else if (modifiedRow.role === "moderator") {
       newRole = "supervisor";
     }
-  
     try {
       await newRequest.post("http://localhost:8800/api/hotel/userstatus/modifiy/" + id, { newRole });      
       if (newRole) {
@@ -202,4 +205,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable;
+export default UsersDataTable;

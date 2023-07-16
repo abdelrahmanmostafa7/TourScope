@@ -179,8 +179,17 @@ const Hotel = () => {
       setOpen(false);
     }
   };
-
-  //popup
+  //fac popup
+  const [showFacPopUp, setShowFacPopUp] = useState(false);
+  const toggleFacPopUp = () => {
+    setShowFacPopUp(true);
+  };
+  const closeFacPopUp = (event) => {
+    if (event.target === event.currentTarget) {
+      setShowFacPopUp(false);
+    }
+  };
+  //nearby places popup
   const [showPopUp, setShowPopUp] = useState(false);
   const togglePopUp = () => {
     setShowPopUp(true);
@@ -190,6 +199,7 @@ const Hotel = () => {
       setShowPopUp(false);
     }
   };
+  
   const [showPopUp2, setShowPopUp2] = useState(false);
   const togglePopUp2 = () => {
     setShowPopUp2(true);
@@ -209,7 +219,6 @@ const Hotel = () => {
     }
   };
   const areainfo = hotel.area_info
-  // console.log(areainfo)
   const [restaurants, setRestaurants] = useState();
   const [nearbyPlaces, setNearbyPlaces] = useState();
   const [attractionsPlaces, setAttractionsPlaces] = useState();
@@ -222,7 +231,6 @@ const Hotel = () => {
     }
   }, [hotel]);
 
-  console.log(restaurants)
 
   
   return (
@@ -425,12 +433,25 @@ const Hotel = () => {
                       )}
                     </div>
                   ))}
-                  <div className="seeMoreHotelFeatures" onClick={togglePopUp}>
+                  <div className="seeMoreHotelFeatures" onClick={toggleFacPopUp}>
                     <h3 className="seeMoreFeature" >See More </h3>
                     <img src={Down} alt="" className="seeMoreHotelImg" />
                   </div>
                 </div>
-
+                  {
+                  showFacPopUp && <div className="popup-background" onClick={closeFacPopUp}>
+                    <div className="popup-content3">
+                      <h2>Restaurants Near To Hotel</h2>
+                      <div className="areaOptionContainer">
+                        {
+                          hotel.amenities.map((amenity, i) =>
+                            <li key={i} >{amenity}</li>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  }
                
                 <div className="hotelDetailsTexts">
                   <h2 className="sectionTitle">Details about Hotel</h2>

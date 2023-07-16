@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import logo from "../../image/logo.png"
 import newRequest from "../../utils/newRequest.js"
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 const Sidebar = () => {
@@ -19,19 +20,27 @@ const Sidebar = () => {
     try {
       await newRequest.post("/auth/signout")
       localStorage.setItem("currentUser", null)
-      window.location.reload();
       navigate("/")
     } catch (err) {
       console.log(err);
     }
   }
+  const [mod,setMod]=useState()
+  // console.log(currentUser.role``)
+  useEffect(()=>{
+    if(currentUser)
+    setMod(currentUser.role)
+  },[currentUser])
   const logInBtn = () => {
     navigate("/Login")
+  }
+  const home = ()=>{
+    navigate("/Home")
   }
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/Home" style={{ textDecoration: "none" }}>
           <img src={logo} alt="" className="logo" />
         </Link>
       </div>
@@ -39,7 +48,7 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <li>
+          <li onClick={home}>
             <Link to="/" className="dashboardTitle" style={{ textDecoration: "none" }}>
               <DashboardIcon className="icon" />
               <span className="pageName">Dashboard</span>
@@ -60,8 +69,16 @@ const Sidebar = () => {
               <span className="pageName">Rooms Management</span>
             </li>
           </Link>
+          <Link to="/ReservationStatus" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span className="pageName">Reservations Management</span>
+            </li>
+          </Link>
 
-          <p className="title">Status</p>
+          {mod ==="supervisor" &&
+          <>
+            <p className="title">Status</p>
           <Link to="/UserStatus" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
@@ -73,6 +90,8 @@ const Sidebar = () => {
               <ExitToAppIcon className="icon" />
               <span className="pageName">Login</span>
             </li>
+          }
+          </>
           }
           {currentUser && 
             <li onClick={handleSignout}>

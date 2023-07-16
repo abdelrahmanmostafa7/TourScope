@@ -36,10 +36,11 @@ import Upload from "../../image/upload.png"
 const HotelEdit = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userId = currentUser ? currentUser._id : null;
-  const { data, loading } = useFetch(`/user/find/${userId}`);
-  const hotelId = data.hotel_id;
-  const { data: hotel , loading: hotelLoading } = useFetch(`/hotel/find/${hotelId}`);
+  // const { data, loading } = useFetch(`/user/find/${userId}`);
+  // const hotelId = data.hotel_id;
+  const { data: hotel, loading: hotelLoading } = useFetch(`/hotel/find/${currentUser.hotel_id}`);
   const navigate = useNavigate()
+  // console.log(hotelId)
   // To add new photo 
   const [file, setFile] = useState(null);
   const upload = async (file) => {
@@ -61,7 +62,7 @@ const HotelEdit = () => {
     e.preventDefault()
     const url = await upload(file)
     try {
-      await newRequest.put(`/hotel/update/${hotelId}`, { images: url });
+      await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, { images: url });
       // window.location.reload();
     }
     catch (err) {
@@ -79,7 +80,7 @@ const HotelEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await newRequest.put(`/hotel/update/${hotelId}`, {
+      await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, {
         description: text,
       });
       setIsEdit(false);
@@ -87,12 +88,14 @@ const HotelEdit = () => {
     } catch (error) {
       console.log(error);
     }
+          // window.location.reload();
+
   };
 
 
   const handleDelete = async (amenity) => {
     try {
-      await newRequest.put(`/hotel/deleteHotelItem/${hotelId}`, { amenity });
+      await newRequest.put(`/hotel/deleteHotelItem/${currentUser.hotel_id}`, { amenity });
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -100,7 +103,7 @@ const HotelEdit = () => {
   };
   const handleDeletePhoto = async (photo) => {
     try {
-      await newRequest.put(`/hotel/deleteHotelItem/${hotelId}`, { photo });
+      await newRequest.put(`/hotel/deleteHotelItem/${currentUser.hotel_id}`, { photo });
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -136,7 +139,7 @@ const HotelEdit = () => {
       const currentAmenities = hotel.amenities;
       const combinedAmenities = [...currentAmenities, ...amenities];
       if (!isEmpty) {
-        await newRequest.put(`/hotel/update/643bb10810a61c1094360089`, { amenities: combinedAmenities });
+        await newRequest.put(`/hotel/update/${currentUser.hotel_id}`, { amenities: combinedAmenities });
       }
     } catch (error) {
       console.log(error);
@@ -145,7 +148,7 @@ const HotelEdit = () => {
     console.log("Amenities Added Successfully ...");
   };
   const goBack = () => {
-    navigate("/HotelEdit")
+    window.location.reload()
   }
   return (
     <div className='hotelEdit'>

@@ -119,7 +119,6 @@ const UpdateRoom = () => {
       });
     }
   }, [data]);
-  console.log(room)
   const [files, setFiles] = useState("");
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);

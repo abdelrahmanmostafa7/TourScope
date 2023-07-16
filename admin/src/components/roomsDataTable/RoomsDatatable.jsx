@@ -10,10 +10,10 @@ import newRequest from "../../utils/newRequest";
 const Datatable = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const userId = currentUser ? currentUser._id : null;
-  const { data:userData , loading:userLoading } = useFetch(`/user/find/${userId}`);
+  // const { data:userData , loading:userLoading } = useFetch(`/user/find/${userId}`);
 
-  const hotelId = userData.hotel_id;
-  const { data, loading } = useFetch(`/hotel/hotelRooms/${hotelId}`)
+  // const hotelId = userData.hotel_id;/
+  const { data, loading } = useFetch(`/hotel/hotelRooms/${currentUser.hotel_id}`)
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Datatable = () => {
 
   const deleteRoom = async (roomId) => {
     try {
-      await newRequest.delete(`/room/${roomId}/${id}`, { hotelid: id });
+      await newRequest.delete(`/room/${roomId}/${currentUser.hotel_id}`, { hotelid: currentUser.hotel_id });
       window.location.reload();
     }
     catch (err) {
@@ -72,7 +72,7 @@ const Datatable = () => {
       <div className="datatableTitle" >
         All Rooms In Hotel
         <button className="link" onClick={togglePopUp}>Add Room</button>
-        {showPopUp && <NewRoom />}
+        {showPopUp && <NewRoom closePopUpn={closePopUp}/>}
 
       </div>
       <DataGrid

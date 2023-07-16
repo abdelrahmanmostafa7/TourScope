@@ -2,40 +2,25 @@ export const userColumns = [,
   {
     field: "name",
     headerName: "Name",
-    width: 230,
+    width: 280,
   },
 
-  {
-    field: "type",
-    headerName: "Type",
-    width: 150,
-  },
+  
   {
     field: "beds",
     headerName: "Beds",
-    width: 150,
+    width: 240,
   },
   {
     field: "maxpeople",
     headerName: "Max Peple",
-    width: 150,
+    width: 220,
   },
   {
     field: "price",
     headerName: "Price",
-    width: 150,
+    width: 350,
   },
-  {
-    field: "status",
-    headerName: "Status",
-    width: 150,
-    renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row.status}`}>
-          {params.row.status}
-        </div>
-      );
-    },
-  },
+  
 ];
 

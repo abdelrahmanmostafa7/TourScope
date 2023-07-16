@@ -3,7 +3,7 @@ import "./NewRoom.scss"
 import { useState } from 'react'
 import newRequest from '../../utils/newRequest'
 import { useNavigate } from 'react-router-dom'
-const NewRoom = () => {
+const NewRoom = ({closePopUpn}) => {
     const navigate = useNavigate()
     const features = [
         "Free toiletries",
@@ -66,6 +66,8 @@ const NewRoom = () => {
         "Bar",
         "Parking"
     ]
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const userId = currentUser ? currentUser._id : null;
     const [showPopUp, setShowPopUp] = useState(false);
     const togglePopUp = () => {
         setShowPopUp(true);
@@ -99,9 +101,9 @@ const NewRoom = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("New Room Created Successfully.. ")
         try {
-            await newRequest.post(`/room/643bb10810a61c1094360089`, { ...room });
+            await newRequest.post(`/room/${currentUser.hotel_id}`, { ...room });
+            console.log("New Room Created Successfully.. ")
         } catch (error) {
             console.log(error);
         }
@@ -118,10 +120,13 @@ const NewRoom = () => {
         });
         console.log(newArray)
     };
+    const goBack = () => {
+        window.location.reload()
+    }
     return (
         <div>
             <div className="newRoomContainer">
-                <div className="popup-background" onClick={closePopUp}>
+                <div className="popup-background" onClick={closePopUpn}>
                     <form className="popup-content5" onSubmit={handleSubmit}>
                         <h2 className='newRoomHeading'>Add New Room</h2>
                         <div className="newRoomDetails">
@@ -180,7 +185,7 @@ const NewRoom = () => {
               </div> */}
                         </div>
                         <div className="newRoomBottom">
-                            <button type="submit" className='btn' onClick={handleSubmit}>Add New Room</button>
+                            <button type="submit" className='btn' onClick={goBack}>Add New Room</button>
                             <button className='btn' onClick={closePopUp}>Cancel</button>
                         </div>
 
