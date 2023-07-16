@@ -444,15 +444,11 @@ export const getHotel = async (req, res, next) => {
       const obj = hotel_res[0];
       res.status(200).send(obj);
     });
-    //res.status(201).send(hotel)
+    //res.stat us(201).send(hotel)
   } catch (err) {
     next(err);
   }
 };
-
-
-
-
 
 
 // Get fav Hotels
